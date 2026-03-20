@@ -11,7 +11,7 @@ import yaml from 'js-yaml';
 const program = new Command();
 
 program
-  .name('4d')
+  .name('fluent')
   .description('Operationalize the AI Fluency 4D Framework: Delegation, Description, Discernment, Diligence. Score, compare, and contribute knowledge plays for AI fluency.')
   .version('0.1.0');
 

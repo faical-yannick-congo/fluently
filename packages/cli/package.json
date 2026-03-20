@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "main": "src/index.ts",
   "bin": {
-    "4d": "dist/index.js"
+    "fluent": "dist/index.js"
   },
   "scripts": {
     "build": "tsc",
