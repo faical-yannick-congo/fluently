@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fluently": {
+      "command": "node",
+      "args": ["./packages/mcp-server/dist/bin.js"],
+      "env": {
+        "NODE_OPTIONS": "--no-warnings"
+      },
+      "description": "AI Fluency 4D Framework tools for scoring human-AI collaboration quality"
+    }
+  }
+}
