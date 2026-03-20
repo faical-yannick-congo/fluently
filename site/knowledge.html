@@ -21,7 +21,7 @@
                     <a href="/knowledge.html" class="text-blue-600 font-bold border-b-2 border-blue-600 font-medium">Knowledge Base</a>
                     <a href="/guide.html" class="text-gray-700 hover:text-blue-600 font-medium">Guide</a>
                     <a href="/contribute.html" class="text-gray-700 hover:text-blue-600 font-medium">Contribute</a>
-                    <a href="https://github.com/dakan-ai/fluently" target="_blank" class="text-gray-700 hover:text-blue-600 font-medium">
+                    <a href="https://github.com/faical-yannick-congo/fluently" target="_blank" class="text-gray-700 hover:text-blue-600 font-medium">
                         <i class="fab fa-github"></i> GitHub
                     </a>
                 </div>
@@ -218,9 +218,9 @@
                 <div>
                     <h4 class="text-white font-bold mb-4">Community</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="https://github.com/dakan-ai/fluently" target="_blank" class="hover:text-white">GitHub</a></li>
-                        <li><a href="https://github.com/dakan-ai/fluently/issues" target="_blank" class="hover:text-white">Issues</a></li>
-                        <li><a href="https://github.com/dakan-ai/fluently/discussions" target="_blank" class="hover:text-white">Discussions</a></li>
+                        <li><a href="https://github.com/faical-yannick-congo/fluently" target="_blank" class="hover:text-white">GitHub</a></li>
+                        <li><a href="https://github.com/faical-yannick-congo/fluently/issues" target="_blank" class="hover:text-white">Issues</a></li>
+                        <li><a href="https://github.com/faical-yannick-congo/fluently/discussions" target="_blank" class="hover:text-white">Discussions</a></li>
                     </ul>
                 </div>
                 <div>
@@ -239,7 +239,7 @@
         async function fetchKnowledgeBase() {
             try {
                 // Try to get rawIndex JSON URL from GitHub
-                const response = await fetch('https://api.github.com/repos/dakan-ai/fluently/contents/knowledge/index.json');
+                const response = await fetch('https://api.github.com/repos/faical-yannick-congo/fluently/contents/knowledge/index.json');
                 const data = await response.json();
                 
                 if (data.download_url) {
@@ -253,7 +253,7 @@
 
             // Fallback: fetch YAML files directly
             try {
-                const repoResponse = await fetch('https://api.github.com/repos/dakan-ai/fluently/contents/knowledge');
+                const repoResponse = await fetch('https://api.github.com/repos/faical-yannick-congo/fluently/contents/knowledge');
                 const files = await repoResponse.json();
                 
                 const entries = [];
@@ -367,7 +367,7 @@
                         <span>
                             <i class="fas fa-user mr-1"></i> ${escapeHtml(entry.contributor || 'Community')}
                         </span>
-                        <a href="https://github.com/dakan-ai/fluently/blob/main/knowledge/${escapeHtml(entry.filename || '')}" 
+                        <a href="https://github.com/faical-yannick-congo/fluently/blob/main/knowledge/${escapeHtml(entry.filename || '')}" 
                            target="_blank"
                            class="text-blue-600 hover:text-blue-700 font-medium">
                             View YAML →
@@ -507,8 +507,8 @@
             if (matchEntries) return matchEntries;
             // Try raw GitHub first, then API fallback
             const urls = [
-                'https://raw.githubusercontent.com/dakan-ai/fluently/main/knowledge/index.json',
-                'https://api.github.com/repos/dakan-ai/fluently/contents/knowledge/index.json'
+                'https://raw.githubusercontent.com/faical-yannick-congo/fluently/main/knowledge/index.json',
+                'https://api.github.com/repos/faical-yannick-congo/fluently/contents/knowledge/index.json'
             ];
             for (const url of urls) {
                 try {
@@ -592,7 +592,7 @@
                         <p class="text-xs text-gray-500 line-clamp-2 mb-2">${escapeHtml((entry.summary || '').substring(0, 120))}${(entry.summary || '').length > 120 ? '…' : ''}</p>
                         <div class="flex gap-2 flex-wrap">
                             ${(entry.tags || []).slice(0, 3).map(t => `<span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">#${escapeHtml(t)}</span>`).join('')}
-                            <a href="https://github.com/dakan-ai/fluently/blob/main/knowledge/${escapeHtml(entry.file || '')}" target="_blank" class="text-xs text-blue-600 hover:underline ml-auto">View YAML →</a>
+                            <a href="https://github.com/faical-yannick-congo/fluently/blob/main/knowledge/${escapeHtml(entry.file || '')}" target="_blank" class="text-xs text-blue-600 hover:underline ml-auto">View YAML →</a>
                         </div>
                     </div>
                 </div>`;
@@ -649,7 +649,7 @@ ${diligence}
 *Submitted via the Fluently 4D Match Tool on the Knowledge Base page.*
 *A maintainer will help convert this into a YAML entry and guide the PR process.*`;
 
-            const url = `https://github.com/dakan-ai/fluently/issues/new?title=${encodeURIComponent(issueTitle)}&body=${encodeURIComponent(issueBody)}&labels=contribution`;
+            const url = `https://github.com/faical-yannick-congo/fluently/issues/new?title=${encodeURIComponent(issueTitle)}&body=${encodeURIComponent(issueBody)}&labels=contribution`;
             window.open(url, '_blank');
         }
 

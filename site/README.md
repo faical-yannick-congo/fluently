@@ -29,7 +29,7 @@ The site is configured to deploy from the `/site` directory:
 1. **_config.yml** — GitHub Pages configuration
    - Source: `/site` directory
    - Theme: None (plain HTML + Tailwind CDN)
-   - URL: `https://dakan-ai.github.io/fluently`
+   - URL: `https://faical-yannick-congo.github.io/fluently`
 
 2. **GitHub Settings** (admin only):
    - Go to: Settings → Pages
@@ -90,13 +90,13 @@ The site fetches data from GitHub API without authentication:
 
 ```javascript
 // Fetch GitHub stats
-fetch('https://api.github.com/repos/dakan-ai/fluently')
+fetch('https://api.github.com/repos/faical-yannick-congo/fluently')
 
 // Fetch contributor count
-fetch('https://api.github.com/repos/dakan-ai/fluently/contributors')
+fetch('https://api.github.com/repos/faical-yannick-congo/fluently/contributors')
 
 // Fetch knowledge entries
-fetch('https://api.github.com/repos/dakan-ai/fluently/contents/knowledge')
+fetch('https://api.github.com/repos/faical-yannick-congo/fluently/contents/knowledge')
 ```
 
 **Note:** GitHub API rate limits (60 req/hr unauthenticated). For production, consider adding a GitHub PAT.
@@ -106,7 +106,7 @@ fetch('https://api.github.com/repos/dakan-ai/fluently/contents/knowledge')
 Once you push to the `main` branch:
 
 1. GitHub automatically builds and deploys from `/site`
-2. Site is live at: `https://dakan-ai.github.io/fluently`
+2. Site is live at: `https://faical-yannick-congo.github.io/fluently`
 3. Changes appear within a few seconds
 
 ## Customization

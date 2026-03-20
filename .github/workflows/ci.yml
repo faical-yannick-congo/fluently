@@ -33,7 +33,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
+      - name: Build scorer
+        run: npm run build --workspace=packages/scorer
+
+      - name: Build packages
         run: npm run build
 
       - name: Validate knowledge schema

@@ -1,9 +1,9 @@
 # 🎯 Fluently — The Open Standard for Human-AI Collaboration Quality
 
 [![npm version](https://img.shields.io/npm/v/fluently?label=fluently&style=flat-square&color=3B82F6)](https://www.npmjs.com/package/fluently-cli)
-[![CI Status](https://img.shields.io/github/actions/workflow/status/dakan-ai/fluently/ci.yml?branch=main&style=flat-square&color=10B981)](https://github.com/dakan-ai/fluently/actions)
+[![CI Status](https://img.shields.io/github/actions/workflow/status/faical-yannick-congo/fluently/ci.yml?branch=main&style=flat-square&color=10B981)](https://github.com/faical-yannick-congo/fluently/actions)
 [![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0%20%2B%20MIT-blueviolet?style=flat-square)](LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/dakan-ai/fluently?style=flat-square&color=FFB800)](https://github.com/dakan-ai/fluently/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/faical-yannick-congo/fluently?style=flat-square&color=FFB800)](https://github.com/faical-yannick-congo/fluently/stargazers)
 
 ---
 
@@ -76,7 +76,7 @@ This isn't just a framework—it's a **commons for AI fluency**. Every Fluently 
 
 Built on the **AI Fluency 4D Framework** by Dakan & Feller / Anthropic, distributed under **CC BY-NC-SA 4.0**. Code (CLI, MCP, scorer) is MIT. Mix and match.
 
-[Browse the Knowledge Base →](https://dakan-ai.github.io/fluently/)
+[Browse the Knowledge Base →](https://faical-yannick-congo.github.io/fluently/)
 
 ---
 
@@ -153,10 +153,10 @@ Tests        → Vitest
 
 ## Quick Links
 
-- 🌐 [Live Site & Knowledge Browser](https://dakan-ai.github.io/fluently/)
+- 🌐 [Live Site & Knowledge Browser](https://faical-yannick-congo.github.io/fluently/)
 - 📖 [Full Documentation](packages/cli/README.md)
-- 💬 [GitHub Discussions](https://github.com/dakan-ai/fluently/discussions)
-- 🐛 [Report Issues](https://github.com/dakan-ai/fluently/issues)
+- 💬 [GitHub Discussions](https://github.com/faical-yannick-congo/fluently/discussions)
+- 🐛 [Report Issues](https://github.com/faical-yannick-congo/fluently/issues)
 - 🤝 [Contributing Guide](CONTRIBUTING.md)
 
 ---

@@ -32,7 +32,7 @@ liquid:
   error_mode: strict
 
 # URL settings
-url: "https://dakan-ai.github.io/fluently"
+url: "https://faical-yannick-congo.github.io/fluently"
 baseurl: "/fluently"
 permalink: /:path/
 
