@@ -27,10 +27,12 @@ function generateKnowledgeIndex() {
         title: data.title,
         domain: data.domain,
         file: file,
-        dimensions: Object.keys(data.dimensions || {}),
+        dimensions: data.dimensions,
+        score_hints: data.score_hints,
         summary: data.dimensions?.delegation?.description?.slice(0, 200) || '',
         tags: data.tags || [],
         contributor: data.contributor,
+        reference: data.reference,
         version: data.version || '1.0.0'
       });
     } catch (err) {

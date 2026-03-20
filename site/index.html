@@ -1,302 +1,1295 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fluently - Turn AI Fluency into Tools</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fluently — AI Fluency in Practice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #050B18;
+      --surface: rgba(255,255,255,0.05);
+      --border: rgba(255,255,255,0.08);
+      --border-hover: rgba(255,255,255,0.18);
+      --purple: #8B5CF6;
+      --cyan: #06B6D4;
+      --amber: #F59E0B;
+      --emerald: #10B981;
+      --text-primary: #F1F5F9;
+      --text-secondary: #94A3B8;
+      --text-muted: #64748B;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Glass morphism */
+    .glass {
+      background: var(--surface);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+    }
+
+    .glass-hover {
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .glass-hover:hover {
+      transform: translateY(-3px);
+      border-color: var(--border-hover);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    /* Gradient text */
+    .gradient-text {
+      background: linear-gradient(135deg, #8B5CF6 0%, #06B6D4 50%, #10B981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Nav */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(5, 11, 24, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Score bars */
+    .score-bar-track {
+      background: rgba(255,255,255,0.06);
+      border-radius: 999px;
+      height: 6px;
+      overflow: hidden;
+    }
+    .score-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      width: 0%;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Tab system */
+    .tab-btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      background: transparent;
+      white-space: nowrap;
+    }
+    .tab-btn:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
+    .tab-btn.active {
+      color: var(--text-primary);
+      background: rgba(139,92,246,0.15);
+      border-bottom: 2px solid var(--purple);
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Form inputs */
+    .form-input {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      outline: none;
+      resize: vertical;
+    }
+    .form-input::placeholder { color: var(--text-muted); }
+    .form-input:focus {
+      border-color: rgba(139,92,246,0.5);
+      box-shadow: 0 0 0 3px rgba(139,92,246,0.1);
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background: linear-gradient(135deg, #8B5CF6, #7C3AED);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 24px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(139,92,246,0.35);
+    }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.06);
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 24px;
+      font-weight: 500;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: var(--border-hover);
+    }
+
+    .btn-emerald {
+      background: linear-gradient(135deg, #10B981, #059669);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 24px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-emerald:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(16,185,129,0.3);
+    }
+
+    /* Domain badge colors */
+    .badge-coding    { background: rgba(99,102,241,0.15); color: #818CF8; border: 1px solid rgba(99,102,241,0.25); }
+    .badge-writing   { background: rgba(236,72,153,0.15); color: #F472B6; border: 1px solid rgba(236,72,153,0.25); }
+    .badge-research  { background: rgba(6,182,212,0.15);  color: #22D3EE; border: 1px solid rgba(6,182,212,0.25); }
+    .badge-education { background: rgba(245,158,11,0.15); color: #FCD34D; border: 1px solid rgba(245,158,11,0.25); }
+    .badge-legal     { background: rgba(239,68,68,0.15);  color: #FCA5A5; border: 1px solid rgba(239,68,68,0.25); }
+    .badge-healthcare{ background: rgba(16,185,129,0.15); color: #6EE7B7; border: 1px solid rgba(16,185,129,0.25); }
+    .badge-general   { background: rgba(148,163,184,0.15);color: #CBD5E1; border: 1px solid rgba(148,163,184,0.25); }
+
+    /* Spinner */
+    .spinner {
+      width: 32px; height: 32px;
+      border: 3px solid rgba(139,92,246,0.2);
+      border-top-color: var(--purple);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Skeleton */
+    .skeleton {
+      background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 6px;
+    }
+    @keyframes shimmer { to { background-position: -200% 0; } }
+
+    /* Hero 4D cards */
+    .d-card-delegation { border-top: 2px solid var(--purple); }
+    .d-card-description { border-top: 2px solid var(--cyan); }
+    .d-card-discernment { border-top: 2px solid var(--amber); }
+    .d-card-diligence   { border-top: 2px solid var(--emerald); }
+
+    /* Domain filter chips */
+    .domain-chip {
+      padding: 5px 14px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--text-secondary);
+      transition: all 0.15s ease;
+    }
+    .domain-chip:hover { border-color: var(--border-hover); color: var(--text-primary); }
+    .domain-chip.active {
+      background: rgba(139,92,246,0.2);
+      border-color: rgba(139,92,246,0.5);
+      color: #C4B5FD;
+    }
+
+    /* Contribute stepper */
+    .step-indicator {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700;
+      border: 2px solid var(--border);
+      color: var(--text-muted);
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+    .step-indicator.active {
+      border-color: var(--purple);
+      background: rgba(139,92,246,0.2);
+      color: #C4B5FD;
+    }
+    .step-indicator.done {
+      border-color: var(--emerald);
+      background: rgba(16,185,129,0.2);
+      color: #6EE7B7;
+    }
+
+    /* YAML preview */
+    .yaml-preview {
+      background: rgba(0,0,0,0.35);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      color: #94A3B8;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 520px;
+      overflow-y: auto;
+      line-height: 1.6;
+    }
+
+    /* Slider */
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 4px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 999px;
+      outline: none;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px; height: 16px;
+      background: var(--purple);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+    input[type=range]::-webkit-slider-thumb:hover {
+      box-shadow: 0 0 0 4px rgba(139,92,246,0.25);
+    }
+
+    /* Unique cycle banner */
+    .unique-banner {
+      background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(6,182,212,0.1));
+      border: 1px solid rgba(16,185,129,0.3);
+      border-radius: 12px;
+      padding: 16px 20px;
+    }
+
+    /* How it works */
+    .how-step-number {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(139,92,246,0.3), rgba(6,182,212,0.2));
+      border: 1px solid rgba(139,92,246,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.875rem;
+      color: #C4B5FD;
+      flex-shrink: 0;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+    /* Stats strip */
+    .stats-strip {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    /* Tooltip */
+    select.form-input {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%2364748B' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 16px;
+      appearance: none;
+      -webkit-appearance: none;
+      padding-right: 40px;
+    }
+    select.form-input option {
+      background: #0F172A;
+      color: var(--text-primary);
+    }
+
+    @media (max-width: 768px) {
+      .hide-mobile { display: none; }
+    }
+  </style>
 </head>
-<body class="bg-white">
-    <!-- Navigation -->
-    <nav class="sticky top-0 z-50 bg-white border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-lightbulb text-blue-600 text-2xl"></i>
-                    <a href="/" class="text-xl font-bold text-gray-900">Fluently</a>
-                </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="/" class="text-gray-700 hover:text-blue-600 font-medium">Home</a>
-                    <a href="/knowledge.html" class="text-gray-700 hover:text-blue-600 font-medium">Knowledge Base</a>
-                    <a href="/guide.html" class="text-gray-700 hover:text-blue-600 font-medium">Guide</a>
-                    <a href="/contribute.html" class="text-gray-700 hover:text-blue-600 font-medium">Contribute</a>
-                    <a href="https://github.com/faical-yannick-congo/fluently" target="_blank" class="text-gray-700 hover:text-blue-600 font-medium">
-                        <i class="fab fa-github"></i> GitHub
-                    </a>
-                </div>
-                <div class="md:hidden">
-                    <a href="https://github.com/faical-yannick-congo/fluently" target="_blank" class="text-gray-700 hover:text-blue-600">
-                        <i class="fab fa-github text-xl"></i>
-                    </a>
-                </div>
+<body>
+
+<!-- ========== NAVIGATION ========== -->
+<nav>
+  <div style="max-width:1200px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:60px;">
+    <!-- Logo -->
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div style="display:flex;align-items:center;gap:6px;">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <rect width="28" height="28" rx="8" fill="url(#logoGrad)"/>
+          <text x="14" y="20" text-anchor="middle" font-size="14" font-family="Inter" font-weight="800" fill="white">4D</text>
+          <defs>
+            <linearGradient id="logoGrad" x1="0" y1="0" x2="28" y2="28">
+              <stop offset="0%" stop-color="#8B5CF6"/>
+              <stop offset="100%" stop-color="#06B6D4"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <span style="font-size:1.1rem;font-weight:800;color:#F1F5F9;letter-spacing:-0.5px;">Fluently</span>
+      </div>
+      <span style="font-size:0.65rem;font-weight:700;background:rgba(139,92,246,0.2);color:#C4B5FD;border:1px solid rgba(139,92,246,0.3);border-radius:999px;padding:2px 8px;letter-spacing:0.5px;">4D</span>
+    </div>
+
+    <!-- Nav links -->
+    <div class="hide-mobile" style="display:flex;align-items:center;gap:4px;">
+      <a href="#app" onclick="switchTab('score')" style="padding:6px 14px;font-size:0.82rem;font-weight:500;color:#94A3B8;text-decoration:none;border-radius:8px;transition:all 0.2s;" onmouseover="this.style.color='#F1F5F9';this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.color='#94A3B8';this.style.background='transparent'">Score</a>
+      <a href="#app" onclick="switchTab('browse')" style="padding:6px 14px;font-size:0.82rem;font-weight:500;color:#94A3B8;text-decoration:none;border-radius:8px;transition:all 0.2s;" onmouseover="this.style.color='#F1F5F9';this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.color='#94A3B8';this.style.background='transparent'">Browse</a>
+      <a href="#app" onclick="switchTab('compare')" style="padding:6px 14px;font-size:0.82rem;font-weight:500;color:#94A3B8;text-decoration:none;border-radius:8px;transition:all 0.2s;" onmouseover="this.style.color='#F1F5F9';this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.color='#94A3B8';this.style.background='transparent'">Compare</a>
+      <a href="#app" onclick="switchTab('contribute')" style="padding:6px 14px;font-size:0.82rem;font-weight:500;color:#94A3B8;text-decoration:none;border-radius:8px;transition:all 0.2s;" onmouseover="this.style.color='#F1F5F9';this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.color='#94A3B8';this.style.background='transparent'">Contribute</a>
+    </div>
+
+    <!-- GitHub -->
+    <a href="https://github.com/faical-yannick-congo/fluently" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:7px;padding:7px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;text-decoration:none;color:#CBD5E1;font-size:0.82rem;font-weight:500;transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)';this.style.color='#F1F5F9'" onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.color='#CBD5E1'">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+      <span class="hide-mobile">GitHub</span>
+    </a>
+  </div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section style="padding:80px 20px 60px;text-align:center;position:relative;overflow:hidden;">
+  <!-- Background glow -->
+  <div style="position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(ellipse at center, rgba(139,92,246,0.12) 0%, transparent 70%);pointer-events:none;"></div>
+
+  <div style="max-width:800px;margin:0 auto;position:relative;">
+    <!-- Pill label -->
+    <div style="display:inline-flex;align-items:center;gap:6px;padding:4px 14px;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.25);border-radius:999px;font-size:0.75rem;font-weight:600;color:#C4B5FD;letter-spacing:0.5px;margin-bottom:24px;">
+      <span style="width:6px;height:6px;background:#8B5CF6;border-radius:50%;display:inline-block;"></span>
+      AI FLUENCY 4D FRAMEWORK
+    </div>
+
+    <h1 style="font-size:clamp(2.4rem, 6vw, 4rem);font-weight:800;line-height:1.1;letter-spacing:-1.5px;margin-bottom:20px;">
+      <span class="gradient-text">AI Fluency</span><br/>in Practice
+    </h1>
+
+    <p style="font-size:1.05rem;color:#94A3B8;line-height:1.7;max-width:560px;margin:0 auto 40px;font-weight:400;">
+      Score any AI task against the four dimensions of fluency — Delegation, Description, Discernment, and Diligence — and match it to battle-tested community cycles.
+    </p>
+
+    <!-- 4D Dimension cards -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:48px;text-align:left;">
+
+      <div class="glass glass-hover d-card-delegation" style="border-radius:12px;padding:20px 16px;">
+        <div style="font-size:1.4rem;margin-bottom:8px;">🤝</div>
+        <div style="font-size:0.8rem;font-weight:700;color:#C4B5FD;letter-spacing:0.4px;margin-bottom:4px;">DELEGATION</div>
+        <div style="font-size:0.75rem;color:#94A3B8;line-height:1.5;">Who owns the decision — human, AI, or both?</div>
+      </div>
+
+      <div class="glass glass-hover d-card-description" style="border-radius:12px;padding:20px 16px;">
+        <div style="font-size:1.4rem;margin-bottom:8px;">📝</div>
+        <div style="font-size:0.8rem;font-weight:700;color:#67E8F9;letter-spacing:0.4px;margin-bottom:4px;">DESCRIPTION</div>
+        <div style="font-size:0.75rem;color:#94A3B8;line-height:1.5;">Frame the task so AI understands context fully.</div>
+      </div>
+
+      <div class="glass glass-hover d-card-discernment" style="border-radius:12px;padding:20px 16px;">
+        <div style="font-size:1.4rem;margin-bottom:8px;">👁️</div>
+        <div style="font-size:0.8rem;font-weight:700;color:#FCD34D;letter-spacing:0.4px;margin-bottom:4px;">DISCERNMENT</div>
+        <div style="font-size:0.75rem;color:#94A3B8;line-height:1.5;">Know when to trust, question, or reject output.</div>
+      </div>
+
+      <div class="glass glass-hover d-card-diligence" style="border-radius:12px;padding:20px 16px;">
+        <div style="font-size:1.4rem;margin-bottom:8px;">✅</div>
+        <div style="font-size:0.8rem;font-weight:700;color:#6EE7B7;letter-spacing:0.4px;margin-bottom:4px;">DILIGENCE</div>
+        <div style="font-size:0.75rem;color:#94A3B8;line-height:1.5;">Maintain accountability after AI is involved.</div>
+      </div>
+
+    </div>
+
+    <!-- Stats strip -->
+    <div class="stats-strip" style="display:flex;flex-wrap:wrap;justify-content:center;gap:0;margin-bottom:36px;">
+      <div style="padding:14px 28px;display:flex;align-items:center;gap:8px;border-right:1px solid rgba(255,255,255,0.06);">
+        <span style="font-size:1.25rem;font-weight:800;color:#F1F5F9;">16</span>
+        <span style="font-size:0.78rem;font-weight:500;color:#64748B;letter-spacing:0.5px;">CYCLES</span>
+      </div>
+      <div style="padding:14px 28px;display:flex;align-items:center;gap:8px;border-right:1px solid rgba(255,255,255,0.06);">
+        <span style="font-size:1.25rem;font-weight:800;color:#F1F5F9;">7</span>
+        <span style="font-size:0.78rem;font-weight:500;color:#64748B;letter-spacing:0.5px;">DOMAINS</span>
+      </div>
+      <div style="padding:14px 28px;display:flex;align-items:center;gap:8px;border-right:1px solid rgba(255,255,255,0.06);">
+        <span style="font-size:0.95rem;font-weight:700;color:#10B981;">Open</span>
+        <span style="font-size:0.78rem;font-weight:500;color:#64748B;letter-spacing:0.5px;">SOURCE</span>
+      </div>
+      <div style="padding:14px 28px;display:flex;align-items:center;gap:8px;">
+        <span style="font-size:0.75rem;font-weight:600;color:#94A3B8;">MIT / CC BY-NC-SA</span>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <a href="#app" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#8B5CF6,#7C3AED);color:white;text-decoration:none;padding:14px 32px;border-radius:12px;font-weight:700;font-size:0.9rem;transition:all 0.2s;box-shadow:0 4px 20px rgba(139,92,246,0.3);" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 28px rgba(139,92,246,0.4)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 20px rgba(139,92,246,0.3)'">
+      Try the Scorer
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ========== MAIN APP ========== -->
+<section id="app" style="padding:20px 20px 80px;">
+  <div style="max-width:1100px;margin:0 auto;">
+
+    <!-- App card -->
+    <div class="glass" style="border-radius:20px;overflow:hidden;">
+
+      <!-- Tab bar -->
+      <div style="padding:16px 20px 0;border-bottom:1px solid var(--border);display:flex;gap:4px;flex-wrap:wrap;">
+        <button class="tab-btn active" id="tab-score"   onclick="switchTab('score')">🎯 Score</button>
+        <button class="tab-btn"        id="tab-browse"  onclick="switchTab('browse')">📚 Browse</button>
+        <button class="tab-btn"        id="tab-compare" onclick="switchTab('compare')">🔄 Compare</button>
+        <button class="tab-btn"        id="tab-contribute" onclick="switchTab('contribute')">✍️ Contribute</button>
+      </div>
+
+      <!-- Loading state -->
+      <div id="kb-loading" style="padding:60px 24px;text-align:center;">
+        <div class="spinner" style="margin-bottom:16px;"></div>
+        <p style="color:#64748B;font-size:0.875rem;">Loading knowledge base…</p>
+      </div>
+
+      <!-- Error state -->
+      <div id="kb-error" style="display:none;padding:60px 24px;text-align:center;">
+        <div style="font-size:2rem;margin-bottom:12px;">⚠️</div>
+        <p style="color:#F87171;font-weight:600;margin-bottom:8px;">Failed to load knowledge base</p>
+        <p style="color:#64748B;font-size:0.875rem;margin-bottom:20px;">Could not fetch from GitHub. Check your connection and try again.</p>
+        <button class="btn-secondary" onclick="initApp()">Retry</button>
+      </div>
+
+      <!-- Tab content -->
+      <div id="tab-content" style="display:none;">
+
+        <!-- ===== SCORE TAB ===== -->
+        <div class="tab-panel active" id="panel-score" style="padding:28px 24px;">
+          <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:6px;">Score Your AI Task</h2>
+          <p style="color:#64748B;font-size:0.82rem;margin-bottom:24px;">Describe your task and delegation intent. We'll match it against 16 community-validated 4D cycles.</p>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+            <div>
+              <label style="display:block;font-size:0.78rem;font-weight:600;color:#94A3B8;margin-bottom:6px;letter-spacing:0.4px;">TASK DESCRIPTION</label>
+              <textarea id="score-task" class="form-input" rows="4" placeholder="Describe your AI task in detail — what you want the AI to do, the context, constraints, and expected outputs…"></textarea>
             </div>
+            <div>
+              <label style="display:block;font-size:0.78rem;font-weight:600;color:#94A3B8;margin-bottom:6px;letter-spacing:0.4px;">DELEGATION INTENT</label>
+              <textarea id="score-delegation" class="form-input" rows="4" placeholder="e.g. augmented — AI suggests options, I make the final decision. Or: fully automated with weekly audit."></textarea>
+            </div>
+          </div>
+
+          <button class="btn-primary" onclick="runScore()" style="width:100%;">Score with Fluently</button>
+
+          <!-- Results -->
+          <div id="score-results" style="display:none;margin-top:28px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+              <h3 style="font-size:0.9rem;font-weight:700;color:#94A3B8;letter-spacing:0.5px;">TOP MATCHES</h3>
+              <span id="score-count-badge" style="font-size:0.75rem;background:rgba(139,92,246,0.15);color:#C4B5FD;padding:3px 10px;border-radius:999px;"></span>
+            </div>
+            <div id="score-cards" style="display:flex;flex-direction:column;gap:12px;"></div>
+          </div>
         </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section class="bg-gradient-to-br from-blue-50 to-indigo-100 py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-                Turn AI Fluency into Tools
-            </h1>
-            <p class="text-xl text-gray-700 mb-8 max-w-2xl mx-auto">
-                Operationalize the AI Fluency 4D Framework with community-contributed knowledge, patterns, and playbooks.
-            </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-8">
-                <a href="/knowledge.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg inline-block">
-                    <i class="fas fa-book mr-2"></i> Browse Knowledge Base
-                </a>
-                <a href="/contribute.html" class="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-3 px-8 rounded-lg inline-block">
-                    <i class="fas fa-code-branch mr-2"></i> Contribute
-                </a>
-            </div>
+        <!-- ===== BROWSE TAB ===== -->
+        <div class="tab-panel" id="panel-browse" style="padding:28px 24px;">
+          <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:6px;">Browse Cycles</h2>
+          <p style="color:#64748B;font-size:0.82rem;margin-bottom:20px;">Explore all 16 community-contributed 4D cycles. Filter by domain or search by keyword.</p>
 
-            <!-- Install Badge -->
-            <div class="bg-gray-900 text-gray-200 rounded-lg p-4 inline-block font-mono text-sm md:text-base">
-                <code>npm install -g fluently</code>
+          <!-- Search + filter -->
+          <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:20px;">
+            <input id="browse-search" class="form-input" type="text" placeholder="Search cycles by title, domain, or tag…" oninput="renderBrowse()" style="resize:none;" />
+            <div id="domain-chips" style="display:flex;flex-wrap:wrap;gap:6px;">
+              <button class="domain-chip active" data-domain="all" onclick="setDomainFilter('all')">All</button>
             </div>
+          </div>
 
-            <!-- GitHub Stats -->
-            <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4 text-gray-700">
-                <a href="https://github.com/faical-yannick-congo/fluently" target="_blank" class="inline-flex items-center space-x-2 hover:text-blue-600">
-                    <i class="fab fa-github text-xl"></i>
-                    <span id="star-count">⭐ Stars</span>
-                </a>
-                <span class="hidden sm:inline text-gray-400">•</span>
-                <span class="inline-flex items-center space-x-2">
-                    <i class="fas fa-users"></i>
-                    <span id="contributor-count">Contributors</span>
-                </span>
-            </div>
+          <div id="browse-count" style="font-size:0.78rem;color:#64748B;margin-bottom:16px;"></div>
+          <div id="browse-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;"></div>
         </div>
-    </section>
 
-    <!-- 4D Framework Explanation -->
-    <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center mb-16 text-gray-900">
-                The 4D Framework
-            </h2>
-            
-            <div class="grid md:grid-cols-4 gap-8">
-                <!-- Delegation -->
-                <div class="p-8 bg-blue-50 rounded-lg border-l-4 border-blue-600">
-                    <div class="text-4xl mb-4">🤝</div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Delegation</h3>
-                    <p class="text-gray-700">
-                        Determine when AI should handle tasks fully, work alongside humans, or stay out. What needs human oversight?
-                    </p>
-                </div>
+        <!-- ===== COMPARE TAB ===== -->
+        <div class="tab-panel" id="panel-compare" style="padding:28px 24px;">
+          <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:6px;">Compare Your Cycle</h2>
+          <p style="color:#64748B;font-size:0.82rem;margin-bottom:24px;">Already have a 4D cycle in mind? Check if it exists in the knowledge base or find the closest existing match.</p>
 
-                <!-- Description -->
-                <div class="p-8 bg-green-50 rounded-lg border-l-4 border-green-600">
-                    <div class="text-4xl mb-4">📝</div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Description</h3>
-                    <p class="text-gray-700">
-                        Frame problems clearly so AI understands context, scope, and constraints. Reduce ambiguity through examples.
-                    </p>
-                </div>
-
-                <!-- Discernment -->
-                <div class="p-8 bg-purple-50 rounded-lg border-l-4 border-purple-600">
-                    <div class="text-4xl mb-4">👁️</div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Discernment</h3>
-                    <p class="text-gray-700">
-                        Recognize hallucinations, overconfidence, and edge cases. What signals indicate trustworthy output?
-                    </p>
-                </div>
-
-                <!-- Diligence -->
-                <div class="p-8 bg-orange-50 rounded-lg border-l-4 border-orange-600">
-                    <div class="text-4xl mb-4">✅</div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Diligence</h3>
-                    <p class="text-gray-700">
-                        Maintain accountability and transparency. Who reviews, audits, and approves? What escalation triggers exist?
-                    </p>
-                </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+            <div>
+              <label style="display:block;font-size:0.78rem;font-weight:600;color:#C4B5FD;margin-bottom:6px;letter-spacing:0.4px;">DELEGATION — your approach</label>
+              <textarea id="compare-delegation" class="form-input" rows="3" placeholder="How you plan to delegate: who decides what, level of AI autonomy…"></textarea>
             </div>
-
-            <div class="mt-12 p-8 bg-gray-50 rounded-lg border border-gray-200">
-                <p class="text-center text-gray-700 mb-4">
-                    <strong>Learn More:</strong> The 4D Framework was developed by Dakan & Feller / Anthropic to operationalize AI fluency in real-world teams.
-                </p>
-                <a href="https://github.com/faical-yannick-congo/fluently" target="_blank" class="text-blue-600 hover:text-blue-700 font-medium">
-                    Read the full framework on GitHub →
-                </a>
+            <div>
+              <label style="display:block;font-size:0.78rem;font-weight:600;color:#67E8F9;margin-bottom:6px;letter-spacing:0.4px;">DESCRIPTION — your framing</label>
+              <textarea id="compare-description" class="form-input" rows="3" placeholder="How you frame the task to the AI: context, examples, constraints…"></textarea>
             </div>
+          </div>
+
+          <button class="btn-primary" onclick="runCompare()" style="width:100%;">Find Similar Cycles</button>
+
+          <div id="compare-results" style="display:none;margin-top:28px;"></div>
         </div>
-    </section>
 
-    <!-- Live Demo Section -->
-    <section class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center mb-12 text-gray-900">
-                See It In Action
-            </h2>
-            
-            <div class="bg-white rounded-lg shadow-lg p-8 max-w-2xl mx-auto border border-gray-200">
-                <p class="text-gray-700 mb-6">
-                    <strong>Example:</strong> A bug fix prioritization decision with 4D framework guidance:
-                </p>
-                
-                <div class="bg-blue-50 p-6 rounded-lg mb-6 border-l-4 border-blue-600">
-                    <div class="mb-4">
-                        <span class="inline-block bg-blue-200 text-blue-800 text-sm font-bold px-3 py-1 rounded">Delegation</span>
-                        <p class="mt-2 text-gray-700">AI suggests priorities; PM approval required</p>
-                    </div>
-                    <div class="mb-4">
-                        <span class="inline-block bg-green-200 text-green-800 text-sm font-bold px-3 py-1 rounded">Description</span>
-                        <p class="mt-2 text-gray-700">Include bug reports, user impact data, and repo context</p>
-                    </div>
-                    <div class="mb-4">
-                        <span class="inline-block bg-purple-200 text-purple-800 text-sm font-bold px-3 py-1 rounded">Discernment</span>
-                        <p class="mt-2 text-gray-700">Verify against historical trends and product roadmap</p>
-                    </div>
-                    <div>
-                        <span class="inline-block bg-orange-200 text-orange-800 text-sm font-bold px-3 py-1 rounded">Diligence</span>
-                        <p class="mt-2 text-gray-700">Product manager sign-off before implementation</p>
-                    </div>
+        <!-- ===== CONTRIBUTE TAB ===== -->
+        <div class="tab-panel" id="panel-contribute" style="padding:28px 24px;">
+          <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:6px;">Contribute a Cycle</h2>
+          <p style="color:#64748B;font-size:0.82rem;margin-bottom:24px;">Share your AI workflow knowledge with the community. Your cycle will be reviewed and added to the knowledge base.</p>
+
+          <div style="display:grid;grid-template-columns:1fr 400px;gap:24px;align-items:start;">
+            <!-- Left: form -->
+            <div>
+              <!-- Step indicators -->
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:24px;">
+                <div class="step-indicator active" id="si-1">1</div>
+                <div style="flex:1;height:2px;background:rgba(255,255,255,0.06);border-radius:1px;"></div>
+                <div class="step-indicator" id="si-2">2</div>
+                <div style="flex:1;height:2px;background:rgba(255,255,255,0.06);border-radius:1px;"></div>
+                <div class="step-indicator" id="si-3">3</div>
+                <div style="margin-left:12px;font-size:0.78rem;color:#64748B;" id="step-label">Step 1 of 3 — Basic Info</div>
+              </div>
+
+              <!-- Step 1: Basic -->
+              <div id="contrib-step-1">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+                  <div>
+                    <label style="display:block;font-size:0.75rem;font-weight:600;color:#94A3B8;margin-bottom:5px;letter-spacing:0.4px;">CYCLE ID (slug)</label>
+                    <input id="c-id" class="form-input" type="text" placeholder="my-workflow-name" oninput="updateYamlPreview()" />
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:0.75rem;font-weight:600;color:#94A3B8;margin-bottom:5px;letter-spacing:0.4px;">VERSION</label>
+                    <input id="c-version" class="form-input" type="text" placeholder="1.0.0" value="1.0.0" oninput="updateYamlPreview()" />
+                  </div>
+                </div>
+                <div style="margin-bottom:12px;">
+                  <label style="display:block;font-size:0.75rem;font-weight:600;color:#94A3B8;margin-bottom:5px;letter-spacing:0.4px;">TITLE</label>
+                  <input id="c-title" class="form-input" type="text" placeholder="Human-readable title for this cycle" oninput="updateYamlPreview()" />
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+                  <div>
+                    <label style="display:block;font-size:0.75rem;font-weight:600;color:#94A3B8;margin-bottom:5px;letter-spacing:0.4px;">DOMAIN</label>
+                    <select id="c-domain" class="form-input" onchange="updateYamlPreview()">
+                      <option value="">Select domain…</option>
+                      <option value="coding">coding</option>
+                      <option value="writing">writing</option>
+                      <option value="research">research</option>
+                      <option value="education">education</option>
+                      <option value="legal">legal</option>
+                      <option value="healthcare">healthcare</option>
+                      <option value="general">general</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:0.75rem;font-weight:600;color:#94A3B8;margin-bottom:5px;letter-spacing:0.4px;">TAGS (comma-separated)</label>
+                    <input id="c-tags" class="form-input" type="text" placeholder="tag1, tag2, tag3" oninput="updateYamlPreview()" />
+                  </div>
+                </div>
+                <div style="margin-bottom:20px;">
+                  <label style="display:block;font-size:0.75rem;font-weight:600;color:#94A3B8;margin-bottom:5px;letter-spacing:0.4px;">YOUR NAME / HANDLE</label>
+                  <input id="c-contributor" class="form-input" type="text" placeholder="Your name or GitHub handle" oninput="updateYamlPreview()" />
+                </div>
+                <button class="btn-primary" onclick="contribNext(1)" style="width:100%;">Next: 4 Dimensions →</button>
+              </div>
+
+              <!-- Step 2: Dimensions -->
+              <div id="contrib-step-2" style="display:none;">
+                <div id="contrib-dims">
+                  <!-- rendered by JS -->
+                </div>
+                <div style="display:flex;gap:10px;margin-top:4px;">
+                  <button class="btn-secondary" onclick="contribBack(2)" style="flex:1;">← Back</button>
+                  <button class="btn-primary"   onclick="contribNext(2)" style="flex:2;">Next: Score Hints →</button>
+                </div>
+              </div>
+
+              <!-- Step 3: Score hints -->
+              <div id="contrib-step-3" style="display:none;">
+                <p style="font-size:0.8rem;color:#64748B;margin-bottom:20px;line-height:1.6;">Set relative importance for each dimension. Values must sum to exactly 1.0. These hints help the scoring engine weight matches appropriately.</p>
+
+                <div style="display:flex;flex-direction:column;gap:18px;margin-bottom:20px;" id="score-hint-sliders">
+                  <!-- rendered by JS -->
                 </div>
 
-                <div class="flex gap-4">
-                    <a href="/knowledge.html" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-center">
-                        Explore More Examples
-                    </a>
-                    <a href="https://github.com/faical-yannick-congo/fluently/blob/main/knowledge/coding-bug-fix-prioritization.yaml" target="_blank" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-3 px-6 rounded-lg text-center">
-                        View Source YAML
-                    </a>
+                <div id="hint-sum-display" style="text-align:center;font-size:0.82rem;font-weight:700;margin-bottom:20px;padding:10px;border-radius:8px;"></div>
+
+                <div style="display:flex;gap:10px;">
+                  <button class="btn-secondary" onclick="contribBack(3)" style="flex:1;">← Back</button>
+                  <button class="btn-emerald"   onclick="openGitHubIssue()" style="flex:2;">Open as GitHub Issue →</button>
                 </div>
+              </div>
             </div>
+
+            <!-- Right: YAML preview -->
+            <div style="position:sticky;top:80px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                <span style="font-size:0.75rem;font-weight:600;color:#64748B;letter-spacing:0.5px;">YAML PREVIEW</span>
+                <button onclick="copyYaml()" style="font-size:0.72rem;padding:4px 10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:#94A3B8;cursor:pointer;font-family:Inter,sans-serif;transition:all 0.15s;" onmouseover="this.style.color='#F1F5F9'" onmouseout="this.style.color='#94A3B8'">Copy</button>
+              </div>
+              <pre class="yaml-preview" id="yaml-preview">id: your-cycle-id
+title: Your Cycle Title
+domain: general
+version: 1.0.0
+contributor: You
+tags:
+  - tag1
+dimensions:
+  delegation:
+    description: ""
+    example: ""
+    antipattern: ""
+  description:
+    description: ""
+    example: ""
+    antipattern: ""
+  discernment:
+    description: ""
+    example: ""
+    antipattern: ""
+  diligence:
+    description: ""
+    example: ""
+    antipattern: ""
+score_hints:
+  delegation: 0.25
+  description: 0.25
+  discernment: 0.25
+  diligence: 0.25</pre>
+            </div>
+          </div>
         </div>
-    </section>
 
-    <!-- Get Started Section -->
-    <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center mb-12 text-gray-900">
-                Get Started
-            </h2>
+      </div><!-- /tab-content -->
+    </div><!-- /app card -->
+  </div>
+</section>
 
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Install -->
-                <div class="p-8 bg-gray-50 rounded-lg border border-gray-200">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">
-                        <i class="fas fa-download text-blue-600 mr-2"></i> Install
-                    </h3>
-                    <p class="text-gray-700 mb-4">
-                        Get the CLI up and running in seconds:
-                    </p>
-                    <div class="bg-gray-900 text-gray-200 rounded p-4 font-mono text-sm overflow-x-auto">
-                        <code>npm install -g fluently</code>
-                    </div>
-                </div>
+<!-- ========== HOW IT WORKS ========== -->
+<section style="padding:60px 20px;border-top:1px solid var(--border);">
+  <div style="max-width:720px;margin:0 auto;text-align:center;">
+    <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:10px;letter-spacing:-0.5px;">How It Works</h2>
+    <p style="color:#64748B;font-size:0.875rem;margin-bottom:40px;">Three steps to turn any AI task into structured, accountable practice.</p>
 
-                <!-- Explore -->
-                <div class="p-8 bg-gray-50 rounded-lg border border-gray-200">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">
-                        <i class="fas fa-compass text-green-600 mr-2"></i> Explore
-                    </h3>
-                    <p class="text-gray-700 mb-4">
-                        Browse the community knowledge base organized by domain:
-                    </p>
-                    <a href="/knowledge.html" class="text-blue-600 hover:text-blue-700 font-bold">
-                        Browse Knowledge →
-                    </a>
-                </div>
-
-                <!-- Contribute -->
-                <div class="p-8 bg-gray-50 rounded-lg border border-gray-200">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">
-                        <i class="fas fa-star text-orange-600 mr-2"></i> Contribute
-                    </h3>
-                    <p class="text-gray-700 mb-4">
-                        Share your own Fluently 4D cycles with the community:
-                    </p>
-                    <a href="/contribute.html" class="text-blue-600 hover:text-blue-700 font-bold">
-                        Learn How →
-                    </a>
-                </div>
-            </div>
+    <div style="display:flex;flex-direction:column;gap:0;">
+      <div style="display:flex;align-items:flex-start;gap:20px;padding:24px;text-align:left;position:relative;">
+        <div class="how-step-number">1</div>
+        <div>
+          <h3 style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Identify your AI task</h3>
+          <p style="color:#64748B;font-size:0.82rem;line-height:1.6;">Write a clear description of what you want AI to do and your intended level of delegation — full automation, augmentation, or supervision only.</p>
         </div>
-    </section>
+        <div style="position:absolute;left:39px;bottom:-1px;width:2px;height:32px;background:rgba(139,92,246,0.2);"></div>
+      </div>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-300 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <h4 class="text-white font-bold mb-4">Fluently</h4>
-                    <p class="text-sm">Operationalizing the AI Fluency 4D Framework</p>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold mb-4">Links</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="/" class="hover:text-white">Home</a></li>
-                        <li><a href="/knowledge.html" class="hover:text-white">Knowledge</a></li>
-                        <li><a href="/guide.html" class="hover:text-white">Guide</a></li>
-                        <li><a href="/contribute.html" class="hover:text-white">Contribute</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold mb-4">Community</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="https://github.com/faical-yannick-congo/fluently" target="_blank" class="hover:text-white">GitHub</a></li>
-                        <li><a href="https://github.com/faical-yannick-congo/fluently/issues" target="_blank" class="hover:text-white">Issues</a></li>
-                        <li><a href="https://github.com/faical-yannick-congo/fluently/discussions" target="_blank" class="hover:text-white">Discussions</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold mb-4">License</h4>
-                    <p class="text-sm">CC BY-NC-SA 4.0</p>
-                </div>
-            </div>
-            <div class="border-t border-gray-700 pt-8 text-center text-sm">
-                <p>&copy; 2024 Fluently / Dakan & Feller. All rights reserved.</p>
-            </div>
+      <div style="display:flex;align-items:flex-start;gap:20px;padding:24px;text-align:left;position:relative;">
+        <div class="how-step-number">2</div>
+        <div>
+          <h3 style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Score with Fluently</h3>
+          <p style="color:#64748B;font-size:0.82rem;line-height:1.6;">The in-browser scoring engine uses keyword-cosine similarity to match your task against 16 curated cycles across 7 domains, ranking by dimensional fit.</p>
         </div>
-    </footer>
+        <div style="position:absolute;left:39px;bottom:-1px;width:2px;height:32px;background:rgba(139,92,246,0.2);"></div>
+      </div>
 
-    <script>
-        // Fetch GitHub stats
-        async function fetchGitHubStats() {
-            try {
-                const response = await fetch('https://api.github.com/repos/faical-yannick-congo/fluently');
-                const data = await response.json();
-                
-                if (data.stargazers_count) {
-                    document.getElementById('star-count').textContent = 
-                        `⭐ ${data.stargazers_count.toLocaleString()} Stars`;
-                }
-            } catch (error) {
-                console.log('Could not fetch GitHub stats:', error);
-            }
-        }
+      <div style="display:flex;align-items:flex-start;gap:20px;padding:24px;text-align:left;">
+        <div class="how-step-number">3</div>
+        <div>
+          <h3 style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Apply the matching cycle</h3>
+          <p style="color:#64748B;font-size:0.82rem;line-height:1.6;">Review the top matching cycles, inspect each dimension's guidance, and adapt the patterns to your specific context. Contribute your refinements back to the community.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        async function fetchContributors() {
-            try {
-                const response = await fetch('https://api.github.com/repos/faical-yannick-congo/fluently/contributors');
-                const data = await response.json();
-                
-                if (Array.isArray(data) && data.length > 0) {
-                    document.getElementById('contributor-count').textContent = 
-                        `👥 ${data.length} Contributors`;
-                }
-            } catch (error) {
-                console.log('Could not fetch contributor count:', error);
-            }
-        }
+<!-- ========== FOOTER ========== -->
+<footer style="border-top:1px solid var(--border);padding:40px 20px;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:32px;margin-bottom:36px;">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+          <span style="font-weight:800;font-size:1rem;color:#F1F5F9;">Fluently</span>
+          <span style="font-size:0.65rem;font-weight:700;background:rgba(139,92,246,0.2);color:#C4B5FD;border:1px solid rgba(139,92,246,0.3);border-radius:999px;padding:2px 8px;">4D</span>
+        </div>
+        <p style="font-size:0.78rem;color:#475569;line-height:1.6;">Operationalizing the AI Fluency 4D Framework for real-world teams and practitioners.</p>
+      </div>
 
-        // Fetch stats on page load
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => {
-                fetchGitHubStats();
-                fetchContributors();
-            });
-        } else {
-            fetchGitHubStats();
-            fetchContributors();
-        }
-    </script>
+      <div>
+        <h4 style="font-size:0.75rem;font-weight:700;color:#64748B;letter-spacing:0.6px;margin-bottom:14px;">COMMUNITY</h4>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+          <li><a href="https://github.com/faical-yannick-congo/fluently" target="_blank" rel="noopener" style="color:#94A3B8;text-decoration:none;font-size:0.82rem;transition:color 0.15s;" onmouseover="this.style.color='#F1F5F9'" onmouseout="this.style.color='#94A3B8'">GitHub Repository</a></li>
+          <li><a href="https://github.com/faical-yannick-congo/fluently/issues" target="_blank" rel="noopener" style="color:#94A3B8;text-decoration:none;font-size:0.82rem;transition:color 0.15s;" onmouseover="this.style.color='#F1F5F9'" onmouseout="this.style.color='#94A3B8'">Issues &amp; Bugs</a></li>
+          <li><a href="https://github.com/faical-yannick-congo/fluently/discussions" target="_blank" rel="noopener" style="color:#94A3B8;text-decoration:none;font-size:0.82rem;transition:color 0.15s;" onmouseover="this.style.color='#F1F5F9'" onmouseout="this.style.color='#94A3B8'">Discussions</a></li>
+          <li><a href="https://github.com/faical-yannick-congo/fluently/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener" style="color:#94A3B8;text-decoration:none;font-size:0.82rem;transition:color 0.15s;" onmouseover="this.style.color='#F1F5F9'" onmouseout="this.style.color='#94A3B8'">Contributing Guide</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 style="font-size:0.75rem;font-weight:700;color:#64748B;letter-spacing:0.6px;margin-bottom:14px;">LICENSE</h4>
+        <p style="font-size:0.78rem;color:#475569;line-height:1.6;">Code: MIT License<br/>Knowledge: CC BY-NC-SA 4.0<br/><br/>Framework by Dakan &amp; Feller / Anthropic</p>
+      </div>
+    </div>
+
+    <div style="border-top:1px solid var(--border);padding-top:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+      <p style="font-size:0.75rem;color:#334155;">© 2025 Fluently — Dakan &amp; Feller. All rights reserved.</p>
+      <div style="display:flex;gap:16px;">
+        <a href="https://github.com/faical-yannick-congo/fluently" target="_blank" rel="noopener" style="color:#334155;transition:color 0.15s;" onmouseover="this.style.color='#94A3B8'" onmouseout="this.style.color='#334155'">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ========== JAVASCRIPT ENGINE ========== -->
+<script>
+// ==============================
+// STATE
+// ==============================
+let knowledgeEntries = [];
+let activeDomainFilter = 'all';
+let contribHints = { delegation: 0.25, description: 0.25, discernment: 0.25, diligence: 0.25 };
+
+const INDEX_URL = 'https://raw.githubusercontent.com/faical-yannick-congo/fluently/main/knowledge/index.json';
+
+const DOMAIN_COLORS = {
+  coding:     { badge: 'badge-coding',     label: 'Coding' },
+  writing:    { badge: 'badge-writing',    label: 'Writing' },
+  research:   { badge: 'badge-research',   label: 'Research' },
+  education:  { badge: 'badge-education',  label: 'Education' },
+  legal:      { badge: 'badge-legal',      label: 'Legal' },
+  healthcare: { badge: 'badge-healthcare', label: 'Healthcare' },
+  general:    { badge: 'badge-general',    label: 'General' },
+};
+
+const D_COLORS = {
+  delegation:  { color: '#8B5CF6', bg: 'rgba(139,92,246,0.12)',  text: '#C4B5FD' },
+  description: { color: '#06B6D4', bg: 'rgba(6,182,212,0.12)',   text: '#67E8F9' },
+  discernment: { color: '#F59E0B', bg: 'rgba(245,158,11,0.12)',  text: '#FCD34D' },
+  diligence:   { color: '#10B981', bg: 'rgba(16,185,129,0.12)',  text: '#6EE7B7' },
+};
+
+// ==============================
+// KNOWLEDGE BASE LOADING
+// ==============================
+async function loadKnowledge() {
+  const res = await fetch(INDEX_URL);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const data = await res.json();
+  return data.entries;
+}
+
+async function initApp() {
+  document.getElementById('kb-loading').style.display = 'block';
+  document.getElementById('kb-error').style.display = 'none';
+  document.getElementById('tab-content').style.display = 'none';
+
+  try {
+    knowledgeEntries = await loadKnowledge();
+    document.getElementById('kb-loading').style.display = 'none';
+    document.getElementById('tab-content').style.display = 'block';
+    setupBrowse();
+    setupContribDims();
+    setupScoreHintSliders();
+  } catch (err) {
+    console.error('Knowledge load failed:', err);
+    document.getElementById('kb-loading').style.display = 'none';
+    document.getElementById('kb-error').style.display = 'block';
+  }
+}
+
+// ==============================
+// TAB SYSTEM
+// ==============================
+function switchTab(name) {
+  ['score','browse','compare','contribute'].forEach(t => {
+    document.getElementById('tab-' + t).classList.toggle('active', t === name);
+    document.getElementById('panel-' + t).classList.toggle('active', t === name);
+  });
+  // scroll to app section
+  setTimeout(() => document.getElementById('app').scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+}
+
+// ==============================
+// SCORING ENGINE
+// ==============================
+function keywordSet(text) {
+  return new Set((text || '').toLowerCase().split(/\W+/).filter(w => w.length > 2));
+}
+
+function cosineSimilarity(setA, setB) {
+  const all = new Set([...setA, ...setB]);
+  let dot = 0, magA = 0, magB = 0;
+  for (const w of all) {
+    const a = setA.has(w) ? 1 : 0;
+    const b = setB.has(w) ? 1 : 0;
+    dot += a * b; magA += a; magB += b;
+  }
+  return magA && magB ? dot / (Math.sqrt(magA) * Math.sqrt(magB)) : 0;
+}
+
+function scoreEntry(taskText, entry) {
+  const dims = entry.dimensions;
+  const entryText = [
+    entry.title, entry.domain,
+    ...(entry.tags || []),
+    entry.summary || '',
+    typeof dims?.delegation === 'object' ? dims.delegation.description || '' : '',
+    typeof dims?.description === 'object' ? dims.description.description || '' : '',
+    typeof dims?.discernment === 'object' ? dims.discernment.description || '' : '',
+    typeof dims?.diligence === 'object' ? dims.diligence.description || '' : '',
+  ].join(' ');
+
+  const similarity = cosineSimilarity(keywordSet(taskText), keywordSet(entryText));
+  const hints = entry.score_hints || { delegation: 0.25, description: 0.25, discernment: 0.25, diligence: 0.25 };
+
+  return {
+    entry,
+    similarity,
+    matchPct: Math.round(similarity * 100),
+    scores: {
+      delegation:  Math.min(100, Math.round(similarity * hints.delegation  * 400)),
+      description: Math.min(100, Math.round(similarity * hints.description * 400)),
+      discernment: Math.min(100, Math.round(similarity * hints.discernment * 400)),
+      diligence:   Math.min(100, Math.round(similarity * hints.diligence   * 400)),
+    }
+  };
+}
+
+function findTopMatches(taskText, entries, n = 5) {
+  return entries
+    .map(e => scoreEntry(taskText, e))
+    .sort((a, b) => b.similarity - a.similarity)
+    .slice(0, n);
+}
+
+// ==============================
+// SCORE TAB
+// ==============================
+function runScore() {
+  const task = document.getElementById('score-task').value.trim();
+  const delegation = document.getElementById('score-delegation').value.trim();
+  if (!task) { alert('Please describe your AI task first.'); return; }
+
+  const combined = task + ' ' + delegation;
+  const top = findTopMatches(combined, knowledgeEntries, 3);
+
+  renderScoreResults(top);
+}
+
+function renderScoreResults(results) {
+  const container = document.getElementById('score-cards');
+  const resultSection = document.getElementById('score-results');
+  const countBadge = document.getElementById('score-count-badge');
+
+  countBadge.textContent = `${results.length} matches`;
+  container.innerHTML = '';
+
+  results.forEach((r, i) => {
+    const dc = DOMAIN_COLORS[r.entry.domain] || DOMAIN_COLORS.general;
+    const yamlUrl = `https://github.com/faical-yannick-congo/fluently/blob/main/knowledge/${r.entry.file || r.entry.id + '.yaml'}`;
+    const matchColor = r.matchPct >= 60 ? '#10B981' : r.matchPct >= 30 ? '#F59E0B' : '#64748B';
+
+    const card = document.createElement('div');
+    card.className = 'glass glass-hover';
+    card.style.cssText = 'border-radius:12px;padding:20px;';
+    card.innerHTML = `
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px;">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <span style="font-weight:700;font-size:0.9rem;color:#F1F5F9;">${escHtml(r.entry.title)}</span>
+          <span class="${dc.badge}" style="font-size:0.68rem;font-weight:600;padding:2px 10px;border-radius:999px;">${dc.label}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
+          <span style="font-size:1.1rem;font-weight:800;color:${matchColor};">${r.matchPct}%</span>
+          <span style="font-size:0.7rem;color:#64748B;">match</span>
+        </div>
+      </div>
+      ${r.entry.summary ? `<p style="font-size:0.78rem;color:#64748B;line-height:1.5;margin-bottom:14px;">${escHtml(r.entry.summary.slice(0, 120))}…</p>` : ''}
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px;">
+        ${Object.entries(r.scores).map(([dim, val]) => {
+          const dc2 = D_COLORS[dim];
+          return `<div style="display:flex;align-items:center;gap:10px;">
+            <span style="width:86px;font-size:0.7rem;font-weight:600;color:${dc2.text};letter-spacing:0.3px;text-transform:capitalize;flex-shrink:0;">${dim}</span>
+            <div class="score-bar-track" style="flex:1;">
+              <div class="score-bar-fill" data-width="${val}" style="background:${dc2.color};"></div>
+            </div>
+            <span style="width:32px;text-align:right;font-size:0.72rem;font-weight:600;color:${dc2.text};">${val}</span>
+          </div>`;
+        }).join('')}
+      </div>
+      <a href="${yamlUrl}" target="_blank" rel="noopener" style="font-size:0.78rem;font-weight:600;color:#8B5CF6;text-decoration:none;display:inline-flex;align-items:center;gap:4px;transition:color 0.15s;" onmouseover="this.style.color='#A78BFA'" onmouseout="this.style.color='#8B5CF6'">
+        View full cycle →
+      </a>
+    `;
+    container.appendChild(card);
+  });
+
+  resultSection.style.display = 'block';
+
+  // Animate bars after a tick
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      document.querySelectorAll('.score-bar-fill[data-width]').forEach(bar => {
+        bar.style.width = bar.dataset.width + '%';
+      });
+    });
+  });
+}
+
+// ==============================
+// BROWSE TAB
+// ==============================
+function setupBrowse() {
+  // Build domain chips
+  const domains = [...new Set(knowledgeEntries.map(e => e.domain).filter(Boolean))].sort();
+  const chipsContainer = document.getElementById('domain-chips');
+
+  // Clear existing chips except 'All'
+  while (chipsContainer.children.length > 1) chipsContainer.removeChild(chipsContainer.lastChild);
+
+  domains.forEach(domain => {
+    const chip = document.createElement('button');
+    chip.className = 'domain-chip';
+    chip.dataset.domain = domain;
+    chip.textContent = (DOMAIN_COLORS[domain]?.label) || domain;
+    chip.onclick = () => setDomainFilter(domain);
+    chipsContainer.appendChild(chip);
+  });
+
+  renderBrowse();
+}
+
+function setDomainFilter(domain) {
+  activeDomainFilter = domain;
+  document.querySelectorAll('.domain-chip').forEach(c => {
+    c.classList.toggle('active', c.dataset.domain === domain);
+  });
+  renderBrowse();
+}
+
+function renderBrowse() {
+  const query = (document.getElementById('browse-search')?.value || '').toLowerCase().trim();
+  const grid = document.getElementById('browse-grid');
+  const countEl = document.getElementById('browse-count');
+
+  const filtered = knowledgeEntries.filter(e => {
+    const domainMatch = activeDomainFilter === 'all' || e.domain === activeDomainFilter;
+    if (!domainMatch) return false;
+    if (!query) return true;
+    const haystack = [e.title, e.domain, e.summary, ...(e.tags || [])].join(' ').toLowerCase();
+    return haystack.includes(query);
+  });
+
+  countEl.textContent = `Showing ${filtered.length} of ${knowledgeEntries.length} cycles`;
+
+  grid.innerHTML = filtered.map(entry => {
+    const dc = DOMAIN_COLORS[entry.domain] || DOMAIN_COLORS.general;
+    const yamlUrl = `https://github.com/faical-yannick-congo/fluently/blob/main/knowledge/${entry.file || entry.id + '.yaml'}`;
+    const tags = (entry.tags || []).slice(0, 4);
+
+    return `<div class="glass glass-hover" style="border-radius:12px;padding:20px;cursor:pointer;" onclick="window.open('${yamlUrl}','_blank')">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <span class="${dc.badge}" style="font-size:0.68rem;font-weight:600;padding:2px 10px;border-radius:999px;">${dc.label}</span>
+      </div>
+      <h3 style="font-size:0.9rem;font-weight:700;color:#F1F5F9;margin-bottom:8px;line-height:1.4;">${escHtml(entry.title)}</h3>
+      ${entry.summary ? `<p style="font-size:0.75rem;color:#64748B;line-height:1.5;margin-bottom:12px;">${escHtml(entry.summary.slice(0, 120))}${entry.summary.length > 120 ? '…' : ''}</p>` : ''}
+      <div style="display:flex;flex-wrap:wrap;gap:5px;">
+        ${tags.map(t => `<span style="font-size:0.68rem;padding:2px 8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:999px;color:#64748B;">${escHtml(t)}</span>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ==============================
+// COMPARE TAB
+// ==============================
+function runCompare() {
+  const delText = document.getElementById('compare-delegation').value.trim();
+  const descText = document.getElementById('compare-description').value.trim();
+
+  if (!delText && !descText) {
+    alert('Please describe your delegation approach and/or task framing.');
+    return;
+  }
+
+  const combined = delText + ' ' + descText;
+  const results = findTopMatches(combined, knowledgeEntries, 5);
+  const best = results[0];
+
+  const container = document.getElementById('compare-results');
+  container.style.display = 'block';
+
+  let html = `<h3 style="font-size:0.85rem;font-weight:700;color:#94A3B8;letter-spacing:0.5px;margin-bottom:16px;">SIMILARITY RESULTS</h3>`;
+
+  // Unique banner if best match < 40%
+  if (best.matchPct < 40) {
+    html += `<div class="unique-banner" style="margin-bottom:20px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <span style="font-size:1.2rem;">🌟</span>
+        <span style="font-weight:700;font-size:0.9rem;color:#6EE7B7;">Your cycle looks unique!</span>
+      </div>
+      <p style="font-size:0.78rem;color:#94A3B8;line-height:1.6;margin-bottom:14px;">Best match is only ${best.matchPct}% — your approach doesn't closely match anything in the knowledge base. Consider contributing it!</p>
+      <button class="btn-emerald" onclick="switchToContributeWithPrefill('${escHtml(delText.slice(0,80))}','${escHtml(descText.slice(0,80))}')" style="font-size:0.8rem;padding:9px 18px;">Register It →</button>
+    </div>`;
+  }
+
+  html += `<div style="display:flex;flex-direction:column;gap:12px;">`;
+  results.slice(0, 3).forEach(r => {
+    const dc = DOMAIN_COLORS[r.entry.domain] || DOMAIN_COLORS.general;
+    const matchColor = r.matchPct >= 60 ? '#10B981' : r.matchPct >= 30 ? '#F59E0B' : '#64748B';
+    html += `<div class="glass" style="border-radius:10px;padding:16px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-weight:700;font-size:0.85rem;">${escHtml(r.entry.title)}</span>
+          <span class="${dc.badge}" style="font-size:0.65rem;padding:2px 8px;border-radius:999px;">${dc.label}</span>
+        </div>
+        <span style="font-size:0.95rem;font-weight:800;color:${matchColor};">${r.matchPct}%</span>
+      </div>
+      <div class="score-bar-track">
+        <div class="score-bar-fill" data-width="${r.matchPct}" style="background:linear-gradient(90deg,#8B5CF6,#06B6D4);"></div>
+      </div>
+    </div>`;
+  });
+  html += `</div>`;
+
+  container.innerHTML = html;
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      container.querySelectorAll('.score-bar-fill[data-width]').forEach(bar => {
+        bar.style.width = bar.dataset.width + '%';
+      });
+    });
+  });
+}
+
+function switchToContributeWithPrefill(delText, descText) {
+  switchTab('contribute');
+  setTimeout(() => {
+    const delEl = document.getElementById('cd-delegation-description');
+    if (delEl) delEl.value = delText;
+    const descEl = document.getElementById('cd-description-description');
+    if (descEl) descEl.value = descText;
+    updateYamlPreview();
+  }, 100);
+}
+
+// ==============================
+// CONTRIBUTE TAB
+// ==============================
+const DIMS_CONFIG = ['delegation','description','discernment','diligence'];
+
+function setupContribDims() {
+  const container = document.getElementById('contrib-dims');
+  container.innerHTML = DIMS_CONFIG.map(dim => {
+    const dc = D_COLORS[dim];
+    return `<div style="margin-bottom:20px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+        <div style="width:3px;height:40px;background:${dc.color};border-radius:2px;flex-shrink:0;"></div>
+        <div>
+          <div style="font-size:0.78rem;font-weight:700;color:${dc.text};letter-spacing:0.4px;text-transform:uppercase;">${dim}</div>
+          <div style="font-size:0.7rem;color:#475569;">description, example, antipattern</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;padding-left:11px;">
+        <textarea id="cd-${dim}-description" class="form-input" rows="2" placeholder="Describe the ${dim} approach for this cycle…" oninput="updateYamlPreview()"></textarea>
+        <textarea id="cd-${dim}-example" class="form-input" rows="2" placeholder="Concrete example of good ${dim}…" oninput="updateYamlPreview()"></textarea>
+        <textarea id="cd-${dim}-antipattern" class="form-input" rows="2" placeholder="What to avoid (antipattern)…" oninput="updateYamlPreview()"></textarea>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function setupScoreHintSliders() {
+  const container = document.getElementById('score-hint-sliders');
+  container.innerHTML = DIMS_CONFIG.map(dim => {
+    const dc = D_COLORS[dim];
+    return `<div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+        <span style="font-size:0.78rem;font-weight:600;color:${dc.text};letter-spacing:0.3px;text-transform:capitalize;">${dim}</span>
+        <span id="hint-val-${dim}" style="font-size:0.78rem;font-weight:700;color:#F1F5F9;">0.25</span>
+      </div>
+      <input type="range" id="hint-slider-${dim}" min="0.05" max="0.70" step="0.05" value="0.25"
+        style="accent-color:${dc.color};"
+        oninput="updateHintSlider('${dim}', parseFloat(this.value))" />
+    </div>`;
+  }).join('');
+
+  updateHintSumDisplay();
+}
+
+function updateHintSlider(dim, val) {
+  contribHints[dim] = val;
+  document.getElementById('hint-val-' + dim).textContent = val.toFixed(2);
+  updateHintSumDisplay();
+  updateYamlPreview();
+}
+
+function updateHintSumDisplay() {
+  const sum = Object.values(contribHints).reduce((a, b) => a + b, 0);
+  const rounded = Math.round(sum * 100) / 100;
+  const el = document.getElementById('hint-sum-display');
+  if (!el) return;
+  const ok = Math.abs(sum - 1.0) < 0.01;
+  el.style.background = ok ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.1)';
+  el.style.border = ok ? '1px solid rgba(16,185,129,0.25)' : '1px solid rgba(239,68,68,0.25)';
+  el.style.color = ok ? '#6EE7B7' : '#FCA5A5';
+  el.textContent = `Sum: ${rounded.toFixed(2)} ${ok ? '✓ Valid' : '✗ Must equal 1.0'}`;
+}
+
+function contribNext(step) {
+  document.getElementById('contrib-step-' + step).style.display = 'none';
+  document.getElementById('contrib-step-' + (step + 1)).style.display = 'block';
+  updateStepIndicators(step + 1);
+  updateYamlPreview();
+}
+
+function contribBack(step) {
+  document.getElementById('contrib-step-' + step).style.display = 'none';
+  document.getElementById('contrib-step-' + (step - 1)).style.display = 'block';
+  updateStepIndicators(step - 1);
+}
+
+function updateStepIndicators(current) {
+  const labels = ['Basic Info', '4 Dimensions', 'Score Hints'];
+  for (let i = 1; i <= 3; i++) {
+    const el = document.getElementById('si-' + i);
+    if (i < current) { el.className = 'step-indicator done'; el.textContent = '✓'; }
+    else if (i === current) { el.className = 'step-indicator active'; el.textContent = i; }
+    else { el.className = 'step-indicator'; el.textContent = i; }
+  }
+  document.getElementById('step-label').textContent = `Step ${current} of 3 — ${labels[current - 1]}`;
+}
+
+function getContribData() {
+  const id = (document.getElementById('c-id')?.value || '').trim();
+  const title = (document.getElementById('c-title')?.value || '').trim();
+  const domain = document.getElementById('c-domain')?.value || '';
+  const version = (document.getElementById('c-version')?.value || '1.0.0').trim();
+  const contributor = (document.getElementById('c-contributor')?.value || '').trim();
+  const tags = (document.getElementById('c-tags')?.value || '').split(',').map(t => t.trim()).filter(Boolean);
+
+  const dimensions = {};
+  DIMS_CONFIG.forEach(dim => {
+    dimensions[dim] = {
+      description: (document.getElementById(`cd-${dim}-description`)?.value || '').trim(),
+      example:     (document.getElementById(`cd-${dim}-example`)?.value || '').trim(),
+      antipattern: (document.getElementById(`cd-${dim}-antipattern`)?.value || '').trim(),
+    };
+  });
+
+  return { id, title, domain, version, contributor, tags, dimensions };
+}
+
+function updateYamlPreview() {
+  const d = getContribData();
+  const yaml = buildYaml(d, contribHints);
+  document.getElementById('yaml-preview').textContent = yaml;
+}
+
+function buildYaml(d, hints) {
+  const tagsStr = d.tags.length
+    ? '\n' + d.tags.map(t => `  - ${t}`).join('\n')
+    : '\n  - tag1';
+
+  const dimsStr = DIMS_CONFIG.map(dim => {
+    const v = d.dimensions[dim] || {};
+    return `  ${dim}:\n    description: "${(v.description||'').replace(/"/g,'\\"')}"\n    example: "${(v.example||'').replace(/"/g,'\\"')}"\n    antipattern: "${(v.antipattern||'').replace(/"/g,'\\"')}"`;
+  }).join('\n');
+
+  const hintsStr = DIMS_CONFIG.map(dim => `  ${dim}: ${(hints[dim]||0.25).toFixed(2)}`).join('\n');
+
+  return `id: ${d.id || 'your-cycle-id'}
+title: ${d.title || 'Your Cycle Title'}
+domain: ${d.domain || 'general'}
+version: ${d.version || '1.0.0'}
+contributor: ${d.contributor || 'You'}
+tags:${tagsStr}
+dimensions:
+${dimsStr}
+score_hints:
+${hintsStr}`;
+}
+
+function copyYaml() {
+  const text = document.getElementById('yaml-preview').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = event.target;
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1500);
+  }).catch(() => {
+    // Fallback
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+  });
+}
+
+function openGitHubIssue() {
+  const d = getContribData();
+  const sum = Object.values(contribHints).reduce((a,b)=>a+b,0);
+  if (Math.abs(sum - 1.0) >= 0.01) {
+    alert('Score hints must sum to 1.0 before submitting. Current sum: ' + sum.toFixed(2));
+    return;
+  }
+  if (!d.id || !d.title) {
+    alert('Please fill in the cycle ID and title before submitting.');
+    return;
+  }
+
+  const yaml = buildYaml(d, contribHints);
+  const title = encodeURIComponent(`[Contribution] ${d.title}`);
+  const body = encodeURIComponent(`## New Fluently 4D Cycle\n\n**Domain:** ${d.domain}\n**Contributor:** ${d.contributor}\n\n\`\`\`yaml\n${yaml}\n\`\`\`\n\n---\n_Submitted via the Fluently site_`);
+  const url = `https://github.com/faical-yannick-congo/fluently/issues/new?title=${title}&body=${body}&labels=contribution`;
+  window.open(url, '_blank');
+}
+
+// ==============================
+// UTILITIES
+// ==============================
+function escHtml(str) {
+  if (!str) return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+// ==============================
+// INIT
+// ==============================
+document.addEventListener('DOMContentLoaded', initApp);
+</script>
 </body>
 </html>

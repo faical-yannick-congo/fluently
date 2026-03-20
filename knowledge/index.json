@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-20T18:30:48.519Z",
+  "generated": "2026-03-20T23:53:30.743Z",
   "total": 16,
   "domains": [
     "coding",
@@ -16,12 +16,34 @@
       "title": "Bug Fix Prioritization",
       "domain": "coding",
       "file": "coding-bug-fix-prioritization.yaml",
-      "dimensions": [
-        "delegation",
-        "description",
-        "discernment",
-        "diligence"
-      ],
+      "dimensions": {
+        "delegation": {
+          "description": "Should this task be automated, augmented, or agentic?",
+          "example": "AI suggests bug fix priorities based on impact and frequency.",
+          "antipattern": "Letting AI fully decide bug fix order without human input."
+        },
+        "description": {
+          "description": "What context/framing makes the AI most useful here?",
+          "example": "Provide bug reports, user impact, and historical data.",
+          "antipattern": "No context, leading to poor prioritization."
+        },
+        "discernment": {
+          "description": "How do you evaluate if the AI output is trustworthy?",
+          "example": "Cross-check AI prioritization with product manager feedback.",
+          "antipattern": "Accepting AI priorities without review."
+        },
+        "diligence": {
+          "description": "What human accountability is required after AI involvement?",
+          "example": "Product manager must approve final bug fix order.",
+          "antipattern": "Deploying fixes based solely on AI suggestions."
+        }
+      },
+      "score_hints": {
+        "delegation": 0.2,
+        "description": 0.3,
+        "discernment": 0.3,
+        "diligence": 0.2
+      },
       "summary": "Should this task be automated, augmented, or agentic?",
       "tags": [
         "bug-fix",
@@ -36,12 +58,34 @@
       "title": "Code Review Triage",
       "domain": "coding",
       "file": "coding-code-review-triage.yaml",
-      "dimensions": [
-        "delegation",
-        "description",
-        "discernment",
-        "diligence"
-      ],
+      "dimensions": {
+        "delegation": {
+          "description": "Should this task be automated, augmented, or agentic?",
+          "example": "Use AI to triage code review comments, flagging those needing human attention.",
+          "antipattern": "Fully automating code review without human oversight."
+        },
+        "description": {
+          "description": "What context/framing makes the AI most useful here?",
+          "example": "Provide repository context and recent commit history for accurate triage.",
+          "antipattern": "No context, leading to irrelevant triage suggestions."
+        },
+        "discernment": {
+          "description": "How do you evaluate if the AI output is trustworthy?",
+          "example": "Compare flagged comments against senior developer feedback.",
+          "antipattern": "Accepting AI triage without validation."
+        },
+        "diligence": {
+          "description": "What human accountability is required after AI involvement?",
+          "example": "Human must review flagged comments before merging.",
+          "antipattern": "Merging code based solely on AI triage."
+        }
+      },
+      "score_hints": {
+        "delegation": 0.2,
+        "description": 0.3,
+        "discernment": 0.3,
+        "diligence": 0.2
+      },
       "summary": "Should this task be automated, augmented, or agentic?",
       "tags": [
         "code-review",
@@ -56,12 +100,34 @@
       "title": "Refactoring Suggestions",
       "domain": "coding",
       "file": "coding-refactoring-suggestions.yaml",
-      "dimensions": [
-        "delegation",
-        "description",
-        "discernment",
-        "diligence"
-      ],
+      "dimensions": {
+        "delegation": {
+          "description": "Should this task be automated, augmented, or agentic?",
+          "example": "AI proposes refactoring opportunities, human reviews and approves.",
+          "antipattern": "AI automatically refactors code without human review."
+        },
+        "description": {
+          "description": "What context/framing makes the AI most useful here?",
+          "example": "Provide codebase structure and known pain points.",
+          "antipattern": "No context, leading to generic suggestions."
+        },
+        "discernment": {
+          "description": "How do you evaluate if the AI output is trustworthy?",
+          "example": "Validate suggestions against test coverage and code quality metrics.",
+          "antipattern": "Accepting AI refactoring without testing."
+        },
+        "diligence": {
+          "description": "What human accountability is required after AI involvement?",
+          "example": "Developer must run tests and review changes.",
+          "antipattern": "Merging AI-refactored code without testing."
+        }
+      },
+      "score_hints": {
+        "delegation": 0.2,
+        "description": 0.3,
+        "discernment": 0.3,
+        "diligence": 0.2
+      },
       "summary": "Should this task be automated, augmented, or agentic?",
       "tags": [
         "refactoring",
@@ -76,12 +142,34 @@
       "title": "Test Case Generation",
       "domain": "coding",
       "file": "coding-test-case-generation.yaml",
-      "dimensions": [
-        "delegation",
-        "description",
-        "discernment",
-        "diligence"
-      ],
+      "dimensions": {
+        "delegation": {
+          "description": "Should this task be automated, augmented, or agentic?",
+          "example": "AI generates test cases, developer reviews and integrates.",
+          "antipattern": "AI-generated tests merged without human review."
+        },
+        "description": {
+          "description": "What context/framing makes the AI most useful here?",
+          "example": "Provide function signatures and edge case requirements.",
+          "antipattern": "No context, leading to incomplete tests."
+        },
+        "discernment": {
+          "description": "How do you evaluate if the AI output is trustworthy?",
+          "example": "Run generated tests and check coverage improvements.",
+          "antipattern": "Accepting tests without execution."
+        },
+        "diligence": {
+          "description": "What human accountability is required after AI involvement?",
+          "example": "Developer must validate and maintain test suite.",
+          "antipattern": "Relying solely on AI for test maintenance."
+        }
+      },
+      "score_hints": {
+        "delegation": 0.2,
+        "description": 0.3,
+        "discernment": 0.3,
+        "diligence": 0.2
+      },
       "summary": "Should this task be automated, augmented, or agentic?",
       "tags": [
         "test-case",
@@ -96,12 +184,34 @@
       "title": "AI-Augmented Course Design",
       "domain": "education",
       "file": "education-course-design.yaml",
-      "dimensions": [
-        "delegation",
-        "description",
-        "discernment",
-        "diligence"
-      ],
+      "dimensions": {
+        "delegation": {
+          "description": "AI can accelerate the scaffolding work of course design: generating draft learning objectives from a topic brief, suggesting module sequencing options, proposing assessment formats, brainstorming reading list candidates, and drafting rubric language. The instructor must own: the pedagogical strategy, the theoretical framework underlying the course, the sequencing rationale, and all decisions about what students will actually experience. Pedagogical authority cannot be delegated.",
+          "example": "A professor designing a new undergraduate ethics course asks AI to generate a draft list of possible weekly topics aligned with her stated course arc (from foundational theory to applied cases). She uses this list as a stimulus to compare against her own planned sequence, adopting two AI-suggested topics she had overlooked and discarding three that don't serve her theoretical framework.",
+          "antipattern": "Asking AI to design the full course — objectives, module structure, readings, assignments, assessments — and adopting the output with cosmetic changes, without grounding the design in a coherent pedagogical theory or ensuring it reflects the instructor's scholarly expertise."
+        },
+        "description": {
+          "description": "Provide AI with detailed instructional design context: course level and credit hours, student profile and prerequisite knowledge, program-level learning outcomes the course must serve, your pedagogical philosophy, assessment philosophy, any accreditation or institutional constraints, and the thematic arc you want the course to trace. Precision in the brief yields useful scaffolding.",
+          "example": "Prompt: 'Help me draft learning objectives for a 3-credit upper-division course on algorithmic bias. Students are CS seniors with strong technical backgrounds but limited social science exposure. Program outcome: graduates can evaluate the societal impact of technology systems. I want the course to move from conceptual foundations (weeks 1-4) to case analysis (weeks 5-10) to policy and design response (weeks 11-14). Use Bloom's Taxonomy verbs appropriate to the upper-division level.'",
+          "antipattern": "Prompting: 'Write learning objectives for a course on AI ethics.' Without specifying student level, program context, Bloom's taxonomy tier, or the course's theoretical arc, AI produces generic objectives that could apply to any course at any level and serve no specific program outcome."
+        },
+        "discernment": {
+          "description": "Evaluate AI-generated course design elements against pedagogical soundness, alignment to Bloom's Taxonomy, internal coherence, and fit with your students' actual preparation. Check that assessment types genuinely measure the stated learning objectives, that the workload is realistic, and that reading suggestions are current, credible, and accessible to your student population.",
+          "example": "An instructor reviews AI-generated weekly learning objectives and notices three of them are knowledge-level objectives (define, identify, list) in weeks designed for upper-division analysis. She revises them upward to analysis and evaluation verbs to match the cognitive demand appropriate for the course level.",
+          "antipattern": "Adopting AI-generated course syllabi and assessment designs without checking internal alignment — using multiple-choice exams to assess objectives that require critical analysis, or setting a reading workload that AI estimated without accounting for the actual length and density of the suggested texts."
+        },
+        "diligence": {
+          "description": "Verify the accuracy of all factual content AI contributes to course materials. Document the AI's role in course design per your institution's academic integrity and transparency policies. Ensure the final course design meets accreditation requirements, reflects current disciplinary knowledge, and embodies your own scholarly judgment and professional responsibility as the instructor of record.",
+          "example": "A faculty member building a new public health law course uses AI to draft a draft syllabus framework, then spends three hours reviewing it against her institution's course approval criteria, the program's accreditation standards, and current public health law scholarship — revising heavily before submission for curricular approval.",
+          "antipattern": "Submitting an AI-generated course proposal to a curriculum committee without personally verifying that the proposed learning objectives meet accreditation standards, that the reading list contains accurate and current citations, or that the assessment strategy is pedagogically defensible under institutional review."
+        }
+      },
+      "score_hints": {
+        "delegation": 0.2,
+        "description": 0.3,
+        "discernment": 0.25,
+        "diligence": 0.25
+      },
       "summary": "AI can accelerate the scaffolding work of course design: generating draft learning objectives from a topic brief, suggesting module sequencing options, proposing assessment formats, brainstorming read",
       "tags": [
         "course-design",
@@ -110,6 +220,7 @@
         "instructional-design"
       ],
       "contributor": "Rick Dakan & Joseph Feller / Anthropic",
+      "reference": "https://aifluencyframework.org",
       "version": "1.0.0"
     },
     {
@@ -117,12 +228,34 @@
       "title": "AI-Assisted Lesson Planning for Educators",
       "domain": "education",
       "file": "education-lesson-planning.yaml",
-      "dimensions": [
-        "delegation",
-        "description",
-        "discernment",
-        "diligence"
-      ],
+      "dimensions": {
+        "delegation": {
+          "description": "Identify which lesson planning elements AI can accelerate versus which require the teacher's direct professional judgment. AI handles well: generating activity ideas, drafting discussion questions, suggesting differentiation strategies, proposing assessment rubrics, and creating example problems. Teachers must retain: selecting content aligned to standards, setting the pedagogical arc across a unit, understanding individual student needs, and making final instructional decisions.",
+          "example": "A 7th-grade science teacher asks AI to generate five hands-on activity ideas for a lesson on cellular respiration at a middle school level, then selects the one that fits her lab budget and her students' prior knowledge, adapts it to her pacing, and writes her own formative assessment questions.",
+          "antipattern": "Pasting an AI-generated full lesson plan directly into the school's curriculum system without reviewing it for standard alignment, age appropriateness, or fit with the specific class's learning trajectory — treating AI as a replacement for pedagogical expertise rather than a brainstorming assistant."
+        },
+        "description": {
+          "description": "Provide AI with specific instructional context: subject and grade level, concrete learning objectives tied to standards, the students' current skill level and prior knowledge, the available time and resources, the preferred pedagogical approach, and any accessibility or differentiation needs. Generic requests produce generic plans.",
+          "example": "Prompt: 'Help me plan a 50-minute 8th-grade ELA lesson on identifying unreliable narrators. Students have read chapters 1-5 of The Outsiders. Objective: students can cite textual evidence to explain how Ponyboy's perspective limits the reader's understanding of events. Pedagogy: discussion-based with a short collaborative activity. Class includes 3 ELL students and 2 students with reading IEPs.'",
+          "antipattern": "Prompting: 'Write a lesson plan about unreliable narrators for middle school.' This produces a generic template disconnected from the specific text students are reading, the actual learning objective, the class's composition, and the teacher's instructional context."
+        },
+        "discernment": {
+          "description": "Evaluate AI-generated lesson plans and activities critically before adopting them. Check standard alignment, age appropriateness of content and vocabulary, timing realism, whether suggested activities match your students' actual readiness, and whether the pedagogical sequence makes instructional sense. AI does not know your students; you do.",
+          "example": "A teacher reviews an AI-generated lesson plan and notices the suggested 'exit ticket' question requires inferential reasoning two grade levels above her current class's demonstrated ability. She replaces it with a scaffolded sentence-starter version that matches where her students actually are.",
+          "antipattern": "Implementing AI-suggested activities without mentally simulating how your specific students will respond — discovering mid-lesson that the activity assumes prior knowledge students don't have, or that the timing estimate was wildly optimistic for the class's working pace."
+        },
+        "diligence": {
+          "description": "Maintain professional responsibility for every lesson you deliver. Verify that AI-suggested content is factually accurate, that activities are safe and appropriate for your students, and that lesson plans meet the curricular standards your students are accountable for. Your professional judgment is the final quality gate, not the AI.",
+          "example": "An educator uses AI-generated lesson scaffolding as a starting framework, then personally verifies that all factual content aligns with state science standards, removes an activity that requires materials not available in her classroom, and adds a culturally responsive example relevant to her students' community.",
+          "antipattern": "Delivering an AI-generated lesson that contains a factual error (e.g., an incorrect historical date or a flawed science explanation) because the teacher assumed the AI's content was accurate and did not independently verify it before presenting it to students."
+        }
+      },
+      "score_hints": {
+        "delegation": 0.25,
+        "description": 0.3,
+        "discernment": 0.25,
+        "diligence": 0.2
+      },
       "summary": "Identify which lesson planning elements AI can accelerate versus which require the teacher's direct professional judgment. AI handles well: generating activity ideas, drafting discussion questions, su",
       "tags": [
         "education",
@@ -131,6 +264,7 @@
         "curriculum"
       ],
       "contributor": "Rick Dakan & Joseph Feller / Anthropic",
+      "reference": "https://aifluencyframework.org",
       "version": "1.0.0"
     },
     {
@@ -138,12 +272,34 @@
       "title": "Student Career Planning with AI",
       "domain": "education",
       "file": "education-student-career-planning.yaml",
-      "dimensions": [
-        "delegation",
-        "description",
-        "discernment",
-        "diligence"
-      ],
+      "dimensions": {
+        "delegation": {
+          "description": "Students can productively delegate to AI: resume drafting from bullet points they supply, generating practice interview questions for a target role, exploring career paths in an unfamiliar field, drafting cover letter frameworks, and researching industry norms. Students must retain: decisions about which opportunities align with their values and goals, truthful representation of their own experiences, and final responsibility for all submitted application materials.",
+          "example": "A college junior asks AI to suggest ten career paths where her combination of biology major and data analytics minor would be valued, then researches the top three that interest her and uses that understanding to craft her own narrative about why she is pursuing biostatistics.",
+          "antipattern": "Having AI write a cover letter that fabricates or exaggerates the student's experiences, then submitting it as an accurate representation — or using AI to answer interview questions on the student's behalf via an earpiece during a live interview."
+        },
+        "description": {
+          "description": "Share with AI your actual skills, experiences, target roles, industry context, career constraints, and personal goals. The more accurately you describe yourself and your situation, the more useful the AI's suggestions will be. Vague or inflated self-descriptions lead to advice that fits a fictional version of you, not your real situation.",
+          "example": "Prompt: 'I'm a 3rd-year environmental engineering student with a 3.4 GPA, one summer internship at a municipal water authority doing stormwater modeling, and a Python project analyzing local air quality data. I want to work in climate tech after graduation, preferably at a company working on water or air quality monitoring. Help me identify specific entry-level roles to target and the skills I should develop this year.'",
+          "antipattern": "Prompting: 'I'm a student who wants a good job in tech. What should I do?' This produces generic career advice applicable to millions of people and useless for the student's actual situation, skills, and industry interest."
+        },
+        "discernment": {
+          "description": "Evaluate AI career advice critically. Verify that suggested roles actually exist and match what you want. Check salary ranges and job market realities against current sources like Bureau of Labor Statistics data or industry salary surveys, not just AI assertions. Assess whether AI suggestions genuinely fit your personal values, lifestyle needs, and long-term goals — not just what sounds impressive.",
+          "example": "A student receives AI-generated advice suggesting she pursue a specific niche certification. She researches the certification independently, reads LinkedIn profiles of people who hold it, talks to two professionals in the field, and determines the certification is valued by only one employer segment — not the area she actually wants to work in.",
+          "antipattern": "Following AI career advice without verification — enrolling in a bootcamp AI recommended, discovering it is not recognized by employers in the target field, or pursuing a role because AI said it pays well without checking current market data or speaking with anyone actually working in that field."
+        },
+        "diligence": {
+          "description": "Own every career decision you make. AI is a thinking partner, not a career counselor with knowledge of your full life context. Build your own understanding of your field. Ensure all application materials truthfully represent your actual experiences. Develop a personal policy for how you use AI in your professional development so your skills and judgment grow alongside your AI fluency.",
+          "example": "A student uses AI to generate a list of potential resume bullet points based on her internship activities, then rewrites each one in her own voice, ensures they accurately reflect what she did, and has her university career center review the final document — treating AI as a drafting scaffold, not the author.",
+          "antipattern": "Submitting AI-generated job applications with exaggerated credentials, relying entirely on AI career advice without informational interviews or real-world research, or using AI so heavily in application writing that the student cannot speak authentically about the experiences described in their own materials."
+        }
+      },
+      "score_hints": {
+        "delegation": 0.25,
+        "description": 0.3,
+        "discernment": 0.25,
+        "diligence": 0.2
+      },
       "summary": "Students can productively delegate to AI: resume drafting from bullet points they supply, generating practice interview questions for a target role, exploring career paths in an unfamiliar field, draf",
       "tags": [
         "career-planning",
@@ -152,6 +308,7 @@
         "professional-development"
       ],
       "contributor": "Rick Dakan & Joseph Feller / Anthropic",
+      "reference": "https://aifluencyframework.org",
       "version": "1.0.0"
     },
     {
@@ -159,12 +316,34 @@
       "title": "Professional Email Writing with AI",
       "domain": "general",
       "file": "general-email-writing.yaml",
-      "dimensions": [
-        "delegation",
-        "description",
-        "discernment",
-        "diligence"
-      ],
+      "dimensions": {
+        "delegation": {
+          "description": "Decide whether AI should produce the full draft or only assist with structure, tone, or phrasing. High-stakes emails (termination notices, executive communications, sensitive negotiations) should remain human-led with AI as an editor at most. Routine emails (meeting requests, status updates, acknowledgment replies) are strong candidates for full AI drafting.",
+          "example": "A manager uses AI to draft a meeting invitation and a project status update, then writes a performance feedback email herself because it requires nuanced personal knowledge of the employee's growth journey.",
+          "antipattern": "Delegating every email including sensitive HR communications, client dispute responses, or apology letters entirely to AI without assessing the relationship stakes or the potential for misrepresentation."
+        },
+        "description": {
+          "description": "Provide AI with the full context it needs to draft an effective email — recipient relationship, communication purpose, desired tone, relevant background, and any constraints on length or formality. The quality of the draft is directly proportional to the richness of the context you provide.",
+          "example": "Prompt: 'Draft a follow-up email to Sarah Chen, our enterprise client at Meridian Corp. We met Tuesday to discuss their Q3 data migration delay. Tone: professional but warm — we have a 3-year relationship. Acknowledge the delay empathetically, confirm next steps (kick-off call Friday 2pm), and close with confidence. Keep it under 200 words.'",
+          "antipattern": "Prompting with only: 'Write an email to my client about the project delay.' This gives AI no information about tone, relationship history, specific facts, or the desired outcome, resulting in a generic template that fails to represent the actual situation."
+        },
+        "discernment": {
+          "description": "After receiving the AI draft, carefully evaluate whether the tone matches the real relationship, whether all factual claims are accurate, whether the intent is captured correctly, and whether the email could be misinterpreted. Read it as the recipient would, not as the author.",
+          "example": "A marketing director reviews an AI-drafted client email and notices the phrase 'as we discussed' refers to a meeting that hasn't happened yet — a factual error the AI introduced. She corrects the timeline before sending.",
+          "antipattern": "Copying the AI draft directly into the email client and hitting send without reading it through the recipient's eyes, missing tone mismatches (e.g., too formal for a casual colleague) or factual inaccuracies introduced by the model."
+        },
+        "diligence": {
+          "description": "Take responsibility for the email you send regardless of how it was drafted. In professional contexts, consider whether AI-assisted drafting should be disclosed. Verify all facts, names, dates, and commitments in the email before sending. Your name on the email means you own the content.",
+          "example": "A consultant discloses in her firm's engagement letter that AI tools assist with drafting client communications, and she maintains a personal checklist — verify dates, names, attachments, and factual claims — that she runs on every AI-assisted email before sending.",
+          "antipattern": "Sending an AI-drafted email containing an incorrect meeting date, a misspelled client name, or a commitment you didn't actually make, because you assumed the AI had accurate information and skipped personal review."
+        }
+      },
+      "score_hints": {
+        "delegation": 0.2,
+        "description": 0.35,
+        "discernment": 0.25,
+        "diligence": 0.2
+      },
       "summary": "Decide whether AI should produce the full draft or only assist with structure, tone, or phrasing. High-stakes emails (termination notices, executive communications, sensitive negotiations) should rema",
       "tags": [
         "email",
@@ -173,6 +352,7 @@
         "workplace"
       ],
       "contributor": "Rick Dakan & Joseph Feller / Anthropic",
+      "reference": "https://aifluencyframework.org",
       "version": "1.0.0"
     },
     {
@@ -180,12 +360,34 @@
       "title": "Description-Discernment Iterative Refinement Loop",
       "domain": "general",
       "file": "general-iterative-refinement-loop.yaml",
-      "dimensions": [
-        "delegation",
-        "description",
-        "discernment",
-        "diligence"
-      ],
+      "dimensions": {
+        "delegation": {
+          "description": "Treat AI as a co-creator in an ongoing dialogue, not a one-shot command executor. The first AI output is a draft that begins a conversation, not an end product. Structure your workflow so that each AI output triggers a human evaluation, which generates a refined prompt, which produces a better output — repeating until the result meets your standard. This iterative posture is the fundamental AI collaboration pattern across all domains.",
+          "example": "A product manager uses AI to draft a feature brief, evaluates it, identifies three gaps (missing user persona context, weak success metrics, no edge case consideration), feeds those gaps back into a refined prompt, gets a second draft, and repeats twice more until the brief meets her standard — treating each cycle as a productive step, not a failure.",
+          "antipattern": "Running a single AI prompt, receiving an output that is clearly incomplete or off-target, and then either submitting that output as-is or abandoning the AI approach entirely — failing to use the iterative loop that is the actual mechanism through which AI collaboration produces quality results."
+        },
+        "description": {
+          "description": "In iterative refinement, each round of prompting is an act of description — but later rounds are more powerful because they are informed by what you learned evaluating the previous output. Describe not just what you want but what was wrong with the last version and why. Specific corrective feedback is the engine of the loop.",
+          "example": "Round 1: 'Draft a product requirements doc for a mobile notification system.' Round 2 (after evaluation): 'The previous draft lacked user permission flow details and assumed push always on. Revise to add: (1) permission request UX at onboarding, (2) notification preference center spec, (3) opt-out flows per notification type. Keep the same structure.'",
+          "antipattern": "After receiving a poor first output, re-prompting with an equally vague request ('Make it better' or 'Try again') rather than articulating specifically what was insufficient and why — failing to use what you learned from evaluating the first output to produce a meaningfully improved next prompt."
+        },
+        "discernment": {
+          "description": "After each AI output, conduct a structured evaluation before generating the next prompt. Assess accuracy against facts you know, relevance to your actual goal, completeness against your requirements, audience fit, and quality of reasoning. The discernment step is not a final judgment — it is the input to the next description. Make your evaluation explicit so you can articulate it in your refined prompt.",
+          "example": "A writer receives an AI-drafted article section and explicitly scores it against four criteria: factual accuracy (3/5 — two claims need verification), tone (4/5 — mostly right, one paragraph too formal), completeness (2/5 — missing the key counterargument), audience fit (4/5 — appropriate vocabulary). This structured evaluation drives her next prompt precisely.",
+          "antipattern": "Skimming AI output and forming a vague sense that 'it's not quite right' without identifying specifically what is wrong — then producing a corrective prompt that is equally vague, resulting in a marginally different output that still misses the target in the same ways."
+        },
+        "diligence": {
+          "description": "Do not ship the first AI output, or even the second, without it having survived genuine evaluative scrutiny. Document your iteration path — the prompts used, the key decisions at each evaluation, and why you accepted the final output — especially for consequential work. Iteration transparency is accountability: it shows the work was human-directed, not just human-forwarded.",
+          "example": "A communications team maintains a prompt log for all AI-assisted client reports, recording each prompt version and the reason for the refinement. When a client questions a report's methodology, the team can demonstrate the three-round refinement process and the human judgment applied at each evaluation step.",
+          "antipattern": "Accepting and submitting the first AI output that seems 'good enough' without completing even one full evaluate-refine cycle — then, when the output contains errors or misses the mark, having no record of the process and no basis for explaining why the AI's first guess was treated as a final answer."
+        }
+      },
+      "score_hints": {
+        "delegation": 0.2,
+        "description": 0.35,
+        "discernment": 0.3,
+        "diligence": 0.15
+      },
       "summary": "Treat AI as a co-creator in an ongoing dialogue, not a one-shot command executor. The first AI output is a draft that begins a conversation, not an end product. Structure your workflow so that each AI",
       "tags": [
         "iteration",
@@ -194,6 +396,7 @@
         "refinement"
       ],
       "contributor": "Rick Dakan & Joseph Feller / Anthropic",
+      "reference": "https://aifluencyframework.org",
       "version": "1.0.0"
     },
     {
@@ -201,12 +404,34 @@
       "title": "AI-Assisted Clinical Documentation",
       "domain": "healthcare",
       "file": "healthcare-clinical-documentation.yaml",
-      "dimensions": [
-        "delegation",
-        "description",
-        "discernment",
-        "diligence"
-      ],
+      "dimensions": {
+        "delegation": {
+          "description": "AI can assist clinicians with drafting clinical notes from voice transcription, generating patient education material drafts, summarizing prior visit records, and producing structured documentation templates. All clinical judgment is non-delegable — diagnosis, treatment decisions, medication orders, and assessment of patient status require a licensed clinician's direct judgment and cannot be transferred to AI under any circumstances.",
+          "example": "An internist uses an AI ambient documentation tool to generate a draft SOAP note from a recorded patient encounter. She reviews the full draft before it enters the EHR, corrects the AI's mischaracterization of the patient's symptom onset timeline, and signs only after verifying that the assessment and plan reflect her actual clinical reasoning.",
+          "antipattern": "Allowing an AI documentation tool to finalize clinical notes without clinician review, or using AI-generated differential diagnoses as the actual clinical assessment without independent clinical evaluation — abdicating the professional judgment that defines clinical practice."
+        },
+        "description": {
+          "description": "Provide AI with precise clinical context: the documentation type required (SOAP note, discharge summary, referral letter, patient education handout), the patient's relevant clinical background, the format required by your institution or EHR, and any clinical standards the document must meet. Vague inputs produce vague outputs that require more revision than starting from scratch.",
+          "example": "Prompt: 'Draft a patient education handout for a 65-year-old patient with newly diagnosed Type 2 diabetes who speaks English as a second language. Reading level: 6th grade. Cover: what Type 2 diabetes is in plain language, the importance of blood sugar monitoring, dietary basics (Mediterranean diet pattern), and when to call the care team. Avoid medical jargon. Format: bullet points with short headers.'",
+          "antipattern": "Prompting: 'Write patient instructions for diabetes.' This produces generic clinical text at an inappropriate reading level with medical terminology, requiring complete rewriting — no faster than drafting from scratch, and risking use of a generic template that doesn't match the specific patient's situation."
+        },
+        "discernment": {
+          "description": "Scrutinize every AI-generated clinical document for medical accuracy before it enters the record or reaches a patient. Check for hallucinated medication names, incorrect dosages, fabricated lab values, inappropriate diagnostic language, or clinical claims that don't match the actual encounter. Patient safety depends on the clinician catching AI errors before they propagate into care decisions.",
+          "example": "A hospitalist reviews an AI-generated discharge summary and catches that the AI has listed a drug at twice the prescribed dose and omitted a critical allergy from the medication list. She corrects both errors before the summary is sent to the receiving primary care physician — preventing a potential adverse drug event.",
+          "antipattern": "Co-signing AI-generated discharge summaries, referral letters, or medication reconciliation documents without reading them in full — allowing a hallucinated dosage, an omitted allergy, or an incorrect diagnosis code to enter the medical record and influence downstream care decisions."
+        },
+        "diligence": {
+          "description": "The clinician who signs a clinical document is fully accountable for its contents regardless of how it was drafted. Disclose AI use in documentation per your institution's policy and applicable regulatory requirements. Uphold patient safety as the absolute priority — when in doubt, rewrite rather than rely on AI output. Maintain the clinical judgment and interpersonal presence that AI documentation tools must never replace.",
+          "example": "A health system requires all clinicians using AI documentation tools to complete a verified review checklist (patient identity, diagnoses, medications, allergies, follow-up instructions) before signing any AI-assisted note, and discloses the use of AI documentation assistance in its patient-facing privacy notice.",
+          "antipattern": "Signing AI-generated clinical notes at volume without individual review because the ambient tool 'usually gets it right' — creating systematic documentation errors that accumulate in the medical record, affect quality metrics, and in serious cases contribute to patient harm through propagated incorrect information."
+        }
+      },
+      "score_hints": {
+        "delegation": 0.2,
+        "description": 0.2,
+        "discernment": 0.3,
+        "diligence": 0.3
+      },
       "summary": "AI can assist clinicians with drafting clinical notes from voice transcription, generating patient education material drafts, summarizing prior visit records, and producing structured documentation te",
       "tags": [
         "healthcare",
@@ -215,6 +440,7 @@
         "EHR"
       ],
       "contributor": "Rick Dakan & Joseph Feller / Anthropic",
+      "reference": "https://aifluencyframework.org",
       "version": "1.0.0"
     },
     {
@@ -222,12 +448,34 @@
       "title": "AI-Assisted Legal Research and Document Drafting",
       "domain": "legal",
       "file": "legal-ai-research-drafting.yaml",
-      "dimensions": [
-        "delegation",
-        "description",
-        "discernment",
-        "diligence"
-      ],
+      "dimensions": {
+        "delegation": {
+          "description": "AI can assist with initial legal research sweeps, summarizing case law, generating first-draft document structures, and flagging potentially relevant statutes. All legal judgment remains with the licensed attorney — case strategy, legal conclusions, advice to clients, and all court filings are non-delegable professional responsibilities. AI is a research and drafting accelerant, never a substitute for attorney analysis.",
+          "example": "An attorney preparing a breach of contract motion asks AI to identify relevant California appellate cases on implied covenant of good faith and generate a draft argument outline. She uses this as a research starting point, independently verifies every citation via Westlaw, and rewrites the argument section from scratch using the verified cases.",
+          "antipattern": "Filing AI-generated legal briefs with unverified citations, or allowing AI to make legal strategy recommendations that the attorney adopts without independent analysis — the equivalent of filing research you haven't read, which creates professional responsibility violations and potential sanctions."
+        },
+        "description": {
+          "description": "Provide AI with precise legal context: jurisdiction, court or regulatory body, matter type, applicable legal standard, client's factual situation, and the desired document format and purpose. Legal AI output quality depends heavily on the specificity of jurisdictional and doctrinal framing. Generic legal prompts produce generic legal text that may be wrong for your jurisdiction.",
+          "example": "Prompt: 'Summarize the current standard for personal jurisdiction over foreign defendants in federal courts in the Ninth Circuit, focusing on cases decided after 2019 that address the specific vs. general jurisdiction distinction post-Bristol-Myers Squibb. Our client is a California-based plaintiff suing a German manufacturer. Identify the strongest and weakest points in our jurisdictional argument.'",
+          "antipattern": "Prompting: 'Explain personal jurisdiction.' This produces a textbook overview applicable to no particular jurisdiction or procedural posture — unusable for actual legal work without the jurisdictional specificity, relevant time frame, and case-specific framing that makes the output actionable."
+        },
+        "discernment": {
+          "description": "Every AI-generated legal citation must be independently verified in a primary legal database before use. AI models hallucinate case citations with high confidence — inventing plausible-sounding but nonexistent cases, misquoting holdings, or attributing dicta as holdings. Verify that each case exists, says what AI claims, is still good law, and applies in your jurisdiction.",
+          "example": "An attorney receives an AI-generated brief draft citing eight cases. She runs each citation in Westlaw before reviewing the draft's argument. Two citations are for real cases that don't say what the AI claimed. One citation is for a case that was overruled. She treats the AI draft as a structural scaffold only and rebuilds the argument on verified authority.",
+          "antipattern": "Submitting a brief with AI-generated citations after only spot-checking one or two, then receiving a sanctions motion when opposing counsel discovers that three cited cases either don't exist or don't stand for the propositions cited — a career-threatening outcome that has already occurred to real attorneys."
+        },
+        "diligence": {
+          "description": "The licensed attorney remains fully and personally responsible for every document filed and every piece of advice given, regardless of how it was drafted. Disclose AI assistance in accordance with applicable bar rules and court standing orders (several federal courts now require this). Maintain professional standards of competence, including understanding AI's limitations in legal contexts.",
+          "example": "An attorney follows her state bar's guidance on AI use in legal practice by disclosing in engagement letters that AI tools assist with research and drafting, maintaining a verification protocol for all AI-generated citations, and staying current with her court's local rules on AI disclosure in filings.",
+          "antipattern": "Treating AI legal research as equivalent to Westlaw research without verification, failing to disclose AI assistance in jurisdictions where disclosure is required, or allowing junior associates to file AI-drafted documents without supervising attorney review — creating professional responsibility exposure and potential harm to clients."
+        }
+      },
+      "score_hints": {
+        "delegation": 0.2,
+        "description": 0.2,
+        "discernment": 0.3,
+        "diligence": 0.3
+      },
       "summary": "AI can assist with initial legal research sweeps, summarizing case law, generating first-draft document structures, and flagging potentially relevant statutes. All legal judgment remains with the lice",
       "tags": [
         "legal",
@@ -236,6 +484,7 @@
         "professional-responsibility"
       ],
       "contributor": "Rick Dakan & Joseph Feller / Anthropic",
+      "reference": "https://aifluencyframework.org",
       "version": "1.0.0"
     },
     {
@@ -243,12 +492,34 @@
       "title": "Research Paper Data Analysis with AI",
       "domain": "research",
       "file": "research-data-analysis.yaml",
-      "dimensions": [
-        "delegation",
-        "description",
-        "discernment",
-        "diligence"
-      ],
+      "dimensions": {
+        "delegation": {
+          "description": "Divide analytical work deliberately between human scholarly judgment and AI computation. AI handles pattern recognition in large datasets, running descriptive statistics, flagging outliers, generating visualization suggestions, and summarizing distributions. The researcher formulates hypotheses, interprets findings in disciplinary context, makes causal claims, and draws conclusions — these require domain expertise that AI cannot reliably supply.",
+          "example": "A social scientist delegates to AI the task of computing correlation matrices across 47 variables in a survey dataset and generating a ranked list of significant correlations. She then applies her theoretical knowledge to determine which correlations are substantively meaningful versus statistically coincidental.",
+          "antipattern": "Asking AI to not only run analysis but to formulate the research hypotheses, interpret what findings mean for the field, and draw conclusions — treating the model as a substitute for the researcher's own disciplinary expertise and scholarly judgment."
+        },
+        "description": {
+          "description": "Give AI precise methodological context — your research question, the dataset structure, units of measurement, required statistical methods, software environment, and any domain-specific constraints. Ambiguous instructions produce analysis that may be technically correct but methodologically wrong for your research design.",
+          "example": "Prompt: 'Analyze this CSV of longitudinal student performance data (n=312, 4 time points). Variables: test_score (0-100), SES_quartile (1-4), intervention_group (binary), school_id (cluster variable). Run a mixed-effects linear regression predicting test_score from intervention_group, controlling for SES_quartile, with school_id as a random effect. Report coefficients, standard errors, and interpret the intervention effect size.'",
+          "antipattern": "Prompting: 'Analyze my research data and tell me what's significant.' Without specifying the research question, the correct statistical model, variable types, or analytical constraints, AI may apply an inappropriate method (e.g., OLS on clustered data) that produces misleading results."
+        },
+        "discernment": {
+          "description": "Rigorously verify AI-produced analysis before incorporating it into research. Check that statistical methods are appropriate for your data structure, that calculations are correct, that effect sizes are interpreted accurately, and that the AI has not made assumptions that violate your study design. AI can produce plausible-looking but methodologically flawed analysis.",
+          "example": "A researcher notices that AI-generated regression output reports a significant p-value but has failed to account for the clustered sampling structure, inflating the precision of estimates. She reruns the analysis herself with correct standard errors and finds the effect is no longer significant at her threshold.",
+          "antipattern": "Inserting AI-generated statistical tables and interpretive text directly into a manuscript without independently verifying the calculations, checking model assumptions, or confirming that the chosen method is appropriate for the study design — risking publication of flawed findings."
+        },
+        "diligence": {
+          "description": "Be transparent about AI's role in your analytical workflow per your institution's and journal's policies. Ensure all claims in the final paper reflect your own validated analysis. Maintain full methodological accountability — if AI analysis is used, you must understand it well enough to defend every number in peer review.",
+          "example": "A research team documents in their methods section that AI-assisted tools were used for initial descriptive analysis and outlier detection, while all inferential statistics were conducted and verified by the authors using R. They retain full analytical scripts for reproducibility review.",
+          "antipattern": "Publishing a paper that includes AI-generated statistical analysis without independent verification, failing to disclose AI assistance in violation of journal policy, or being unable to explain or reproduce the reported numbers during peer review."
+        }
+      },
+      "score_hints": {
+        "delegation": 0.2,
+        "description": 0.25,
+        "discernment": 0.35,
+        "diligence": 0.2
+      },
       "summary": "Divide analytical work deliberately between human scholarly judgment and AI computation. AI handles pattern recognition in large datasets, running descriptive statistics, flagging outliers, generating",
       "tags": [
         "research",
@@ -257,6 +528,7 @@
         "academic"
       ],
       "contributor": "Rick Dakan & Joseph Feller / Anthropic",
+      "reference": "https://aifluencyframework.org",
       "version": "1.0.0"
     },
     {
@@ -264,12 +536,34 @@
       "title": "AI-Supported Academic Literature Review",
       "domain": "research",
       "file": "research-literature-review.yaml",
-      "dimensions": [
-        "delegation",
-        "description",
-        "discernment",
-        "diligence"
-      ],
+      "dimensions": {
+        "delegation": {
+          "description": "AI can accelerate the literature review process by synthesizing themes across papers you have already identified, generating structured summaries of provided texts, suggesting search terms for database queries, and proposing a gap analysis framework. Researchers retain responsibility for: executing the systematic search in academic databases, verifying that all cited sources exist and are accurately represented, forming scholarly interpretations, and drawing conclusions about the field's state.",
+          "example": "A PhD student compiles 60 papers from her PubMed and Scopus searches on microbiome-mental health connections. She feeds the abstracts to AI in batches, asking it to identify recurring themes, contradictions between studies, and underexplored angles. She then uses this thematic map as a scaffold for her own reading and synthesis, reading every paper herself before citing it.",
+          "antipattern": "Asking AI to conduct the literature review from scratch — generating the reading list, summarizing papers AI has not actually read, and producing a synthesis the researcher then submits — creating a review full of hallucinated citations and misrepresented findings that the researcher cannot defend."
+        },
+        "description": {
+          "description": "Specify your literature review's scope with precision: the exact research question, the academic field and subfield, the time range, inclusion and exclusion criteria, the required depth of analysis, and the review type (narrative, systematic, scoping). Imprecise framing leads to AI output that spans the wrong literature or treats your question at the wrong level of specificity.",
+          "example": "Prompt: 'I have provided 45 abstracts from papers on cognitive behavioral therapy outcomes for adolescent depression, published 2015-2024, RCTs only. Identify: (1) the most common outcome measures used across studies, (2) the patient subgroups most frequently underrepresented, (3) the three most-cited methodological limitations across papers, and (4) any emerging treatment modifications mentioned in multiple papers. Do not add any studies I haven't provided.'",
+          "antipattern": "Prompting: 'Write a literature review on therapy and depression.' Without scope constraints, AI generates a sweeping narrative that mixes study types, time periods, populations, and therapy modalities — producing a superficial overview that satisfies no specific research question and cannot withstand peer review scrutiny."
+        },
+        "discernment": {
+          "description": "Verify every citation in an AI-assisted literature review independently in an academic database before including it in your work. AI confidently generates plausible-sounding but fabricated citations — author names, journal titles, and publication years that look real but aren't. Additionally, verify that real papers are accurately characterized: check that AI summaries correctly represent each paper's methodology, findings, and limitations.",
+          "example": "A researcher asks AI to synthesize themes from a set of provided papers and flag potentially relevant additional sources. She treats every additional source AI suggests as unverified until she has confirmed it in Google Scholar. Of eight AI-suggested additional references, two do not exist and one exists but reaches the opposite conclusion from what AI claimed.",
+          "antipattern": "Submitting a literature review with AI-generated citations that were never individually verified in an academic database — discovering during peer review that three cited articles are fabrications, resulting in rejection and reputational damage that follows the researcher's professional record."
+        },
+        "diligence": {
+          "description": "The researcher is fully responsible for every claim and citation in the final review. Disclose AI assistance per your target journal's author guidelines and your institution's research integrity policy (requirements vary significantly across disciplines and publishers). Validate all sources independently regardless of AI confidence. Understand that your scholarly reputation is built on the accuracy and integrity of your literature representation.",
+          "example": "A research team submits a systematic review that includes in the methods section a transparent account of how AI tools were used for thematic synthesis of author-identified papers, notes that all citations were independently verified in Cochrane Library and PubMed, and confirms compliance with the journal's AI transparency policy — meeting both disclosure and integrity standards.",
+          "antipattern": "Relying on AI to identify and summarize literature without reading the papers yourself, submitting a review that misrepresents study findings because you trusted AI's characterizations over the original texts, or failing to disclose AI assistance to a journal that requires transparency — compromising academic integrity and potentially contributing false knowledge to the scholarly record."
+        }
+      },
+      "score_hints": {
+        "delegation": 0.2,
+        "description": 0.3,
+        "discernment": 0.3,
+        "diligence": 0.2
+      },
       "summary": "AI can accelerate the literature review process by synthesizing themes across papers you have already identified, generating structured summaries of provided texts, suggesting search terms for databas",
       "tags": [
         "literature-review",
@@ -278,6 +572,7 @@
         "research-integrity"
       ],
       "contributor": "Rick Dakan & Joseph Feller / Anthropic",
+      "reference": "https://aifluencyframework.org",
       "version": "1.0.0"
     },
     {
@@ -285,12 +580,34 @@
       "title": "Story and Content Development with AI",
       "domain": "writing",
       "file": "writing-content-development.yaml",
-      "dimensions": [
-        "delegation",
-        "description",
-        "discernment",
-        "diligence"
-      ],
+      "dimensions": {
+        "delegation": {
+          "description": "Identify which creative elements benefit from AI exploration versus which must remain human-driven. AI excels at generating plot alternatives, brainstorming secondary character names, proposing scene structures, and expanding on prompts. Core voice, thematic meaning, emotional truth, and the author's unique perspective must stay with the human creator.",
+          "example": "A novelist asks AI to generate five possible turning points for chapter 7, then selects and transforms the one that best fits her protagonist's established arc. The AI explores; the human decides and develops.",
+          "antipattern": "Handing the AI a character description and asking it to write entire chapters wholesale, then lightly editing and publishing the result — abdicating the creative authorship that gives the work its distinctive voice and purpose."
+        },
+        "description": {
+          "description": "Give AI rich, specific creative context — the story world's rules, character backstories, established themes, the emotional arc you are building toward, your narrative voice, and any stylistic constraints. Vague prompts produce generic content; detailed creative briefs produce useful raw material.",
+          "example": "Prompt: 'This is a near-future climate noir story set in drowned New Orleans, 2067. Protagonist Maya Tran is a cynical water-rights detective, dry wit, Creole heritage, distrusts authority. I need three scene openings for chapter 4 where she visits the Floating Market. Tone: melancholy but alive with sensory detail. Echo Toni Morrison's eye for place.'",
+          "antipattern": "Prompting: 'Write a scene for my sci-fi story where the hero goes to a market.' This yields generic content with no connection to the established world, character voice, or thematic purpose — unusable without complete rewriting."
+        },
+        "discernment": {
+          "description": "Evaluate AI-generated content against your creative vision, not just surface quality. Good AI output that doesn't fit your voice or thematic intent is still the wrong output. Actively reject suggestions that feel generic, that undercut character consistency, or that introduce tropes that conflict with what you are building.",
+          "example": "An author receives three AI-generated chapter openings. Two are competently written but feel tonally flat for her noir voice. The third has an interesting image she adapts, changing the phrasing to match her protagonist's sardonic register. She uses roughly 15% of the AI material, transformed.",
+          "antipattern": "Accepting AI-generated dialogue or scene descriptions because they are grammatically sound and feel 'good enough,' without checking whether they match the character's established voice, advance the story's thematic arc, or reflect the emotional truth the author intended."
+        },
+        "diligence": {
+          "description": "Be transparent about AI's role in your creative work according to the norms of your publication context. Preserve your human creative intent as the primary force shaping the work. Avoid over-relying on AI to the point where your own creative voice atrophies. Keep records of your creative process for attribution purposes.",
+          "example": "A short story writer notes in her submission cover letter that AI tools were used for brainstorming and structural exploration, per the journal's disclosure policy. The published story reflects her voice, her decisions, and her thematic vision throughout.",
+          "antipattern": "Submitting AI-generated content to publications that prohibit AI-assisted work without disclosure, or losing track of which creative decisions were yours versus the AI's — failing to maintain the human authorship that gives the work its integrity and legal standing."
+        }
+      },
+      "score_hints": {
+        "delegation": 0.3,
+        "description": 0.35,
+        "discernment": 0.2,
+        "diligence": 0.15
+      },
       "summary": "Identify which creative elements benefit from AI exploration versus which must remain human-driven. AI excels at generating plot alternatives, brainstorming secondary character names, proposing scene ",
       "tags": [
         "creative-writing",
@@ -299,6 +616,7 @@
         "authorship"
       ],
       "contributor": "Rick Dakan & Joseph Feller / Anthropic",
+      "reference": "https://aifluencyframework.org",
       "version": "1.0.0"
     },
     {
@@ -306,12 +624,34 @@
       "title": "Creative Writing with AI as Co-Creator",
       "domain": "writing",
       "file": "writing-creative-ai-collaboration.yaml",
-      "dimensions": [
-        "delegation",
-        "description",
-        "discernment",
-        "diligence"
-      ],
+      "dimensions": {
+        "delegation": {
+          "description": "The human writer sets and holds the creative vision, voice, and thematic intent. AI's role is to explore the possibility space: generating variations, proposing alternative phrasings, suggesting structural options, and expanding on prompts the writer provides. The writer selects, transforms, and integrates — never simply accepting. This asymmetry preserves human creative authorship while genuinely leveraging AI's generative range.",
+          "example": "A short story writer gives AI her protagonist's voice sample and asks for ten possible opening lines for a new story. She finds two that spark something, combines elements from both, and rewrites the result into a line that is distinctly her own — using AI as a creative catalyst, not a ghostwriter.",
+          "antipattern": "Asking AI to generate a complete story with a brief premise, then submitting it to literary publications with minimal editing — claiming authorship of work in which the human's creative contribution was limited to a topic choice and a submit button press."
+        },
+        "description": {
+          "description": "Give AI the full creative parameters it needs to generate useful material: genre conventions you are working within or against, your protagonist's established voice and psychology, the narrative constraints of the world you've built, the emotional register of the scene, stylistic influences, and what you specifically want to explore in this session. Richer briefs yield richer possibilities.",
+          "example": "Prompt: 'Write three alternative versions of the scene where Lena realizes her sister has been lying to her for years. Lena's voice: quiet, measured, suppresses emotion until it breaks through — think Marilynne Robinson's register. Setting: kitchen, early morning, just them. Her sister doesn't know Lena knows yet. Each version should find a different emotional entry point: one through an object, one through silence, one through an unexpected mundane action.'",
+          "antipattern": "Prompting: 'Write a scene where two sisters have a conflict.' This produces a generic dialogue with stock emotional beats that has no connection to your specific characters, your established voice, or the narrative weight the scene needs to carry in your story."
+        },
+        "discernment": {
+          "description": "Evaluate AI-generated creative material against voice consistency, originality, narrative coherence, and emotional truth — not just surface competence. Good writing that doesn't sound like you, that relies on familiar tropes, or that resolves emotional tension too easily is still wrong for your work. Actively seek and reject the generic. What makes AI output valuable is what you do with it, not what it produces on its own.",
+          "example": "A novelist receives five AI-generated dialogue exchanges for a tense confrontation scene. She discards three as tonally flat and relying on predictable beats. One has an image — a character straightening a picture frame mid-argument — that feels true to her story. She uses only that image, embedded in dialogue she writes herself, and the scene becomes one of the book's strongest moments.",
+          "antipattern": "Accepting AI-generated prose because it reads smoothly and competently, without checking whether it sounds like your narrator's voice, advances the scene's specific emotional purpose, or introduces tropes (the dramatic pause before the reveal, the single tear) that undercut the subtlety you are working to achieve."
+        },
+        "diligence": {
+          "description": "Be honest with your readers, your publishers, and yourself about AI's role in your creative process. Follow your publication venue's disclosure policies. Ensure your creative voice and human intent remain the primary force in the work. Maintain your craft practice — using AI as a crutch that prevents developing your own creative capabilities ultimately diminishes both you and the work.",
+          "example": "A literary fiction writer discloses in her author's note that AI tools were used for brainstorming and exploring structural alternatives during drafting, consistent with her publisher's transparency policy. The novel reflects her voice, her thematic vision, and her years of craft development on every page.",
+          "antipattern": "Using AI to write the bulk of a novel, submitting it under your sole authorship to a publisher who prohibits undisclosed AI content, and publishing work that cannot be defended as primarily yours — creating legal and reputational exposure and undermining the trust relationship between author and reader."
+        }
+      },
+      "score_hints": {
+        "delegation": 0.3,
+        "description": 0.3,
+        "discernment": 0.2,
+        "diligence": 0.2
+      },
       "summary": "The human writer sets and holds the creative vision, voice, and thematic intent. AI's role is to explore the possibility space: generating variations, proposing alternative phrasings, suggesting struc",
       "tags": [
         "creative-writing",
@@ -320,6 +660,7 @@
         "authorship"
       ],
       "contributor": "Rick Dakan & Joseph Feller / Anthropic",
+      "reference": "https://aifluencyframework.org",
       "version": "1.0.0"
     },
     {
@@ -327,12 +668,34 @@
       "title": "AI-Assisted Marketing Email Campaigns",
       "domain": "writing",
       "file": "writing-marketing-email-campaign.yaml",
-      "dimensions": [
-        "delegation",
-        "description",
-        "discernment",
-        "diligence"
-      ],
+      "dimensions": {
+        "delegation": {
+          "description": "The human marketing strategist designs the campaign's core message, audience segmentation logic, and brand voice. AI then executes variation drafting — subject line alternatives, body copy variants for A/B testing, personalization token suggestions, and CTA phrasing options. The human selects, refines, and approves; AI accelerates the variation space.",
+          "example": "A marketing manager defines the campaign goal (re-engage lapsed subscribers with a 20% discount), the audience segment (users inactive for 90+ days), and the brand voice (friendly, direct, never pushy). She then asks AI to draft five subject line options and three body copy variants, which she narrows to one of each after testing against campaign criteria.",
+          "antipattern": "Having AI independently design the campaign messaging strategy, choose the audience, set the offer, and draft the emails — then simply forwarding the AI output to the email platform without human strategic review or brand alignment check."
+        },
+        "description": {
+          "description": "Provide AI with a complete campaign brief: target audience demographics and psychographics, campaign objective and success metrics, desired brand voice with examples, the specific offer or message, any compliance constraints (CAN-SPAM, GDPR), and the desired call to action. The more precisely you define success, the more useful the AI drafts.",
+          "example": "Prompt: 'Draft three subject line options and two body copy variants for a re-engagement email. Audience: B2B SaaS users, mid-level product managers, inactive 90+ days. Offer: 20% discount on annual plan upgrade. Voice: confident, peer-to-peer, not salesy — like a trusted colleague nudging, not a pushy vendor. CTA: Schedule a 15-min call. Compliance: include unsubscribe link placeholder. Max 150 words body copy.'",
+          "antipattern": "Prompting: 'Write a marketing email for our product.' With no audience definition, no campaign goal, no voice guidance, and no offer details, AI produces a generic promotional template that fits no specific audience and advances no particular business goal."
+        },
+        "discernment": {
+          "description": "Evaluate each AI-drafted variant against your campaign goals, brand standards, audience fit, and legal requirements before sending. Check that claims are factually accurate, that the tone matches your brand, that the offer details are correct, and that no language could mislead recipients or create compliance issues.",
+          "example": "A campaign manager reviews an AI-drafted email and flags two issues: the subject line 'You''re missing out!' violates the company's brand guideline against FOMO language, and a product claim ('the #1 tool for project managers') is unsubstantiated. She revises both before the email enters the approval workflow.",
+          "antipattern": "Sending AI-drafted campaign emails after only a quick skim for spelling errors — missing off-brand phrasing, unverified product claims, incorrect offer details, or compliance issues that could damage brand trust or trigger regulatory scrutiny."
+        },
+        "diligence": {
+          "description": "Validate all factual claims, offer details, pricing, and legal disclosures before the email goes out. Consider the ethics of AI use in persuasive marketing communications and whether your audience has any expectation of human-crafted outreach. Maintain a human approval step in the campaign workflow regardless of AI involvement.",
+          "example": "Before deploying a 50,000-recipient campaign, the marketing team runs the AI-drafted email through their compliance checklist (unsubscribe link present, sender identification correct, no deceptive subject lines), has the legal team verify the offer terms, and gets final sign-off from the brand director.",
+          "antipattern": "Auto-deploying AI-drafted emails through an automated campaign platform with no human review step, sending incorrect pricing or expired offers to thousands of recipients, or using AI-generated urgency language ('Act now before midnight!') for a deadline that doesn't actually exist."
+        }
+      },
+      "score_hints": {
+        "delegation": 0.25,
+        "description": 0.35,
+        "discernment": 0.2,
+        "diligence": 0.2
+      },
       "summary": "The human marketing strategist designs the campaign's core message, audience segmentation logic, and brand voice. AI then executes variation drafting — subject line alternatives, body copy variants fo",
       "tags": [
         "marketing",
@@ -341,6 +704,7 @@
         "brand-voice"
       ],
       "contributor": "Rick Dakan & Joseph Feller / Anthropic",
+      "reference": "https://aifluencyframework.org",
       "version": "1.0.0"
     }
   ],
@@ -351,12 +715,34 @@
         "title": "Bug Fix Prioritization",
         "domain": "coding",
         "file": "coding-bug-fix-prioritization.yaml",
-        "dimensions": [
-          "delegation",
-          "description",
-          "discernment",
-          "diligence"
-        ],
+        "dimensions": {
+          "delegation": {
+            "description": "Should this task be automated, augmented, or agentic?",
+            "example": "AI suggests bug fix priorities based on impact and frequency.",
+            "antipattern": "Letting AI fully decide bug fix order without human input."
+          },
+          "description": {
+            "description": "What context/framing makes the AI most useful here?",
+            "example": "Provide bug reports, user impact, and historical data.",
+            "antipattern": "No context, leading to poor prioritization."
+          },
+          "discernment": {
+            "description": "How do you evaluate if the AI output is trustworthy?",
+            "example": "Cross-check AI prioritization with product manager feedback.",
+            "antipattern": "Accepting AI priorities without review."
+          },
+          "diligence": {
+            "description": "What human accountability is required after AI involvement?",
+            "example": "Product manager must approve final bug fix order.",
+            "antipattern": "Deploying fixes based solely on AI suggestions."
+          }
+        },
+        "score_hints": {
+          "delegation": 0.2,
+          "description": 0.3,
+          "discernment": 0.3,
+          "diligence": 0.2
+        },
         "summary": "Should this task be automated, augmented, or agentic?",
         "tags": [
           "bug-fix",
@@ -371,12 +757,34 @@
         "title": "Code Review Triage",
         "domain": "coding",
         "file": "coding-code-review-triage.yaml",
-        "dimensions": [
-          "delegation",
-          "description",
-          "discernment",
-          "diligence"
-        ],
+        "dimensions": {
+          "delegation": {
+            "description": "Should this task be automated, augmented, or agentic?",
+            "example": "Use AI to triage code review comments, flagging those needing human attention.",
+            "antipattern": "Fully automating code review without human oversight."
+          },
+          "description": {
+            "description": "What context/framing makes the AI most useful here?",
+            "example": "Provide repository context and recent commit history for accurate triage.",
+            "antipattern": "No context, leading to irrelevant triage suggestions."
+          },
+          "discernment": {
+            "description": "How do you evaluate if the AI output is trustworthy?",
+            "example": "Compare flagged comments against senior developer feedback.",
+            "antipattern": "Accepting AI triage without validation."
+          },
+          "diligence": {
+            "description": "What human accountability is required after AI involvement?",
+            "example": "Human must review flagged comments before merging.",
+            "antipattern": "Merging code based solely on AI triage."
+          }
+        },
+        "score_hints": {
+          "delegation": 0.2,
+          "description": 0.3,
+          "discernment": 0.3,
+          "diligence": 0.2
+        },
         "summary": "Should this task be automated, augmented, or agentic?",
         "tags": [
           "code-review",
@@ -391,12 +799,34 @@
         "title": "Refactoring Suggestions",
         "domain": "coding",
         "file": "coding-refactoring-suggestions.yaml",
-        "dimensions": [
-          "delegation",
-          "description",
-          "discernment",
-          "diligence"
-        ],
+        "dimensions": {
+          "delegation": {
+            "description": "Should this task be automated, augmented, or agentic?",
+            "example": "AI proposes refactoring opportunities, human reviews and approves.",
+            "antipattern": "AI automatically refactors code without human review."
+          },
+          "description": {
+            "description": "What context/framing makes the AI most useful here?",
+            "example": "Provide codebase structure and known pain points.",
+            "antipattern": "No context, leading to generic suggestions."
+          },
+          "discernment": {
+            "description": "How do you evaluate if the AI output is trustworthy?",
+            "example": "Validate suggestions against test coverage and code quality metrics.",
+            "antipattern": "Accepting AI refactoring without testing."
+          },
+          "diligence": {
+            "description": "What human accountability is required after AI involvement?",
+            "example": "Developer must run tests and review changes.",
+            "antipattern": "Merging AI-refactored code without testing."
+          }
+        },
+        "score_hints": {
+          "delegation": 0.2,
+          "description": 0.3,
+          "discernment": 0.3,
+          "diligence": 0.2
+        },
         "summary": "Should this task be automated, augmented, or agentic?",
         "tags": [
           "refactoring",
@@ -411,12 +841,34 @@
         "title": "Test Case Generation",
         "domain": "coding",
         "file": "coding-test-case-generation.yaml",
-        "dimensions": [
-          "delegation",
-          "description",
-          "discernment",
-          "diligence"
-        ],
+        "dimensions": {
+          "delegation": {
+            "description": "Should this task be automated, augmented, or agentic?",
+            "example": "AI generates test cases, developer reviews and integrates.",
+            "antipattern": "AI-generated tests merged without human review."
+          },
+          "description": {
+            "description": "What context/framing makes the AI most useful here?",
+            "example": "Provide function signatures and edge case requirements.",
+            "antipattern": "No context, leading to incomplete tests."
+          },
+          "discernment": {
+            "description": "How do you evaluate if the AI output is trustworthy?",
+            "example": "Run generated tests and check coverage improvements.",
+            "antipattern": "Accepting tests without execution."
+          },
+          "diligence": {
+            "description": "What human accountability is required after AI involvement?",
+            "example": "Developer must validate and maintain test suite.",
+            "antipattern": "Relying solely on AI for test maintenance."
+          }
+        },
+        "score_hints": {
+          "delegation": 0.2,
+          "description": 0.3,
+          "discernment": 0.3,
+          "diligence": 0.2
+        },
         "summary": "Should this task be automated, augmented, or agentic?",
         "tags": [
           "test-case",
@@ -433,12 +885,34 @@
         "title": "AI-Augmented Course Design",
         "domain": "education",
         "file": "education-course-design.yaml",
-        "dimensions": [
-          "delegation",
-          "description",
-          "discernment",
-          "diligence"
-        ],
+        "dimensions": {
+          "delegation": {
+            "description": "AI can accelerate the scaffolding work of course design: generating draft learning objectives from a topic brief, suggesting module sequencing options, proposing assessment formats, brainstorming reading list candidates, and drafting rubric language. The instructor must own: the pedagogical strategy, the theoretical framework underlying the course, the sequencing rationale, and all decisions about what students will actually experience. Pedagogical authority cannot be delegated.",
+            "example": "A professor designing a new undergraduate ethics course asks AI to generate a draft list of possible weekly topics aligned with her stated course arc (from foundational theory to applied cases). She uses this list as a stimulus to compare against her own planned sequence, adopting two AI-suggested topics she had overlooked and discarding three that don't serve her theoretical framework.",
+            "antipattern": "Asking AI to design the full course — objectives, module structure, readings, assignments, assessments — and adopting the output with cosmetic changes, without grounding the design in a coherent pedagogical theory or ensuring it reflects the instructor's scholarly expertise."
+          },
+          "description": {
+            "description": "Provide AI with detailed instructional design context: course level and credit hours, student profile and prerequisite knowledge, program-level learning outcomes the course must serve, your pedagogical philosophy, assessment philosophy, any accreditation or institutional constraints, and the thematic arc you want the course to trace. Precision in the brief yields useful scaffolding.",
+            "example": "Prompt: 'Help me draft learning objectives for a 3-credit upper-division course on algorithmic bias. Students are CS seniors with strong technical backgrounds but limited social science exposure. Program outcome: graduates can evaluate the societal impact of technology systems. I want the course to move from conceptual foundations (weeks 1-4) to case analysis (weeks 5-10) to policy and design response (weeks 11-14). Use Bloom's Taxonomy verbs appropriate to the upper-division level.'",
+            "antipattern": "Prompting: 'Write learning objectives for a course on AI ethics.' Without specifying student level, program context, Bloom's taxonomy tier, or the course's theoretical arc, AI produces generic objectives that could apply to any course at any level and serve no specific program outcome."
+          },
+          "discernment": {
+            "description": "Evaluate AI-generated course design elements against pedagogical soundness, alignment to Bloom's Taxonomy, internal coherence, and fit with your students' actual preparation. Check that assessment types genuinely measure the stated learning objectives, that the workload is realistic, and that reading suggestions are current, credible, and accessible to your student population.",
+            "example": "An instructor reviews AI-generated weekly learning objectives and notices three of them are knowledge-level objectives (define, identify, list) in weeks designed for upper-division analysis. She revises them upward to analysis and evaluation verbs to match the cognitive demand appropriate for the course level.",
+            "antipattern": "Adopting AI-generated course syllabi and assessment designs without checking internal alignment — using multiple-choice exams to assess objectives that require critical analysis, or setting a reading workload that AI estimated without accounting for the actual length and density of the suggested texts."
+          },
+          "diligence": {
+            "description": "Verify the accuracy of all factual content AI contributes to course materials. Document the AI's role in course design per your institution's academic integrity and transparency policies. Ensure the final course design meets accreditation requirements, reflects current disciplinary knowledge, and embodies your own scholarly judgment and professional responsibility as the instructor of record.",
+            "example": "A faculty member building a new public health law course uses AI to draft a draft syllabus framework, then spends three hours reviewing it against her institution's course approval criteria, the program's accreditation standards, and current public health law scholarship — revising heavily before submission for curricular approval.",
+            "antipattern": "Submitting an AI-generated course proposal to a curriculum committee without personally verifying that the proposed learning objectives meet accreditation standards, that the reading list contains accurate and current citations, or that the assessment strategy is pedagogically defensible under institutional review."
+          }
+        },
+        "score_hints": {
+          "delegation": 0.2,
+          "description": 0.3,
+          "discernment": 0.25,
+          "diligence": 0.25
+        },
         "summary": "AI can accelerate the scaffolding work of course design: generating draft learning objectives from a topic brief, suggesting module sequencing options, proposing assessment formats, brainstorming read",
         "tags": [
           "course-design",
@@ -447,6 +921,7 @@
           "instructional-design"
         ],
         "contributor": "Rick Dakan & Joseph Feller / Anthropic",
+        "reference": "https://aifluencyframework.org",
         "version": "1.0.0"
       },
       {
@@ -454,12 +929,34 @@
         "title": "AI-Assisted Lesson Planning for Educators",
         "domain": "education",
         "file": "education-lesson-planning.yaml",
-        "dimensions": [
-          "delegation",
-          "description",
-          "discernment",
-          "diligence"
-        ],
+        "dimensions": {
+          "delegation": {
+            "description": "Identify which lesson planning elements AI can accelerate versus which require the teacher's direct professional judgment. AI handles well: generating activity ideas, drafting discussion questions, suggesting differentiation strategies, proposing assessment rubrics, and creating example problems. Teachers must retain: selecting content aligned to standards, setting the pedagogical arc across a unit, understanding individual student needs, and making final instructional decisions.",
+            "example": "A 7th-grade science teacher asks AI to generate five hands-on activity ideas for a lesson on cellular respiration at a middle school level, then selects the one that fits her lab budget and her students' prior knowledge, adapts it to her pacing, and writes her own formative assessment questions.",
+            "antipattern": "Pasting an AI-generated full lesson plan directly into the school's curriculum system without reviewing it for standard alignment, age appropriateness, or fit with the specific class's learning trajectory — treating AI as a replacement for pedagogical expertise rather than a brainstorming assistant."
+          },
+          "description": {
+            "description": "Provide AI with specific instructional context: subject and grade level, concrete learning objectives tied to standards, the students' current skill level and prior knowledge, the available time and resources, the preferred pedagogical approach, and any accessibility or differentiation needs. Generic requests produce generic plans.",
+            "example": "Prompt: 'Help me plan a 50-minute 8th-grade ELA lesson on identifying unreliable narrators. Students have read chapters 1-5 of The Outsiders. Objective: students can cite textual evidence to explain how Ponyboy's perspective limits the reader's understanding of events. Pedagogy: discussion-based with a short collaborative activity. Class includes 3 ELL students and 2 students with reading IEPs.'",
+            "antipattern": "Prompting: 'Write a lesson plan about unreliable narrators for middle school.' This produces a generic template disconnected from the specific text students are reading, the actual learning objective, the class's composition, and the teacher's instructional context."
+          },
+          "discernment": {
+            "description": "Evaluate AI-generated lesson plans and activities critically before adopting them. Check standard alignment, age appropriateness of content and vocabulary, timing realism, whether suggested activities match your students' actual readiness, and whether the pedagogical sequence makes instructional sense. AI does not know your students; you do.",
+            "example": "A teacher reviews an AI-generated lesson plan and notices the suggested 'exit ticket' question requires inferential reasoning two grade levels above her current class's demonstrated ability. She replaces it with a scaffolded sentence-starter version that matches where her students actually are.",
+            "antipattern": "Implementing AI-suggested activities without mentally simulating how your specific students will respond — discovering mid-lesson that the activity assumes prior knowledge students don't have, or that the timing estimate was wildly optimistic for the class's working pace."
+          },
+          "diligence": {
+            "description": "Maintain professional responsibility for every lesson you deliver. Verify that AI-suggested content is factually accurate, that activities are safe and appropriate for your students, and that lesson plans meet the curricular standards your students are accountable for. Your professional judgment is the final quality gate, not the AI.",
+            "example": "An educator uses AI-generated lesson scaffolding as a starting framework, then personally verifies that all factual content aligns with state science standards, removes an activity that requires materials not available in her classroom, and adds a culturally responsive example relevant to her students' community.",
+            "antipattern": "Delivering an AI-generated lesson that contains a factual error (e.g., an incorrect historical date or a flawed science explanation) because the teacher assumed the AI's content was accurate and did not independently verify it before presenting it to students."
+          }
+        },
+        "score_hints": {
+          "delegation": 0.25,
+          "description": 0.3,
+          "discernment": 0.25,
+          "diligence": 0.2
+        },
         "summary": "Identify which lesson planning elements AI can accelerate versus which require the teacher's direct professional judgment. AI handles well: generating activity ideas, drafting discussion questions, su",
         "tags": [
           "education",
@@ -468,6 +965,7 @@
           "curriculum"
         ],
         "contributor": "Rick Dakan & Joseph Feller / Anthropic",
+        "reference": "https://aifluencyframework.org",
         "version": "1.0.0"
       },
       {
@@ -475,12 +973,34 @@
         "title": "Student Career Planning with AI",
         "domain": "education",
         "file": "education-student-career-planning.yaml",
-        "dimensions": [
-          "delegation",
-          "description",
-          "discernment",
-          "diligence"
-        ],
+        "dimensions": {
+          "delegation": {
+            "description": "Students can productively delegate to AI: resume drafting from bullet points they supply, generating practice interview questions for a target role, exploring career paths in an unfamiliar field, drafting cover letter frameworks, and researching industry norms. Students must retain: decisions about which opportunities align with their values and goals, truthful representation of their own experiences, and final responsibility for all submitted application materials.",
+            "example": "A college junior asks AI to suggest ten career paths where her combination of biology major and data analytics minor would be valued, then researches the top three that interest her and uses that understanding to craft her own narrative about why she is pursuing biostatistics.",
+            "antipattern": "Having AI write a cover letter that fabricates or exaggerates the student's experiences, then submitting it as an accurate representation — or using AI to answer interview questions on the student's behalf via an earpiece during a live interview."
+          },
+          "description": {
+            "description": "Share with AI your actual skills, experiences, target roles, industry context, career constraints, and personal goals. The more accurately you describe yourself and your situation, the more useful the AI's suggestions will be. Vague or inflated self-descriptions lead to advice that fits a fictional version of you, not your real situation.",
+            "example": "Prompt: 'I'm a 3rd-year environmental engineering student with a 3.4 GPA, one summer internship at a municipal water authority doing stormwater modeling, and a Python project analyzing local air quality data. I want to work in climate tech after graduation, preferably at a company working on water or air quality monitoring. Help me identify specific entry-level roles to target and the skills I should develop this year.'",
+            "antipattern": "Prompting: 'I'm a student who wants a good job in tech. What should I do?' This produces generic career advice applicable to millions of people and useless for the student's actual situation, skills, and industry interest."
+          },
+          "discernment": {
+            "description": "Evaluate AI career advice critically. Verify that suggested roles actually exist and match what you want. Check salary ranges and job market realities against current sources like Bureau of Labor Statistics data or industry salary surveys, not just AI assertions. Assess whether AI suggestions genuinely fit your personal values, lifestyle needs, and long-term goals — not just what sounds impressive.",
+            "example": "A student receives AI-generated advice suggesting she pursue a specific niche certification. She researches the certification independently, reads LinkedIn profiles of people who hold it, talks to two professionals in the field, and determines the certification is valued by only one employer segment — not the area she actually wants to work in.",
+            "antipattern": "Following AI career advice without verification — enrolling in a bootcamp AI recommended, discovering it is not recognized by employers in the target field, or pursuing a role because AI said it pays well without checking current market data or speaking with anyone actually working in that field."
+          },
+          "diligence": {
+            "description": "Own every career decision you make. AI is a thinking partner, not a career counselor with knowledge of your full life context. Build your own understanding of your field. Ensure all application materials truthfully represent your actual experiences. Develop a personal policy for how you use AI in your professional development so your skills and judgment grow alongside your AI fluency.",
+            "example": "A student uses AI to generate a list of potential resume bullet points based on her internship activities, then rewrites each one in her own voice, ensures they accurately reflect what she did, and has her university career center review the final document — treating AI as a drafting scaffold, not the author.",
+            "antipattern": "Submitting AI-generated job applications with exaggerated credentials, relying entirely on AI career advice without informational interviews or real-world research, or using AI so heavily in application writing that the student cannot speak authentically about the experiences described in their own materials."
+          }
+        },
+        "score_hints": {
+          "delegation": 0.25,
+          "description": 0.3,
+          "discernment": 0.25,
+          "diligence": 0.2
+        },
         "summary": "Students can productively delegate to AI: resume drafting from bullet points they supply, generating practice interview questions for a target role, exploring career paths in an unfamiliar field, draf",
         "tags": [
           "career-planning",
@@ -489,6 +1009,7 @@
           "professional-development"
         ],
         "contributor": "Rick Dakan & Joseph Feller / Anthropic",
+        "reference": "https://aifluencyframework.org",
         "version": "1.0.0"
       }
     ],
@@ -498,12 +1019,34 @@
         "title": "Professional Email Writing with AI",
         "domain": "general",
         "file": "general-email-writing.yaml",
-        "dimensions": [
-          "delegation",
-          "description",
-          "discernment",
-          "diligence"
-        ],
+        "dimensions": {
+          "delegation": {
+            "description": "Decide whether AI should produce the full draft or only assist with structure, tone, or phrasing. High-stakes emails (termination notices, executive communications, sensitive negotiations) should remain human-led with AI as an editor at most. Routine emails (meeting requests, status updates, acknowledgment replies) are strong candidates for full AI drafting.",
+            "example": "A manager uses AI to draft a meeting invitation and a project status update, then writes a performance feedback email herself because it requires nuanced personal knowledge of the employee's growth journey.",
+            "antipattern": "Delegating every email including sensitive HR communications, client dispute responses, or apology letters entirely to AI without assessing the relationship stakes or the potential for misrepresentation."
+          },
+          "description": {
+            "description": "Provide AI with the full context it needs to draft an effective email — recipient relationship, communication purpose, desired tone, relevant background, and any constraints on length or formality. The quality of the draft is directly proportional to the richness of the context you provide.",
+            "example": "Prompt: 'Draft a follow-up email to Sarah Chen, our enterprise client at Meridian Corp. We met Tuesday to discuss their Q3 data migration delay. Tone: professional but warm — we have a 3-year relationship. Acknowledge the delay empathetically, confirm next steps (kick-off call Friday 2pm), and close with confidence. Keep it under 200 words.'",
+            "antipattern": "Prompting with only: 'Write an email to my client about the project delay.' This gives AI no information about tone, relationship history, specific facts, or the desired outcome, resulting in a generic template that fails to represent the actual situation."
+          },
+          "discernment": {
+            "description": "After receiving the AI draft, carefully evaluate whether the tone matches the real relationship, whether all factual claims are accurate, whether the intent is captured correctly, and whether the email could be misinterpreted. Read it as the recipient would, not as the author.",
+            "example": "A marketing director reviews an AI-drafted client email and notices the phrase 'as we discussed' refers to a meeting that hasn't happened yet — a factual error the AI introduced. She corrects the timeline before sending.",
+            "antipattern": "Copying the AI draft directly into the email client and hitting send without reading it through the recipient's eyes, missing tone mismatches (e.g., too formal for a casual colleague) or factual inaccuracies introduced by the model."
+          },
+          "diligence": {
+            "description": "Take responsibility for the email you send regardless of how it was drafted. In professional contexts, consider whether AI-assisted drafting should be disclosed. Verify all facts, names, dates, and commitments in the email before sending. Your name on the email means you own the content.",
+            "example": "A consultant discloses in her firm's engagement letter that AI tools assist with drafting client communications, and she maintains a personal checklist — verify dates, names, attachments, and factual claims — that she runs on every AI-assisted email before sending.",
+            "antipattern": "Sending an AI-drafted email containing an incorrect meeting date, a misspelled client name, or a commitment you didn't actually make, because you assumed the AI had accurate information and skipped personal review."
+          }
+        },
+        "score_hints": {
+          "delegation": 0.2,
+          "description": 0.35,
+          "discernment": 0.25,
+          "diligence": 0.2
+        },
         "summary": "Decide whether AI should produce the full draft or only assist with structure, tone, or phrasing. High-stakes emails (termination notices, executive communications, sensitive negotiations) should rema",
         "tags": [
           "email",
@@ -512,6 +1055,7 @@
           "workplace"
         ],
         "contributor": "Rick Dakan & Joseph Feller / Anthropic",
+        "reference": "https://aifluencyframework.org",
         "version": "1.0.0"
       },
       {
@@ -519,12 +1063,34 @@
         "title": "Description-Discernment Iterative Refinement Loop",
         "domain": "general",
         "file": "general-iterative-refinement-loop.yaml",
-        "dimensions": [
-          "delegation",
-          "description",
-          "discernment",
-          "diligence"
-        ],
+        "dimensions": {
+          "delegation": {
+            "description": "Treat AI as a co-creator in an ongoing dialogue, not a one-shot command executor. The first AI output is a draft that begins a conversation, not an end product. Structure your workflow so that each AI output triggers a human evaluation, which generates a refined prompt, which produces a better output — repeating until the result meets your standard. This iterative posture is the fundamental AI collaboration pattern across all domains.",
+            "example": "A product manager uses AI to draft a feature brief, evaluates it, identifies three gaps (missing user persona context, weak success metrics, no edge case consideration), feeds those gaps back into a refined prompt, gets a second draft, and repeats twice more until the brief meets her standard — treating each cycle as a productive step, not a failure.",
+            "antipattern": "Running a single AI prompt, receiving an output that is clearly incomplete or off-target, and then either submitting that output as-is or abandoning the AI approach entirely — failing to use the iterative loop that is the actual mechanism through which AI collaboration produces quality results."
+          },
+          "description": {
+            "description": "In iterative refinement, each round of prompting is an act of description — but later rounds are more powerful because they are informed by what you learned evaluating the previous output. Describe not just what you want but what was wrong with the last version and why. Specific corrective feedback is the engine of the loop.",
+            "example": "Round 1: 'Draft a product requirements doc for a mobile notification system.' Round 2 (after evaluation): 'The previous draft lacked user permission flow details and assumed push always on. Revise to add: (1) permission request UX at onboarding, (2) notification preference center spec, (3) opt-out flows per notification type. Keep the same structure.'",
+            "antipattern": "After receiving a poor first output, re-prompting with an equally vague request ('Make it better' or 'Try again') rather than articulating specifically what was insufficient and why — failing to use what you learned from evaluating the first output to produce a meaningfully improved next prompt."
+          },
+          "discernment": {
+            "description": "After each AI output, conduct a structured evaluation before generating the next prompt. Assess accuracy against facts you know, relevance to your actual goal, completeness against your requirements, audience fit, and quality of reasoning. The discernment step is not a final judgment — it is the input to the next description. Make your evaluation explicit so you can articulate it in your refined prompt.",
+            "example": "A writer receives an AI-drafted article section and explicitly scores it against four criteria: factual accuracy (3/5 — two claims need verification), tone (4/5 — mostly right, one paragraph too formal), completeness (2/5 — missing the key counterargument), audience fit (4/5 — appropriate vocabulary). This structured evaluation drives her next prompt precisely.",
+            "antipattern": "Skimming AI output and forming a vague sense that 'it's not quite right' without identifying specifically what is wrong — then producing a corrective prompt that is equally vague, resulting in a marginally different output that still misses the target in the same ways."
+          },
+          "diligence": {
+            "description": "Do not ship the first AI output, or even the second, without it having survived genuine evaluative scrutiny. Document your iteration path — the prompts used, the key decisions at each evaluation, and why you accepted the final output — especially for consequential work. Iteration transparency is accountability: it shows the work was human-directed, not just human-forwarded.",
+            "example": "A communications team maintains a prompt log for all AI-assisted client reports, recording each prompt version and the reason for the refinement. When a client questions a report's methodology, the team can demonstrate the three-round refinement process and the human judgment applied at each evaluation step.",
+            "antipattern": "Accepting and submitting the first AI output that seems 'good enough' without completing even one full evaluate-refine cycle — then, when the output contains errors or misses the mark, having no record of the process and no basis for explaining why the AI's first guess was treated as a final answer."
+          }
+        },
+        "score_hints": {
+          "delegation": 0.2,
+          "description": 0.35,
+          "discernment": 0.3,
+          "diligence": 0.15
+        },
         "summary": "Treat AI as a co-creator in an ongoing dialogue, not a one-shot command executor. The first AI output is a draft that begins a conversation, not an end product. Structure your workflow so that each AI",
         "tags": [
           "iteration",
@@ -533,6 +1099,7 @@
           "refinement"
         ],
         "contributor": "Rick Dakan & Joseph Feller / Anthropic",
+        "reference": "https://aifluencyframework.org",
         "version": "1.0.0"
       }
     ],
@@ -542,12 +1109,34 @@
         "title": "AI-Assisted Clinical Documentation",
         "domain": "healthcare",
         "file": "healthcare-clinical-documentation.yaml",
-        "dimensions": [
-          "delegation",
-          "description",
-          "discernment",
-          "diligence"
-        ],
+        "dimensions": {
+          "delegation": {
+            "description": "AI can assist clinicians with drafting clinical notes from voice transcription, generating patient education material drafts, summarizing prior visit records, and producing structured documentation templates. All clinical judgment is non-delegable — diagnosis, treatment decisions, medication orders, and assessment of patient status require a licensed clinician's direct judgment and cannot be transferred to AI under any circumstances.",
+            "example": "An internist uses an AI ambient documentation tool to generate a draft SOAP note from a recorded patient encounter. She reviews the full draft before it enters the EHR, corrects the AI's mischaracterization of the patient's symptom onset timeline, and signs only after verifying that the assessment and plan reflect her actual clinical reasoning.",
+            "antipattern": "Allowing an AI documentation tool to finalize clinical notes without clinician review, or using AI-generated differential diagnoses as the actual clinical assessment without independent clinical evaluation — abdicating the professional judgment that defines clinical practice."
+          },
+          "description": {
+            "description": "Provide AI with precise clinical context: the documentation type required (SOAP note, discharge summary, referral letter, patient education handout), the patient's relevant clinical background, the format required by your institution or EHR, and any clinical standards the document must meet. Vague inputs produce vague outputs that require more revision than starting from scratch.",
+            "example": "Prompt: 'Draft a patient education handout for a 65-year-old patient with newly diagnosed Type 2 diabetes who speaks English as a second language. Reading level: 6th grade. Cover: what Type 2 diabetes is in plain language, the importance of blood sugar monitoring, dietary basics (Mediterranean diet pattern), and when to call the care team. Avoid medical jargon. Format: bullet points with short headers.'",
+            "antipattern": "Prompting: 'Write patient instructions for diabetes.' This produces generic clinical text at an inappropriate reading level with medical terminology, requiring complete rewriting — no faster than drafting from scratch, and risking use of a generic template that doesn't match the specific patient's situation."
+          },
+          "discernment": {
+            "description": "Scrutinize every AI-generated clinical document for medical accuracy before it enters the record or reaches a patient. Check for hallucinated medication names, incorrect dosages, fabricated lab values, inappropriate diagnostic language, or clinical claims that don't match the actual encounter. Patient safety depends on the clinician catching AI errors before they propagate into care decisions.",
+            "example": "A hospitalist reviews an AI-generated discharge summary and catches that the AI has listed a drug at twice the prescribed dose and omitted a critical allergy from the medication list. She corrects both errors before the summary is sent to the receiving primary care physician — preventing a potential adverse drug event.",
+            "antipattern": "Co-signing AI-generated discharge summaries, referral letters, or medication reconciliation documents without reading them in full — allowing a hallucinated dosage, an omitted allergy, or an incorrect diagnosis code to enter the medical record and influence downstream care decisions."
+          },
+          "diligence": {
+            "description": "The clinician who signs a clinical document is fully accountable for its contents regardless of how it was drafted. Disclose AI use in documentation per your institution's policy and applicable regulatory requirements. Uphold patient safety as the absolute priority — when in doubt, rewrite rather than rely on AI output. Maintain the clinical judgment and interpersonal presence that AI documentation tools must never replace.",
+            "example": "A health system requires all clinicians using AI documentation tools to complete a verified review checklist (patient identity, diagnoses, medications, allergies, follow-up instructions) before signing any AI-assisted note, and discloses the use of AI documentation assistance in its patient-facing privacy notice.",
+            "antipattern": "Signing AI-generated clinical notes at volume without individual review because the ambient tool 'usually gets it right' — creating systematic documentation errors that accumulate in the medical record, affect quality metrics, and in serious cases contribute to patient harm through propagated incorrect information."
+          }
+        },
+        "score_hints": {
+          "delegation": 0.2,
+          "description": 0.2,
+          "discernment": 0.3,
+          "diligence": 0.3
+        },
         "summary": "AI can assist clinicians with drafting clinical notes from voice transcription, generating patient education material drafts, summarizing prior visit records, and producing structured documentation te",
         "tags": [
           "healthcare",
@@ -556,6 +1145,7 @@
           "EHR"
         ],
         "contributor": "Rick Dakan & Joseph Feller / Anthropic",
+        "reference": "https://aifluencyframework.org",
         "version": "1.0.0"
       }
     ],
@@ -565,12 +1155,34 @@
         "title": "AI-Assisted Legal Research and Document Drafting",
         "domain": "legal",
         "file": "legal-ai-research-drafting.yaml",
-        "dimensions": [
-          "delegation",
-          "description",
-          "discernment",
-          "diligence"
-        ],
+        "dimensions": {
+          "delegation": {
+            "description": "AI can assist with initial legal research sweeps, summarizing case law, generating first-draft document structures, and flagging potentially relevant statutes. All legal judgment remains with the licensed attorney — case strategy, legal conclusions, advice to clients, and all court filings are non-delegable professional responsibilities. AI is a research and drafting accelerant, never a substitute for attorney analysis.",
+            "example": "An attorney preparing a breach of contract motion asks AI to identify relevant California appellate cases on implied covenant of good faith and generate a draft argument outline. She uses this as a research starting point, independently verifies every citation via Westlaw, and rewrites the argument section from scratch using the verified cases.",
+            "antipattern": "Filing AI-generated legal briefs with unverified citations, or allowing AI to make legal strategy recommendations that the attorney adopts without independent analysis — the equivalent of filing research you haven't read, which creates professional responsibility violations and potential sanctions."
+          },
+          "description": {
+            "description": "Provide AI with precise legal context: jurisdiction, court or regulatory body, matter type, applicable legal standard, client's factual situation, and the desired document format and purpose. Legal AI output quality depends heavily on the specificity of jurisdictional and doctrinal framing. Generic legal prompts produce generic legal text that may be wrong for your jurisdiction.",
+            "example": "Prompt: 'Summarize the current standard for personal jurisdiction over foreign defendants in federal courts in the Ninth Circuit, focusing on cases decided after 2019 that address the specific vs. general jurisdiction distinction post-Bristol-Myers Squibb. Our client is a California-based plaintiff suing a German manufacturer. Identify the strongest and weakest points in our jurisdictional argument.'",
+            "antipattern": "Prompting: 'Explain personal jurisdiction.' This produces a textbook overview applicable to no particular jurisdiction or procedural posture — unusable for actual legal work without the jurisdictional specificity, relevant time frame, and case-specific framing that makes the output actionable."
+          },
+          "discernment": {
+            "description": "Every AI-generated legal citation must be independently verified in a primary legal database before use. AI models hallucinate case citations with high confidence — inventing plausible-sounding but nonexistent cases, misquoting holdings, or attributing dicta as holdings. Verify that each case exists, says what AI claims, is still good law, and applies in your jurisdiction.",
+            "example": "An attorney receives an AI-generated brief draft citing eight cases. She runs each citation in Westlaw before reviewing the draft's argument. Two citations are for real cases that don't say what the AI claimed. One citation is for a case that was overruled. She treats the AI draft as a structural scaffold only and rebuilds the argument on verified authority.",
+            "antipattern": "Submitting a brief with AI-generated citations after only spot-checking one or two, then receiving a sanctions motion when opposing counsel discovers that three cited cases either don't exist or don't stand for the propositions cited — a career-threatening outcome that has already occurred to real attorneys."
+          },
+          "diligence": {
+            "description": "The licensed attorney remains fully and personally responsible for every document filed and every piece of advice given, regardless of how it was drafted. Disclose AI assistance in accordance with applicable bar rules and court standing orders (several federal courts now require this). Maintain professional standards of competence, including understanding AI's limitations in legal contexts.",
+            "example": "An attorney follows her state bar's guidance on AI use in legal practice by disclosing in engagement letters that AI tools assist with research and drafting, maintaining a verification protocol for all AI-generated citations, and staying current with her court's local rules on AI disclosure in filings.",
+            "antipattern": "Treating AI legal research as equivalent to Westlaw research without verification, failing to disclose AI assistance in jurisdictions where disclosure is required, or allowing junior associates to file AI-drafted documents without supervising attorney review — creating professional responsibility exposure and potential harm to clients."
+          }
+        },
+        "score_hints": {
+          "delegation": 0.2,
+          "description": 0.2,
+          "discernment": 0.3,
+          "diligence": 0.3
+        },
         "summary": "AI can assist with initial legal research sweeps, summarizing case law, generating first-draft document structures, and flagging potentially relevant statutes. All legal judgment remains with the lice",
         "tags": [
           "legal",
@@ -579,6 +1191,7 @@
           "professional-responsibility"
         ],
         "contributor": "Rick Dakan & Joseph Feller / Anthropic",
+        "reference": "https://aifluencyframework.org",
         "version": "1.0.0"
       }
     ],
@@ -588,12 +1201,34 @@
         "title": "Research Paper Data Analysis with AI",
         "domain": "research",
         "file": "research-data-analysis.yaml",
-        "dimensions": [
-          "delegation",
-          "description",
-          "discernment",
-          "diligence"
-        ],
+        "dimensions": {
+          "delegation": {
+            "description": "Divide analytical work deliberately between human scholarly judgment and AI computation. AI handles pattern recognition in large datasets, running descriptive statistics, flagging outliers, generating visualization suggestions, and summarizing distributions. The researcher formulates hypotheses, interprets findings in disciplinary context, makes causal claims, and draws conclusions — these require domain expertise that AI cannot reliably supply.",
+            "example": "A social scientist delegates to AI the task of computing correlation matrices across 47 variables in a survey dataset and generating a ranked list of significant correlations. She then applies her theoretical knowledge to determine which correlations are substantively meaningful versus statistically coincidental.",
+            "antipattern": "Asking AI to not only run analysis but to formulate the research hypotheses, interpret what findings mean for the field, and draw conclusions — treating the model as a substitute for the researcher's own disciplinary expertise and scholarly judgment."
+          },
+          "description": {
+            "description": "Give AI precise methodological context — your research question, the dataset structure, units of measurement, required statistical methods, software environment, and any domain-specific constraints. Ambiguous instructions produce analysis that may be technically correct but methodologically wrong for your research design.",
+            "example": "Prompt: 'Analyze this CSV of longitudinal student performance data (n=312, 4 time points). Variables: test_score (0-100), SES_quartile (1-4), intervention_group (binary), school_id (cluster variable). Run a mixed-effects linear regression predicting test_score from intervention_group, controlling for SES_quartile, with school_id as a random effect. Report coefficients, standard errors, and interpret the intervention effect size.'",
+            "antipattern": "Prompting: 'Analyze my research data and tell me what's significant.' Without specifying the research question, the correct statistical model, variable types, or analytical constraints, AI may apply an inappropriate method (e.g., OLS on clustered data) that produces misleading results."
+          },
+          "discernment": {
+            "description": "Rigorously verify AI-produced analysis before incorporating it into research. Check that statistical methods are appropriate for your data structure, that calculations are correct, that effect sizes are interpreted accurately, and that the AI has not made assumptions that violate your study design. AI can produce plausible-looking but methodologically flawed analysis.",
+            "example": "A researcher notices that AI-generated regression output reports a significant p-value but has failed to account for the clustered sampling structure, inflating the precision of estimates. She reruns the analysis herself with correct standard errors and finds the effect is no longer significant at her threshold.",
+            "antipattern": "Inserting AI-generated statistical tables and interpretive text directly into a manuscript without independently verifying the calculations, checking model assumptions, or confirming that the chosen method is appropriate for the study design — risking publication of flawed findings."
+          },
+          "diligence": {
+            "description": "Be transparent about AI's role in your analytical workflow per your institution's and journal's policies. Ensure all claims in the final paper reflect your own validated analysis. Maintain full methodological accountability — if AI analysis is used, you must understand it well enough to defend every number in peer review.",
+            "example": "A research team documents in their methods section that AI-assisted tools were used for initial descriptive analysis and outlier detection, while all inferential statistics were conducted and verified by the authors using R. They retain full analytical scripts for reproducibility review.",
+            "antipattern": "Publishing a paper that includes AI-generated statistical analysis without independent verification, failing to disclose AI assistance in violation of journal policy, or being unable to explain or reproduce the reported numbers during peer review."
+          }
+        },
+        "score_hints": {
+          "delegation": 0.2,
+          "description": 0.25,
+          "discernment": 0.35,
+          "diligence": 0.2
+        },
         "summary": "Divide analytical work deliberately between human scholarly judgment and AI computation. AI handles pattern recognition in large datasets, running descriptive statistics, flagging outliers, generating",
         "tags": [
           "research",
@@ -602,6 +1237,7 @@
           "academic"
         ],
         "contributor": "Rick Dakan & Joseph Feller / Anthropic",
+        "reference": "https://aifluencyframework.org",
         "version": "1.0.0"
       },
       {
@@ -609,12 +1245,34 @@
         "title": "AI-Supported Academic Literature Review",
         "domain": "research",
         "file": "research-literature-review.yaml",
-        "dimensions": [
-          "delegation",
-          "description",
-          "discernment",
-          "diligence"
-        ],
+        "dimensions": {
+          "delegation": {
+            "description": "AI can accelerate the literature review process by synthesizing themes across papers you have already identified, generating structured summaries of provided texts, suggesting search terms for database queries, and proposing a gap analysis framework. Researchers retain responsibility for: executing the systematic search in academic databases, verifying that all cited sources exist and are accurately represented, forming scholarly interpretations, and drawing conclusions about the field's state.",
+            "example": "A PhD student compiles 60 papers from her PubMed and Scopus searches on microbiome-mental health connections. She feeds the abstracts to AI in batches, asking it to identify recurring themes, contradictions between studies, and underexplored angles. She then uses this thematic map as a scaffold for her own reading and synthesis, reading every paper herself before citing it.",
+            "antipattern": "Asking AI to conduct the literature review from scratch — generating the reading list, summarizing papers AI has not actually read, and producing a synthesis the researcher then submits — creating a review full of hallucinated citations and misrepresented findings that the researcher cannot defend."
+          },
+          "description": {
+            "description": "Specify your literature review's scope with precision: the exact research question, the academic field and subfield, the time range, inclusion and exclusion criteria, the required depth of analysis, and the review type (narrative, systematic, scoping). Imprecise framing leads to AI output that spans the wrong literature or treats your question at the wrong level of specificity.",
+            "example": "Prompt: 'I have provided 45 abstracts from papers on cognitive behavioral therapy outcomes for adolescent depression, published 2015-2024, RCTs only. Identify: (1) the most common outcome measures used across studies, (2) the patient subgroups most frequently underrepresented, (3) the three most-cited methodological limitations across papers, and (4) any emerging treatment modifications mentioned in multiple papers. Do not add any studies I haven't provided.'",
+            "antipattern": "Prompting: 'Write a literature review on therapy and depression.' Without scope constraints, AI generates a sweeping narrative that mixes study types, time periods, populations, and therapy modalities — producing a superficial overview that satisfies no specific research question and cannot withstand peer review scrutiny."
+          },
+          "discernment": {
+            "description": "Verify every citation in an AI-assisted literature review independently in an academic database before including it in your work. AI confidently generates plausible-sounding but fabricated citations — author names, journal titles, and publication years that look real but aren't. Additionally, verify that real papers are accurately characterized: check that AI summaries correctly represent each paper's methodology, findings, and limitations.",
+            "example": "A researcher asks AI to synthesize themes from a set of provided papers and flag potentially relevant additional sources. She treats every additional source AI suggests as unverified until she has confirmed it in Google Scholar. Of eight AI-suggested additional references, two do not exist and one exists but reaches the opposite conclusion from what AI claimed.",
+            "antipattern": "Submitting a literature review with AI-generated citations that were never individually verified in an academic database — discovering during peer review that three cited articles are fabrications, resulting in rejection and reputational damage that follows the researcher's professional record."
+          },
+          "diligence": {
+            "description": "The researcher is fully responsible for every claim and citation in the final review. Disclose AI assistance per your target journal's author guidelines and your institution's research integrity policy (requirements vary significantly across disciplines and publishers). Validate all sources independently regardless of AI confidence. Understand that your scholarly reputation is built on the accuracy and integrity of your literature representation.",
+            "example": "A research team submits a systematic review that includes in the methods section a transparent account of how AI tools were used for thematic synthesis of author-identified papers, notes that all citations were independently verified in Cochrane Library and PubMed, and confirms compliance with the journal's AI transparency policy — meeting both disclosure and integrity standards.",
+            "antipattern": "Relying on AI to identify and summarize literature without reading the papers yourself, submitting a review that misrepresents study findings because you trusted AI's characterizations over the original texts, or failing to disclose AI assistance to a journal that requires transparency — compromising academic integrity and potentially contributing false knowledge to the scholarly record."
+          }
+        },
+        "score_hints": {
+          "delegation": 0.2,
+          "description": 0.3,
+          "discernment": 0.3,
+          "diligence": 0.2
+        },
         "summary": "AI can accelerate the literature review process by synthesizing themes across papers you have already identified, generating structured summaries of provided texts, suggesting search terms for databas",
         "tags": [
           "literature-review",
@@ -623,6 +1281,7 @@
           "research-integrity"
         ],
         "contributor": "Rick Dakan & Joseph Feller / Anthropic",
+        "reference": "https://aifluencyframework.org",
         "version": "1.0.0"
       }
     ],
@@ -632,12 +1291,34 @@
         "title": "Story and Content Development with AI",
         "domain": "writing",
         "file": "writing-content-development.yaml",
-        "dimensions": [
-          "delegation",
-          "description",
-          "discernment",
-          "diligence"
-        ],
+        "dimensions": {
+          "delegation": {
+            "description": "Identify which creative elements benefit from AI exploration versus which must remain human-driven. AI excels at generating plot alternatives, brainstorming secondary character names, proposing scene structures, and expanding on prompts. Core voice, thematic meaning, emotional truth, and the author's unique perspective must stay with the human creator.",
+            "example": "A novelist asks AI to generate five possible turning points for chapter 7, then selects and transforms the one that best fits her protagonist's established arc. The AI explores; the human decides and develops.",
+            "antipattern": "Handing the AI a character description and asking it to write entire chapters wholesale, then lightly editing and publishing the result — abdicating the creative authorship that gives the work its distinctive voice and purpose."
+          },
+          "description": {
+            "description": "Give AI rich, specific creative context — the story world's rules, character backstories, established themes, the emotional arc you are building toward, your narrative voice, and any stylistic constraints. Vague prompts produce generic content; detailed creative briefs produce useful raw material.",
+            "example": "Prompt: 'This is a near-future climate noir story set in drowned New Orleans, 2067. Protagonist Maya Tran is a cynical water-rights detective, dry wit, Creole heritage, distrusts authority. I need three scene openings for chapter 4 where she visits the Floating Market. Tone: melancholy but alive with sensory detail. Echo Toni Morrison's eye for place.'",
+            "antipattern": "Prompting: 'Write a scene for my sci-fi story where the hero goes to a market.' This yields generic content with no connection to the established world, character voice, or thematic purpose — unusable without complete rewriting."
+          },
+          "discernment": {
+            "description": "Evaluate AI-generated content against your creative vision, not just surface quality. Good AI output that doesn't fit your voice or thematic intent is still the wrong output. Actively reject suggestions that feel generic, that undercut character consistency, or that introduce tropes that conflict with what you are building.",
+            "example": "An author receives three AI-generated chapter openings. Two are competently written but feel tonally flat for her noir voice. The third has an interesting image she adapts, changing the phrasing to match her protagonist's sardonic register. She uses roughly 15% of the AI material, transformed.",
+            "antipattern": "Accepting AI-generated dialogue or scene descriptions because they are grammatically sound and feel 'good enough,' without checking whether they match the character's established voice, advance the story's thematic arc, or reflect the emotional truth the author intended."
+          },
+          "diligence": {
+            "description": "Be transparent about AI's role in your creative work according to the norms of your publication context. Preserve your human creative intent as the primary force shaping the work. Avoid over-relying on AI to the point where your own creative voice atrophies. Keep records of your creative process for attribution purposes.",
+            "example": "A short story writer notes in her submission cover letter that AI tools were used for brainstorming and structural exploration, per the journal's disclosure policy. The published story reflects her voice, her decisions, and her thematic vision throughout.",
+            "antipattern": "Submitting AI-generated content to publications that prohibit AI-assisted work without disclosure, or losing track of which creative decisions were yours versus the AI's — failing to maintain the human authorship that gives the work its integrity and legal standing."
+          }
+        },
+        "score_hints": {
+          "delegation": 0.3,
+          "description": 0.35,
+          "discernment": 0.2,
+          "diligence": 0.15
+        },
         "summary": "Identify which creative elements benefit from AI exploration versus which must remain human-driven. AI excels at generating plot alternatives, brainstorming secondary character names, proposing scene ",
         "tags": [
           "creative-writing",
@@ -646,6 +1327,7 @@
           "authorship"
         ],
         "contributor": "Rick Dakan & Joseph Feller / Anthropic",
+        "reference": "https://aifluencyframework.org",
         "version": "1.0.0"
       },
       {
@@ -653,12 +1335,34 @@
         "title": "Creative Writing with AI as Co-Creator",
         "domain": "writing",
         "file": "writing-creative-ai-collaboration.yaml",
-        "dimensions": [
-          "delegation",
-          "description",
-          "discernment",
-          "diligence"
-        ],
+        "dimensions": {
+          "delegation": {
+            "description": "The human writer sets and holds the creative vision, voice, and thematic intent. AI's role is to explore the possibility space: generating variations, proposing alternative phrasings, suggesting structural options, and expanding on prompts the writer provides. The writer selects, transforms, and integrates — never simply accepting. This asymmetry preserves human creative authorship while genuinely leveraging AI's generative range.",
+            "example": "A short story writer gives AI her protagonist's voice sample and asks for ten possible opening lines for a new story. She finds two that spark something, combines elements from both, and rewrites the result into a line that is distinctly her own — using AI as a creative catalyst, not a ghostwriter.",
+            "antipattern": "Asking AI to generate a complete story with a brief premise, then submitting it to literary publications with minimal editing — claiming authorship of work in which the human's creative contribution was limited to a topic choice and a submit button press."
+          },
+          "description": {
+            "description": "Give AI the full creative parameters it needs to generate useful material: genre conventions you are working within or against, your protagonist's established voice and psychology, the narrative constraints of the world you've built, the emotional register of the scene, stylistic influences, and what you specifically want to explore in this session. Richer briefs yield richer possibilities.",
+            "example": "Prompt: 'Write three alternative versions of the scene where Lena realizes her sister has been lying to her for years. Lena's voice: quiet, measured, suppresses emotion until it breaks through — think Marilynne Robinson's register. Setting: kitchen, early morning, just them. Her sister doesn't know Lena knows yet. Each version should find a different emotional entry point: one through an object, one through silence, one through an unexpected mundane action.'",
+            "antipattern": "Prompting: 'Write a scene where two sisters have a conflict.' This produces a generic dialogue with stock emotional beats that has no connection to your specific characters, your established voice, or the narrative weight the scene needs to carry in your story."
+          },
+          "discernment": {
+            "description": "Evaluate AI-generated creative material against voice consistency, originality, narrative coherence, and emotional truth — not just surface competence. Good writing that doesn't sound like you, that relies on familiar tropes, or that resolves emotional tension too easily is still wrong for your work. Actively seek and reject the generic. What makes AI output valuable is what you do with it, not what it produces on its own.",
+            "example": "A novelist receives five AI-generated dialogue exchanges for a tense confrontation scene. She discards three as tonally flat and relying on predictable beats. One has an image — a character straightening a picture frame mid-argument — that feels true to her story. She uses only that image, embedded in dialogue she writes herself, and the scene becomes one of the book's strongest moments.",
+            "antipattern": "Accepting AI-generated prose because it reads smoothly and competently, without checking whether it sounds like your narrator's voice, advances the scene's specific emotional purpose, or introduces tropes (the dramatic pause before the reveal, the single tear) that undercut the subtlety you are working to achieve."
+          },
+          "diligence": {
+            "description": "Be honest with your readers, your publishers, and yourself about AI's role in your creative process. Follow your publication venue's disclosure policies. Ensure your creative voice and human intent remain the primary force in the work. Maintain your craft practice — using AI as a crutch that prevents developing your own creative capabilities ultimately diminishes both you and the work.",
+            "example": "A literary fiction writer discloses in her author's note that AI tools were used for brainstorming and exploring structural alternatives during drafting, consistent with her publisher's transparency policy. The novel reflects her voice, her thematic vision, and her years of craft development on every page.",
+            "antipattern": "Using AI to write the bulk of a novel, submitting it under your sole authorship to a publisher who prohibits undisclosed AI content, and publishing work that cannot be defended as primarily yours — creating legal and reputational exposure and undermining the trust relationship between author and reader."
+          }
+        },
+        "score_hints": {
+          "delegation": 0.3,
+          "description": 0.3,
+          "discernment": 0.2,
+          "diligence": 0.2
+        },
         "summary": "The human writer sets and holds the creative vision, voice, and thematic intent. AI's role is to explore the possibility space: generating variations, proposing alternative phrasings, suggesting struc",
         "tags": [
           "creative-writing",
@@ -667,6 +1371,7 @@
           "authorship"
         ],
         "contributor": "Rick Dakan & Joseph Feller / Anthropic",
+        "reference": "https://aifluencyframework.org",
         "version": "1.0.0"
       },
       {
@@ -674,12 +1379,34 @@
         "title": "AI-Assisted Marketing Email Campaigns",
         "domain": "writing",
         "file": "writing-marketing-email-campaign.yaml",
-        "dimensions": [
-          "delegation",
-          "description",
-          "discernment",
-          "diligence"
-        ],
+        "dimensions": {
+          "delegation": {
+            "description": "The human marketing strategist designs the campaign's core message, audience segmentation logic, and brand voice. AI then executes variation drafting — subject line alternatives, body copy variants for A/B testing, personalization token suggestions, and CTA phrasing options. The human selects, refines, and approves; AI accelerates the variation space.",
+            "example": "A marketing manager defines the campaign goal (re-engage lapsed subscribers with a 20% discount), the audience segment (users inactive for 90+ days), and the brand voice (friendly, direct, never pushy). She then asks AI to draft five subject line options and three body copy variants, which she narrows to one of each after testing against campaign criteria.",
+            "antipattern": "Having AI independently design the campaign messaging strategy, choose the audience, set the offer, and draft the emails — then simply forwarding the AI output to the email platform without human strategic review or brand alignment check."
+          },
+          "description": {
+            "description": "Provide AI with a complete campaign brief: target audience demographics and psychographics, campaign objective and success metrics, desired brand voice with examples, the specific offer or message, any compliance constraints (CAN-SPAM, GDPR), and the desired call to action. The more precisely you define success, the more useful the AI drafts.",
+            "example": "Prompt: 'Draft three subject line options and two body copy variants for a re-engagement email. Audience: B2B SaaS users, mid-level product managers, inactive 90+ days. Offer: 20% discount on annual plan upgrade. Voice: confident, peer-to-peer, not salesy — like a trusted colleague nudging, not a pushy vendor. CTA: Schedule a 15-min call. Compliance: include unsubscribe link placeholder. Max 150 words body copy.'",
+            "antipattern": "Prompting: 'Write a marketing email for our product.' With no audience definition, no campaign goal, no voice guidance, and no offer details, AI produces a generic promotional template that fits no specific audience and advances no particular business goal."
+          },
+          "discernment": {
+            "description": "Evaluate each AI-drafted variant against your campaign goals, brand standards, audience fit, and legal requirements before sending. Check that claims are factually accurate, that the tone matches your brand, that the offer details are correct, and that no language could mislead recipients or create compliance issues.",
+            "example": "A campaign manager reviews an AI-drafted email and flags two issues: the subject line 'You''re missing out!' violates the company's brand guideline against FOMO language, and a product claim ('the #1 tool for project managers') is unsubstantiated. She revises both before the email enters the approval workflow.",
+            "antipattern": "Sending AI-drafted campaign emails after only a quick skim for spelling errors — missing off-brand phrasing, unverified product claims, incorrect offer details, or compliance issues that could damage brand trust or trigger regulatory scrutiny."
+          },
+          "diligence": {
+            "description": "Validate all factual claims, offer details, pricing, and legal disclosures before the email goes out. Consider the ethics of AI use in persuasive marketing communications and whether your audience has any expectation of human-crafted outreach. Maintain a human approval step in the campaign workflow regardless of AI involvement.",
+            "example": "Before deploying a 50,000-recipient campaign, the marketing team runs the AI-drafted email through their compliance checklist (unsubscribe link present, sender identification correct, no deceptive subject lines), has the legal team verify the offer terms, and gets final sign-off from the brand director.",
+            "antipattern": "Auto-deploying AI-drafted emails through an automated campaign platform with no human review step, sending incorrect pricing or expired offers to thousands of recipients, or using AI-generated urgency language ('Act now before midnight!') for a deadline that doesn't actually exist."
+          }
+        },
+        "score_hints": {
+          "delegation": 0.25,
+          "description": 0.35,
+          "discernment": 0.2,
+          "diligence": 0.2
+        },
         "summary": "The human marketing strategist designs the campaign's core message, audience segmentation logic, and brand voice. AI then executes variation drafting — subject line alternatives, body copy variants fo",
         "tags": [
           "marketing",
@@ -688,6 +1415,7 @@
           "brand-voice"
         ],
         "contributor": "Rick Dakan & Joseph Feller / Anthropic",
+        "reference": "https://aifluencyframework.org",
         "version": "1.0.0"
       }
     ]
