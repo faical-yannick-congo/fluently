@@ -1,535 +1,365 @@
-import {
-  Server,
-} from "@modelcontextprotocol/sdk/server/index.js";
+import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { loadKnowledgeEntries } from "@fluently/scorer";
+import {
+  ListToolsRequestSchema,
+  CallToolRequestSchema,
+} from "@modelcontextprotocol/sdk/types.js";
 import { knowledgeEntrySchema } from "@fluently/scorer/schema";
 import fs from "fs";
 import path from "path";
-import type { z } from "zod";
-
-type KnowledgeEntry = z.infer<typeof knowledgeEntrySchema>;
-
-interface Tool {
-  name: string;
-  description: string;
-  inputSchema: {
-    type: "object";
-    properties: Record<string, unknown>;
-    required: string[];
-  };
-}
-
-interface ToolResponse {
-  content: Array<{
-    type: "text";
-    text: string;
-  }>;
-}
+import yaml from "js-yaml";
+import { createConnector } from "./connectors/factory.js";
+import type { KnowledgeConnector, KnowledgeEntry } from "./connectors/types.js";
 
 const { version: SERVER_VERSION } = JSON.parse(
   fs.readFileSync(path.join(__dirname, "../package.json"), "utf8")
 );
-const KNOWLEDGE_DIR = fs.existsSync(path.join(__dirname, "../knowledge"))
-  ? path.join(__dirname, "../knowledge")
-  : path.join(process.cwd(), "knowledge");
 
-// Initialize server with metadata
-const server = new Server({
-  name: "fluently",
-  version: SERVER_VERSION,
-  description:
-    "AI Fluency 4D Framework tools for scoring human-AI collaboration quality",
-});
+const BUNDLED_KNOWLEDGE = path.join(__dirname, "../knowledge");
 
-// Helper: Simple cosine similarity for finding top matches
-function keywordSet(text: string): Set<string> {
-  return new Set(text.toLowerCase().split(/\W+/).filter(Boolean));
+// ── Connector ────────────────────────────────────────────────────────────────
+
+let connector: KnowledgeConnector;
+try {
+  connector = createConnector();
+} catch (err: any) {
+  console.error(`[fluently] Connector error: ${err.message}`);
+  process.exit(1);
 }
 
-function cosineSimilarity(setA: Set<string>, setB: Set<string>): number {
-  const all = new Set([...setA, ...setB]);
-  let dot = 0,
-    magA = 0,
-    magB = 0;
-  for (const word of all) {
-    const a = setA.has(word) ? 1 : 0;
-    const b = setB.has(word) ? 1 : 0;
-    dot += a * b;
-    magA += a * a;
-    magB += b * b;
+// ── Knowledge cache ───────────────────────────────────────────────────────────
+
+interface Cache {
+  entries: KnowledgeEntry[];
+  loadedAt: number;
+  source: string;
+}
+
+let cache: Cache | null = null;
+const CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
+
+async function getKnowledge(): Promise<Cache> {
+  if (cache && Date.now() - cache.loadedAt < CACHE_TTL_MS) return cache;
+  return refreshKnowledge();
+}
+
+async function refreshKnowledge(): Promise<Cache> {
+  try {
+    const entries = await connector.load();
+    cache = { entries, loadedAt: Date.now(), source: connector.name };
+    console.error(`[fluently] Loaded ${entries.length} cycles from ${connector.name}`);
+    return cache;
+  } catch (err: any) {
+    console.error(`[fluently] Failed to load from ${connector.name}: ${err.message}`);
+    if (cache) {
+      console.error(`[fluently] Using cached knowledge (${cache.entries.length} entries)`);
+      return cache;
+    }
+    // Fall back to bundled knowledge
+    if (fs.existsSync(BUNDLED_KNOWLEDGE)) {
+      console.error(`[fluently] Falling back to bundled knowledge`);
+      const files = fs.readdirSync(BUNDLED_KNOWLEDGE).filter(f => f.endsWith('.yaml'));
+      const entries = files.map(f => yaml.load(fs.readFileSync(path.join(BUNDLED_KNOWLEDGE, f), 'utf8')) as KnowledgeEntry);
+      cache = { entries, loadedAt: Date.now(), source: 'bundled-fallback' };
+      return cache;
+    }
+    throw new Error(`No knowledge available: ${err.message}`);
+  }
+}
+
+// ── Keyword retrieval (for ranking — no scores exposed) ───────────────────────
+
+function keywordSet(text: string): Set<string> {
+  return new Set(text.toLowerCase().split(/\W+/).filter(w => w.length > 2));
+}
+
+function cosineSimilarity(a: Set<string>, b: Set<string>): number {
+  const all = new Set([...a, ...b]);
+  let dot = 0, magA = 0, magB = 0;
+  for (const w of all) {
+    const av = a.has(w) ? 1 : 0;
+    const bv = b.has(w) ? 1 : 0;
+    dot += av * bv; magA += av * av; magB += bv * bv;
   }
   return magA && magB ? dot / (Math.sqrt(magA) * Math.sqrt(magB)) : 0;
 }
 
-// Load knowledge base
-function getKnowledgeEntries(): KnowledgeEntry[] {
-  if (!fs.existsSync(KNOWLEDGE_DIR)) {
-    return [];
-  }
-  return loadKnowledgeEntries(KNOWLEDGE_DIR);
+function rankCycles(task: string, entries: KnowledgeEntry[], domain?: string, limit = 5): KnowledgeEntry[] {
+  const taskSet = keywordSet(task);
+  return entries
+    .filter(e => !domain || e.domain === domain)
+    .map(e => ({
+      entry: e,
+      sim: cosineSimilarity(taskSet, keywordSet(
+        [e.title, e.domain, e.summary ?? '', ...e.tags,
+          e.dimensions.delegation.description,
+          e.dimensions.description.description,
+          e.dimensions.discernment.description,
+          e.dimensions.diligence.description,
+        ].join(' ')
+      ))
+    }))
+    .sort((a, b) => b.sim - a.sim)
+    .slice(0, limit)
+    .map(r => r.entry);
 }
 
-// Tool 1: compare_problem_space
-const compareToolDef: Tool = {
-  name: "compare_problem_space",
-  description:
-    "Returns top 3 similar past Fluently 4D cycles from knowledge base with similarity scores",
-  inputSchema: {
-    type: "object",
-    properties: {
-      task_description: {
-        type: "string",
-        description: "Description of the problem or task",
-      },
-      domain: {
-        type: "string",
-        enum: [
-          "coding",
-          "writing",
-          "research",
-          "customer-support",
-          "education",
-          "legal",
-          "healthcare",
-          "general",
-        ],
-        description: "Optional: domain to filter by",
-      },
-    },
-    required: ["task_description"],
+// ── Server ────────────────────────────────────────────────────────────────────
+
+const server = new Server(
+  {
+    name: "fluently",
+    version: SERVER_VERSION,
   },
-};
+  {
+    capabilities: { tools: {} },
+    instructions:
+      "Fluently 4D Framework knowledge tools. Retrieves community or private AI workflow cycles " +
+      "so an agent can reason over them and assess fit — no hardcoded scoring.",
+  }
+);
 
-// Tool 2: score_delegation
-const scoreDelegationToolDef: Tool = {
-  name: "score_delegation",
-  description:
-    "Returns Delegation + Description dimension scores with improvement advice",
-  inputSchema: {
-    type: "object",
-    properties: {
-      task: {
-        type: "string",
-        description: "The task or problem to evaluate",
-      },
-      delegation_intent: {
-        type: "string",
-        description:
-          "How you intend to delegate this task (automated, augmented, agentic)",
-      },
-    },
-    required: ["task", "delegation_intent"],
+// ── Tool definitions ──────────────────────────────────────────────────────────
+
+const TOOLS = [
+  {
+    name: "list_domains",
+    description:
+      "List all domains available in the knowledge base with cycle counts. " +
+      "Use this to orient yourself before searching for relevant cycles.",
+    inputSchema: { type: "object", properties: {}, required: [] },
   },
-};
-
-// Tool 3: evaluate_discernment
-const evaluateDiscernmentToolDef: Tool = {
-  name: "evaluate_discernment",
-  description:
-    "Returns a discernment rubric score: checks for hallucination risk, confidence calibration, human review need",
-  inputSchema: {
-    type: "object",
-    properties: {
-      ai_output: {
-        type: "string",
-        description: "The AI-generated output to evaluate",
+  {
+    name: "find_relevant_cycles",
+    description:
+      "Retrieve the most relevant Fluently 4D cycles for a task. " +
+      "Returns ranked candidates (no numeric scores) for you to reason over and assess fit. " +
+      "Each cycle includes delegation, description, discernment, and diligence guidance.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        task_description: { type: "string", description: "Plain-language description of the AI task" },
+        domain: { type: "string", description: "Optional domain filter: coding | writing | research | education | legal | healthcare | general" },
+        limit: { type: "number", description: "Max cycles to return (default 3, max 10)" },
       },
-      original_task: {
-        type: "string",
-        description: "The original task or prompt given to the AI",
-      },
+      required: ["task_description"],
     },
-    required: ["ai_output", "original_task"],
   },
-};
-
-// Tool 4: check_diligence
-const checkDiligenceToolDef: Tool = {
-  name: "check_diligence",
-  description:
-    "Returns a diligence checklist: transparency requirements, accountability steps, disclosure needs",
-  inputSchema: {
-    type: "object",
-    properties: {
-      task: {
-        type: "string",
-        description: "The task to evaluate for diligence requirements",
+  {
+    name: "get_cycle_detail",
+    description:
+      "Get the full 4D cycle for a specific ID. " +
+      "Use after find_relevant_cycles to read the complete guidance for a candidate cycle.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        id: { type: "string", description: "The cycle ID (from find_relevant_cycles results)" },
       },
-      domain: {
-        type: "string",
-        description: "The domain or context of the task",
-      },
+      required: ["id"],
     },
-    required: ["task", "domain"],
   },
-};
-
-// Tool 5: get_4d_score
-const get4DScoreToolDef: Tool = {
-  name: "get_4d_score",
-  description:
-    "Master tool: returns complete 4D Score (0-100 per dimension + overall) with one-sentence improvement tip per dimension",
-  inputSchema: {
-    type: "object",
-    properties: {
-      description: {
-        type: "string",
-        description: "Description of the task or scenario",
+  {
+    name: "get_dimension_guidance",
+    description:
+      "Get antipatterns and examples for a specific 4D dimension across all cycles in a domain. " +
+      "Use to understand what good and bad looks like for delegation, description, discernment, or diligence.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        dimension: { type: "string", description: "One of: delegation | description | discernment | diligence" },
+        domain: { type: "string", description: "Optional domain filter" },
       },
-      delegation: {
-        type: "string",
-        description: "How the task is being delegated to AI",
-      },
-      output: {
-        type: "string",
-        description: "Optional: the AI output to evaluate (for discernment)",
-      },
+      required: ["dimension"],
     },
-    required: ["description", "delegation"],
   },
-};
+  {
+    name: "refresh_knowledge",
+    description:
+      "Re-fetch the knowledge base from the configured connector without restarting the server. " +
+      "Use after new cycles have been merged or published to get the latest patterns.",
+    inputSchema: { type: "object", properties: {}, required: [] },
+  },
+  {
+    name: "contribute_cycle",
+    description:
+      "Validate and submit a new 4D cycle to the configured knowledge source. " +
+      "For github-public: returns validated YAML + PR instructions. " +
+      "For github-private: opens a PR automatically (requires FLUENTLY_GITHUB_TOKEN). " +
+      "For local: writes the YAML file to the configured directory.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        cycle: {
+          type: "object",
+          description: "The complete 4D cycle object with id, title, domain, tags, contributor, version, dimensions, and score_hints",
+        },
+      },
+      required: ["cycle"],
+    },
+  },
+];
 
-// Register tools
-server.setRequestHandler("tools/list" as any, async () => {
-  return {
-    tools: [
-      compareToolDef,
-      scoreDelegationToolDef,
-      evaluateDiscernmentToolDef,
-      checkDiligenceToolDef,
-      get4DScoreToolDef,
-    ],
-  };
-});
+// ── Request handlers ──────────────────────────────────────────────────────────
 
-// Handler for tool calls
-server.setRequestHandler("tools/call" as any, async (request: any) => {
-  const { name, arguments: toolArgs } = request.params;
+server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools: TOOLS }));
 
-  if (name === "compare_problem_space") {
-    const { task_description, domain } = toolArgs as {
-      task_description: string;
-      domain?: string;
+server.setRequestHandler(CallToolRequestSchema, async (request) => {
+  const { name, arguments: args } = request.params as { name: string; arguments: any };
+
+  // ── list_domains ────────────────────────────────────────────────────────────
+  if (name === "list_domains") {
+    const { entries, source } = await getKnowledge();
+    const counts: Record<string, number> = {};
+    for (const e of entries) counts[e.domain] = (counts[e.domain] ?? 0) + 1;
+    const rows = Object.entries(counts)
+      .sort((a, b) => b[1] - a[1])
+      .map(([domain, count]) => `${domain}: ${count} cycle${count !== 1 ? 's' : ''}`)
+      .join('\n');
+    return {
+      content: [{
+        type: "text",
+        text: JSON.stringify({ source, total: entries.length, domains: counts, summary: rows }, null, 2),
+      }],
+    } as any;
+  }
+
+  // ── find_relevant_cycles ────────────────────────────────────────────────────
+  if (name === "find_relevant_cycles") {
+    const { task_description, domain, limit } = args as {
+      task_description: string; domain?: string; limit?: number;
     };
+    const { entries, source } = await getKnowledge();
+    const cap = Math.min(limit ?? 3, 10);
+    const ranked = rankCycles(task_description, entries, domain, cap);
 
-    const entries = getKnowledgeEntries();
-    if (entries.length === 0) {
-      return {
-        content: [
-          {
-            type: "text",
-            text: "No knowledge entries found. Please ensure the knowledge/ directory contains YAML files.",
-          },
-        ],
-      } as any;
-    }
-
-    const taskSet = keywordSet(task_description);
-    const scored = entries
-      .filter((e: KnowledgeEntry) => !domain || e.domain === domain)
-      .map((entry: KnowledgeEntry) => {
-        const entrySet = keywordSet(
-          entry.title +
-            " " +
-            entry.domain +
-            " " +
-            Object.values(entry.dimensions)
-              .map((d) => d.description)
-              .join(" ")
-        );
-        const similarity = cosineSimilarity(taskSet, entrySet);
-        return { entry, similarity };
-      });
-
-    scored.sort((a, b) => b.similarity - a.similarity);
-    const top3 = scored.slice(0, 3);
-
-    const results = top3.map(({ entry, similarity }: { entry: KnowledgeEntry; similarity: number }) => ({
-      id: entry.id,
-      title: entry.title,
-      domain: entry.domain,
-      similarity_score: (similarity * 100).toFixed(1),
-      dimensions: entry.dimensions,
-      tags: entry.tags,
+    const results = ranked.map(e => ({
+      id: e.id,
+      title: e.title,
+      domain: e.domain,
+      tags: e.tags,
+      contributor: e.contributor,
+      summary: e.summary,
+      dimensions: {
+        delegation:  { description: e.dimensions.delegation.description },
+        description: { description: e.dimensions.description.description },
+        discernment: { description: e.dimensions.discernment.description },
+        diligence:   { description: e.dimensions.diligence.description },
+      },
     }));
 
     return {
-      content: [
-        {
-          type: "text",
-          text: JSON.stringify(results, null, 2),
-        },
-      ],
+      content: [{
+        type: "text",
+        text: JSON.stringify({
+          source,
+          task: task_description,
+          domain: domain ?? "all",
+          cycles: results,
+          guidance: "Reason over these cycles to assess fit for the task. Use get_cycle_detail to read full antipatterns and examples for the best match.",
+        }, null, 2),
+      }],
     } as any;
   }
 
-  if (name === "score_delegation") {
-    const { task, delegation_intent } = toolArgs as {
-      task: string;
-      delegation_intent: string;
-    };
-
-    const entries = getKnowledgeEntries();
-    const taskSet = keywordSet(task + " " + delegation_intent);
-
-    const scored = entries.map((entry: KnowledgeEntry) => {
-      const entrySet = keywordSet(
-        entry.title + " " + Object.values(entry.dimensions).map((d) => d.description).join(" ")
-      );
-      const similarity = cosineSimilarity(taskSet, entrySet);
+  // ── get_cycle_detail ────────────────────────────────────────────────────────
+  if (name === "get_cycle_detail") {
+    const { id } = args as { id: string };
+    const { entries, source } = await getKnowledge();
+    const entry = entries.find(e => e.id === id);
+    if (!entry) {
       return {
-        entry,
-        similarity,
-        delegationScore: Math.min(100, Math.round(similarity * entry.score_hints.delegation * 400)),
-        descriptionScore: Math.min(100, Math.round(similarity * entry.score_hints.description * 400)),
-      };
-    });
-
-    scored.sort((a, b) => b.similarity - a.similarity);
-    const topMatch = scored[0];
-
-    return {
-      content: [
-        {
-          type: "text",
-          text: JSON.stringify(
-            {
-              task,
-              delegation_intent,
-              delegation_score: topMatch.delegationScore,
-              description_score: topMatch.descriptionScore,
-              recommendation: {
-                delegation: `Improve delegation approach: ${topMatch.entry.dimensions.delegation.antipattern}`,
-                description: `Improve task description: ${topMatch.entry.dimensions.description.antipattern}`,
-              },
-              reference_entry: topMatch.entry.title,
-            },
-            null,
-            2
-          ),
-        },
-      ],
-    } as any;
-  }
-
-  if (name === "evaluate_discernment") {
-    const { ai_output, original_task } = toolArgs as {
-      ai_output: string;
-      original_task: string;
-    };
-
-    const entries = getKnowledgeEntries();
-    const taskSet = keywordSet(original_task + " " + ai_output);
-
-    const scored = entries.map((entry: KnowledgeEntry) => {
-      const entrySet = keywordSet(
-        entry.title + " " + entry.dimensions.discernment.description
-      );
-      const similarity = cosineSimilarity(taskSet, entrySet);
-      return {
-        entry,
-        discernmentScore: Math.min(100, Math.round(similarity * entry.score_hints.discernment * 400)),
-      };
-    });
-
-    scored.sort((a, b) => b.discernmentScore - a.discernmentScore);
-    const topMatch = scored[0];
-
-    const hallucination_risk = Math.max(0, 100 - topMatch.discernmentScore);
-    const confidence_calibration = Math.min(100, topMatch.discernmentScore + 20);
-    const human_review_needed =
-      hallucination_risk > 50 || confidence_calibration < 60;
-
-    return {
-      content: [
-        {
-          type: "text",
-          text: JSON.stringify(
-            {
-              discernment_score: topMatch.discernmentScore,
-              hallucination_risk_percent: hallucination_risk,
-              confidence_calibration_percent: confidence_calibration,
-              human_review_needed,
-              guidance: topMatch.entry.dimensions.discernment.example,
-              antipattern_to_avoid:
-                topMatch.entry.dimensions.discernment.antipattern,
-            },
-            null,
-            2
-          ),
-        },
-      ],
-    } as any;
-  }
-
-  if (name === "check_diligence") {
-    const { task, domain } = toolArgs as {
-      task: string;
-      domain: string;
-    };
-
-    const entries = getKnowledgeEntries().filter((e: KnowledgeEntry) => e.domain === domain);
-
-    if (entries.length === 0) {
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(
-              {
-                domain,
-                checklist: [
-                  "Define clear human accountability roles",
-                  "Establish review and approval process",
-                  "Document AI involvement in decision",
-                  "Create audit trail of decisions",
-                  "Define escalation criteria",
-                ],
-                transparency_requirements: [
-                  "Disclose AI participation to stakeholders",
-                  "Explain AI limitations and confidence",
-                  "Provide human decision-maker contact",
-                ],
-                accountability_steps: [
-                  "Assign human reviewer",
-                  "Log all AI recommendations",
-                  "Document approval/rejection decisions",
-                ],
-              },
-              null,
-              2
-            ),
-          },
-        ],
+        content: [{ type: "text", text: JSON.stringify({ error: `Cycle "${id}" not found. Use list_domains or find_relevant_cycles to discover available cycles.` }) }],
       } as any;
     }
-
-    const topEntry = entries[0];
-
     return {
-      content: [
-        {
-          type: "text",
-          text: JSON.stringify(
-            {
-              domain,
-              task,
-              diligence_guidance: topEntry.dimensions.diligence.description,
-              best_practice_example:
-                topEntry.dimensions.diligence.example,
-              antipattern_to_avoid:
-                topEntry.dimensions.diligence.antipattern,
-              checklist: [
-                "Define clear human accountability roles",
-                "Establish review and approval process",
-                "Document AI involvement in decision",
-                "Create audit trail of decisions",
-                "Define escalation criteria",
-              ],
-              transparency_requirements: [
-                "Disclose AI participation to stakeholders",
-                "Explain AI limitations and confidence",
-                "Provide human decision-maker contact",
-              ],
-              accountability_steps: [
-                "Assign human reviewer",
-                "Log all AI recommendations",
-                "Document approval/rejection decisions",
-              ],
-            },
-            null,
-            2
-          ),
-        },
-      ],
+      content: [{ type: "text", text: JSON.stringify({ source, cycle: entry }, null, 2) }],
     } as any;
   }
 
-  if (name === "get_4d_score") {
-    const { description, delegation, output } = toolArgs as {
-      description: string;
-      delegation: string;
-      output?: string;
-    };
-
-    const entries = getKnowledgeEntries();
-    const taskSet = keywordSet(description + " " + delegation + " " + (output || ""));
-
-    const scored = entries.map((entry: KnowledgeEntry) => {
-      const entrySet = keywordSet(entry.title + " " + entry.domain);
-      const similarity = cosineSimilarity(taskSet, entrySet);
+  // ── get_dimension_guidance ──────────────────────────────────────────────────
+  if (name === "get_dimension_guidance") {
+    const { dimension, domain } = args as { dimension: string; domain?: string };
+    const validDims = ['delegation', 'description', 'discernment', 'diligence'];
+    if (!validDims.includes(dimension)) {
       return {
-        entry,
-        similarity,
-        delegationScore: Math.min(100, Math.round(similarity * entry.score_hints.delegation * 400)),
-        descriptionScore: Math.min(100, Math.round(similarity * entry.score_hints.description * 400)),
-        discernmentScore: Math.min(100, Math.round(similarity * entry.score_hints.discernment * 400)),
-        diligenceScore: Math.min(100, Math.round(similarity * entry.score_hints.diligence * 400)),
-      };
-    });
-
-    scored.sort((a, b) => b.similarity - a.similarity);
-    const topMatch = scored[0];
-
-    const delegationScore = Math.max(0, Math.min(100, topMatch.delegationScore + 30));
-    const descriptionScore = Math.max(
-      0,
-      Math.min(100, topMatch.descriptionScore + 25)
-    );
-    const discernmentScore = Math.max(0, Math.min(100, output ? topMatch.discernmentScore + 20 : 50));
-    const diligenceScore = Math.max(0, Math.min(100, topMatch.diligenceScore + 15));
-
-    const overallScore = Math.round(
-      (delegationScore +
-        descriptionScore +
-        discernmentScore +
-        diligenceScore) /
-        4
-    );
-
+        content: [{ type: "text", text: JSON.stringify({ error: `Invalid dimension "${dimension}". Valid: ${validDims.join(', ')}` }) }],
+      } as any;
+    }
+    const { entries, source } = await getKnowledge();
+    const filtered = domain ? entries.filter(e => e.domain === domain) : entries;
+    const guidance = filtered.map(e => ({
+      cycle: e.title,
+      domain: e.domain,
+      description: (e.dimensions as any)[dimension].description,
+      example:     (e.dimensions as any)[dimension].example,
+      antipattern: (e.dimensions as any)[dimension].antipattern,
+    }));
     return {
-      content: [
-        {
-          type: "text",
-          text: JSON.stringify(
-            {
-              overall_score: overallScore,
-              dimension_scores: {
-                delegation: delegationScore,
-                description: descriptionScore,
-                discernment: discernmentScore,
-                diligence: diligenceScore,
-              },
-              improvement_tips: {
-                delegation: `Clarify role: ${topMatch.entry.dimensions.delegation.antipattern}`,
-                description: `Better context: ${topMatch.entry.dimensions.description.antipattern}`,
-                discernment: `Review more carefully: ${topMatch.entry.dimensions.discernment.antipattern}`,
-                diligence: `Establish accountability: ${topMatch.entry.dimensions.diligence.antipattern}`,
-              },
-              reference_framework: topMatch.entry.title,
-              version: SERVER_VERSION,
-            },
-            null,
-            2
-          ),
-        },
-      ],
+      content: [{ type: "text", text: JSON.stringify({ source, dimension, domain: domain ?? 'all', guidance }, null, 2) }],
     } as any;
   }
 
-  throw new Error(
-    `Unknown tool: ${name}`
-  );
+  // ── refresh_knowledge ───────────────────────────────────────────────────────
+  if (name === "refresh_knowledge") {
+    cache = null;
+    const refreshed = await refreshKnowledge();
+    return {
+      content: [{
+        type: "text",
+        text: JSON.stringify({
+          success: true,
+          connector: refreshed.source,
+          cycles_loaded: refreshed.entries.length,
+          loaded_at: new Date(refreshed.loadedAt).toISOString(),
+          message: `Knowledge base refreshed from ${refreshed.source}. ${refreshed.entries.length} cycles now available.`,
+        }, null, 2),
+      }],
+    } as any;
+  }
+
+  // ── contribute_cycle ────────────────────────────────────────────────────────
+  if (name === "contribute_cycle") {
+    const { cycle } = args as { cycle: unknown };
+    // Validate schema
+    try {
+      knowledgeEntrySchema.parse(cycle);
+    } catch (err: any) {
+      return {
+        content: [{
+          type: "text",
+          text: JSON.stringify({
+            success: false,
+            message: "Cycle validation failed. Fix the errors before contributing.",
+            errors: err.errors ?? err.message,
+          }, null, 2),
+        }],
+      } as any;
+    }
+    const result = await connector.contribute(cycle);
+    return {
+      content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
+    } as any;
+  }
+
+  throw new Error(`Unknown tool: ${name}`);
 });
 
+// ── Start ─────────────────────────────────────────────────────────────────────
+
 export async function start() {
+  const connectorInfo = `${connector.name}${
+    process.env.FLUENTLY_GITHUB_REPO ? ` (${process.env.FLUENTLY_GITHUB_REPO})` : ''
+  }`;
+  console.error(`[fluently] MCP server v${SERVER_VERSION} — connector: ${connectorInfo}`);
+
+  // Connect transport first so stdin is not missed while knowledge loads
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("Fluently MCP server running on stdio");
+  console.error(`[fluently] Ready`);
+
+  // Pre-load knowledge in background after transport is connected
+  refreshKnowledge().catch((err: any) => {
+    console.error(`[fluently] Warning: could not pre-load knowledge: ${err.message}`);
+  });
 }
 
-// Run if called directly
-if (require.main === module) {
-  start().catch(console.error);
-}
