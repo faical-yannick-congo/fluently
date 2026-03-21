@@ -1,15 +1,93 @@
 # Fluently Test Playbook
 
-Two paths to interact with the Fluently 4D knowledge base:
+Two paths to interact with the Fluently 4D knowledge base. **GitHub MCP is the default community path** — no server to install, no rebuild needed, works with any Claude agent.
 
 | Path | When to use |
 |---|---|
+| **GitHub MCP** (default) | Community knowledge, no server, agent reads public repo directly |
 | **Custom MCP server** | Private knowledge, isolation, offline, automated contributions |
-| **GitHub MCP** | Community knowledge, no server, agent reads repo directly |
 
 ---
 
-## Path A — Custom MCP Server
+## Path A — GitHub MCP (Community, default)
+
+The agent reads the Fluently knowledge base directly from the public GitHub repo using the [GitHub MCP server](https://github.com/github/github-mcp-server). No auth required for reads. Knowledge updates the moment a cycle is merged — no rebuild, no redeploy.
+
+### Wire GitHub MCP
+
+In `~/.claude/settings.json` (Claude Code) or `claude_desktop_config.json` (Claude Desktop):
+
+```json
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_xxx"
+      }
+    }
+  }
+}
+```
+
+> Token is optional for read-only access to the public repo. Required only to open contribution PRs.
+
+### Agent workflow (prompts to give Claude)
+
+```
+# Step 1 — Orient (read the guide)
+Read the file KNOWLEDGE.md in repo faical-yannick-congo/fluently (main branch).
+Tell me what domains are available and how cycles are structured.
+
+
+# Step 2 — Discover all cycles
+Read knowledge/index.json in faical-yannick-congo/fluently.
+List all cycles grouped by domain with IDs and tags.
+
+
+# Step 3 — Deep-read a specific cycle
+Read knowledge/coding-code-review-triage.yaml in faical-yannick-congo/fluently.
+Summarize the 4D guidance and the most important antipattern.
+
+
+# Step 4 — Find the best fit for your task
+I want to use AI to summarize daily standup notes and flag blockers automatically.
+Read knowledge/index.json and the YAML files for the 2–3 most likely matching cycles.
+Reason over them and tell me which fits best and why — no numeric scores, just your assessment.
+
+
+# Step 5 — Contribute a new cycle (requires GitHub token)
+I want to contribute a new cycle. Read KNOWLEDGE.md for the schema.
+Help me fill in all 4D dimensions for:
+  "AI drafts customer support responses, human reviews and sends."
+Then open a PR to faical-yannick-congo/fluently adding the YAML file under knowledge/.
+```
+
+### Manual spot-checks
+
+```bash
+# Verify index.json is live and valid
+curl -s "https://raw.githubusercontent.com/faical-yannick-congo/fluently/main/knowledge/index.json" \
+  | python3 -c "
+import sys, json
+d = json.load(sys.stdin)
+print('total:', d['total'])
+print('domains:', list(d['byDomain'].keys()))
+"
+
+# Read a specific cycle
+curl -s "https://raw.githubusercontent.com/faical-yannick-congo/fluently/main/knowledge/coding-code-review-triage.yaml"
+
+# Read the agent orientation guide
+curl -s "https://raw.githubusercontent.com/faical-yannick-congo/fluently/main/KNOWLEDGE.md" | head -50
+```
+
+---
+
+## Path B — Custom MCP Server
+
+Use when you need private knowledge, offline access, or automated PRs without leaving the agent.
 
 ### Prerequisites
 
@@ -88,7 +166,7 @@ for d in ['delegation','description','discernment','diligence']:
 # Expected: title + 4 antipattern lines
 
 
-# 5. Get dimension guidance (antipatterns + examples across a domain)
+# 5. Get dimension guidance across a domain
 echo '{"jsonrpc":"2.0","id":5,"method":"tools/call","params":{"name":"get_dimension_guidance","arguments":{"dimension":"discernment","domain":"coding"}}}' \
   | node packages/mcp-server/dist/bin.js 2>/dev/null \
   | python3 -c "
@@ -97,7 +175,7 @@ c = json.loads(json.load(sys.stdin)['result']['content'][0]['text'])
 print(c['dimension'], 'in', c['domain'])
 for g in c['guidance']: print(' -', g['cycle'], '|', g['antipattern'])
 "
-# Expected: discernment antipatterns for all 4 coding cycles
+# Expected: discernment antipatterns for all coding cycles
 
 
 # 6. Contribute a cycle — validation error (missing fields)
@@ -164,101 +242,14 @@ In `.claude/settings.json` (project) or `~/.claude/settings.json` (global):
 
 ---
 
-## Path B — GitHub MCP (no custom server)
-
-Uses the [GitHub MCP server](https://github.com/github/github-mcp-server) to read the Fluently knowledge base directly from the public repo. No auth required for read access.
-
-### Wire GitHub MCP
-
-```json
-{
-  "mcpServers": {
-    "github": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": { "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_xxx" }
-    }
-  }
-}
-```
-
-> Token is optional for public repo reads. Required only to open contribution PRs.
-
-### Agent workflow (prompts to give Claude)
-
-```
-# Step 1 — Orient
-Read the file KNOWLEDGE.md in the repo faical-yannick-congo/fluently (main branch).
-Tell me the domains available and how to find cycles.
-
-# Step 2 — Discover
-Read knowledge/index.json in faical-yannick-congo/fluently.
-List all cycles in the "coding" domain with their IDs and tags.
-
-# Step 3 — Deep-read a cycle
-Read the file knowledge/coding-code-review-triage.yaml.
-Summarize the 4D guidance and identify which antipattern is most relevant
-when an LLM is used without human sign-off.
-
-# Step 4 — Find fit for your task
-I want to use AI to summarize daily standup notes and flag blockers.
-Read knowledge/index.json and then the YAML files for the 2 most likely
-matching cycles. Reason over them and tell me which one fits best and why.
-No numeric scores — just your assessment.
-
-# Step 5 — Contribute (requires GitHub token)
-I want to contribute a new cycle. Read KNOWLEDGE.md to understand the schema,
-then help me fill in all 4D dimensions for this task:
-"AI drafts customer support responses, human reviews before sending."
-When done, open a PR to faical-yannick-congo/fluently adding the YAML file.
-```
-
-### Manual spot-checks
-
-```bash
-# Check index.json is valid and lists all cycles
-python3 -c "
-import json
-d = json.load(open('knowledge/index.json'))
-print('total:', d['total'])
-print('domains:', list(d['byDomain'].keys()))
-print('entries:', [e['id'] for e in d['entries']])
-"
-
-# Validate all YAML files against the schema
-node -e "
-const {knowledgeEntrySchema} = require('./packages/scorer/dist/schema.js');
-const yaml = require('js-yaml');
-const fs = require('fs');
-const files = fs.readdirSync('knowledge').filter(f => f.endsWith('.yaml'));
-let ok = 0, fail = 0;
-for (const f of files) {
-  try {
-    knowledgeEntrySchema.parse(yaml.load(fs.readFileSync('knowledge/'+f,'utf8')));
-    ok++;
-  } catch(e) {
-    console.error('FAIL', f, e.errors.map(x=>x.path+': '+x.message).join(', '));
-    fail++;
-  }
-}
-console.log(ok + ' valid, ' + fail + ' failed');
-"
-
-# Verify github-public connector can fetch live index
-curl -s "https://raw.githubusercontent.com/faical-yannick-congo/fluently/main/knowledge/index.json" \
-  | python3 -c "import sys,json; d=json.load(sys.stdin); print('live total:', d['total'])"
-```
-
----
-
 ## Quick comparison
 
-| | Custom MCP server | GitHub MCP |
+| | GitHub MCP (default) | Custom MCP server |
 |---|---|---|
-| **Setup** | `npm install -g fluently-mcp-server` | Add GitHub MCP server config |
-| **Auth** | None for community, token for private | Optional for reads, required for PR |
-| **Knowledge source** | Live GitHub fetch + 1h cache + offline fallback | Direct repo file reads |
-| **Private knowledge** | Yes — private repo, fork, local, SQL/NoSQL | Only if repo is private |
-| **Contribution** | `contribute_cycle` tool (automated or instructions) | Agent opens PR via GitHub MCP |
-| **Offline** | Yes — bundled fallback | No |
-| **Scoring** | None — agent reasons over ranked candidates | None — agent reasons over raw YAML |
+| **Setup** | Add GitHub MCP server config | `npm install -g fluently-mcp-server` |
+| **Auth** | Optional for reads, required for PR | None for community, token for private |
+| **Knowledge source** | Direct repo file reads (always current) | Live GitHub fetch + 1h cache + offline fallback |
+| **Private knowledge** | Only if repo is private | Yes — private repo, fork, local, SQL/NoSQL |
+| **Contribution** | Agent opens PR via GitHub MCP | `contribute_cycle` tool (automated or instructions) |
+| **Offline** | No | Yes — bundled fallback |
+| **Scoring** | None — agent reasons over raw YAML | None — agent reasons over ranked candidates |
