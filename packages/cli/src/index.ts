@@ -1,9 +1,10 @@
+#!/usr/bin/env node
 import { Command } from 'commander';
 import chalk from 'chalk';
 import ora from 'ora';
 import { scoreTask, loadKnowledgeEntries } from '@fluently/scorer';
 import { knowledgeEntrySchema } from '@fluently/scorer/schema';
-import { input, select } from '@inquirer/prompts';
+import inquirer from 'inquirer';
 const fs = require('fs');
 const path = require('path');
 import yaml from 'js-yaml';
@@ -56,34 +57,34 @@ program
   .command('contribute')
   .description('Contribute a new Fluently 4D cycle to the knowledge base')
   .action(async () => {
-    const answers: Record<string, unknown> = {};
-    answers.id = await input({ message: 'Slug (unique id):' });
-    answers.title = await input({ message: 'Title:' });
-    answers.domain = await select({ message: 'Domain:', choices: [
-      { name: 'coding', value: 'coding' },
-      { name: 'writing', value: 'writing' },
-      { name: 'research', value: 'research' },
-      { name: 'customer-support', value: 'customer-support' },
-      { name: 'education', value: 'education' },
-      { name: 'legal', value: 'legal' },
-      { name: 'healthcare', value: 'healthcare' },
-      { name: 'general', value: 'general' }
-    ] });
-    answers.dimensions = {};
+    const basic = await inquirer.prompt([
+      { type: 'input', name: 'id', message: 'Slug (unique id):' },
+      { type: 'input', name: 'title', message: 'Title:' },
+      { type: 'list', name: 'domain', message: 'Domain:', choices: ['coding','writing','research','customer-support','education','legal','healthcare','general'] },
+      { type: 'input', name: 'tags', message: 'Tags (comma separated):' },
+      { type: 'input', name: 'contributor', message: 'Contributor:' },
+      { type: 'input', name: 'version', message: 'Version (semver):', default: '1.0.0' }
+    ]);
+    const dimensions: Record<string, unknown> = {};
     for (const dim of ['delegation', 'description', 'discernment', 'diligence']) {
-      (answers.dimensions as Record<string, unknown>)[dim] = {
-        description: await input({ message: `Describe ${dim}:` }),
-        example: await input({ message: `Example for ${dim}:` }),
-        antipattern: await input({ message: `Antipattern for ${dim}:` })
-      };
+      const d = await inquirer.prompt([
+        { type: 'input', name: 'description', message: `${dim} — describe:` },
+        { type: 'input', name: 'example', message: `${dim} — example:` },
+        { type: 'input', name: 'antipattern', message: `${dim} — antipattern:` }
+      ]);
+      dimensions[dim] = d;
     }
-    answers.score_hints = {};
-    for (const dim of ['delegation', 'description', 'discernment', 'diligence']) {
-      (answers.score_hints as Record<string, number>)[dim] = parseFloat(await input({ message: `Weight for ${dim} (0-1):` }));
-    }
-    answers.tags = (await input({ message: 'Tags (comma separated):' })).split(',').map((t: string) => t.trim());
-    answers.contributor = await input({ message: 'Contributor:' });
-    answers.version = await input({ message: 'Version (semver):' });
+    const hintsRaw = await inquirer.prompt(
+      ['delegation','description','discernment','diligence'].map(dim => ({
+        type: 'input', name: dim, message: `Weight for ${dim} (0–1, all must sum to 1):`
+      }))
+    );
+    const answers: Record<string, unknown> = {
+      ...basic,
+      tags: basic.tags.split(',').map((t: string) => t.trim()),
+      dimensions,
+      score_hints: Object.fromEntries(Object.entries(hintsRaw).map(([k, v]) => [k, parseFloat(v as string)]))
+    };
     try {
       knowledgeEntrySchema.parse(answers);
       const yamlStr = yaml.dump(answers);
