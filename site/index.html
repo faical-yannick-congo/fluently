@@ -372,6 +372,7 @@
 
     <!-- Nav links -->
     <div class="hide-mobile" style="display:flex;align-items:center;gap:4px;">
+      <a href="#install" style="padding:6px 14px;font-size:0.82rem;font-weight:500;color:#94A3B8;text-decoration:none;border-radius:8px;transition:all 0.2s;" onmouseover="this.style.color='#F1F5F9';this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.color='#94A3B8';this.style.background='transparent'">Install</a>
       <a href="#app" onclick="switchTab('score')" style="padding:6px 14px;font-size:0.82rem;font-weight:500;color:#94A3B8;text-decoration:none;border-radius:8px;transition:all 0.2s;" onmouseover="this.style.color='#F1F5F9';this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.color='#94A3B8';this.style.background='transparent'">Score</a>
       <a href="#app" onclick="switchTab('browse')" style="padding:6px 14px;font-size:0.82rem;font-weight:500;color:#94A3B8;text-decoration:none;border-radius:8px;transition:all 0.2s;" onmouseover="this.style.color='#F1F5F9';this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.color='#94A3B8';this.style.background='transparent'">Browse</a>
       <a href="#app" onclick="switchTab('compare')" style="padding:6px 14px;font-size:0.82rem;font-weight:500;color:#94A3B8;text-decoration:none;border-radius:8px;transition:all 0.2s;" onmouseover="this.style.color='#F1F5F9';this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.color='#94A3B8';this.style.background='transparent'">Compare</a>
@@ -459,6 +460,81 @@
       Try the Scorer
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </a>
+  </div>
+</section>
+
+<!-- ========== INSTALL ========== -->
+<section id="install" style="padding:60px 20px;background:linear-gradient(180deg,transparent,rgba(139,92,246,0.04),transparent);">
+  <div style="max-width:900px;margin:0 auto;text-align:center;">
+
+    <div style="display:inline-flex;align-items:center;gap:6px;padding:4px 14px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.2);border-radius:999px;font-size:0.75rem;font-weight:600;color:#67E8F9;letter-spacing:0.5px;margin-bottom:20px;">
+      <span style="width:6px;height:6px;background:#06B6D4;border-radius:50%;display:inline-block;"></span>
+      GET STARTED IN SECONDS
+    </div>
+
+    <h2 style="font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;letter-spacing:-0.8px;margin-bottom:12px;">Three Ways to Use Fluently</h2>
+    <p style="color:#64748B;font-size:0.95rem;margin-bottom:40px;max-width:520px;margin-left:auto;margin-right:auto;">No sign-up. No account. Pick the way that fits your workflow.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;text-align:left;margin-bottom:40px;">
+
+      <!-- Option 1: Browser -->
+      <div class="glass glass-hover" style="border-radius:16px;padding:28px 24px;border-color:rgba(139,92,246,0.3);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+          <div style="width:36px;height:36px;background:rgba(139,92,246,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🌐</div>
+          <div>
+            <div style="font-size:0.7rem;font-weight:700;color:#8B5CF6;letter-spacing:0.6px;">ZERO INSTALL</div>
+            <div style="font-weight:700;font-size:0.95rem;">Use in Browser</div>
+          </div>
+        </div>
+        <p style="color:#64748B;font-size:0.82rem;line-height:1.6;margin-bottom:16px;">Score tasks, browse the knowledge base, and contribute cycles — all right here. No installation needed.</p>
+        <a href="#app" onclick="switchTab('score')" style="display:inline-flex;align-items:center;gap:6px;background:rgba(139,92,246,0.15);color:#C4B5FD;text-decoration:none;padding:8px 16px;border-radius:8px;font-size:0.82rem;font-weight:600;border:1px solid rgba(139,92,246,0.25);transition:all 0.2s;" onmouseover="this.style.background='rgba(139,92,246,0.25)'" onmouseout="this.style.background='rgba(139,92,246,0.15)'">
+          Open Scorer
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <!-- Option 2: npx -->
+      <div class="glass glass-hover" style="border-radius:16px;padding:28px 24px;border-color:rgba(6,182,212,0.3);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+          <div style="width:36px;height:36px;background:rgba(6,182,212,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">⚡</div>
+          <div>
+            <div style="font-size:0.7rem;font-weight:700;color:#06B6D4;letter-spacing:0.6px;">NO INSTALL NEEDED</div>
+            <div style="font-weight:700;font-size:0.95rem;">Run with npx</div>
+          </div>
+        </div>
+        <p style="color:#64748B;font-size:0.82rem;line-height:1.6;margin-bottom:16px;">Have Node.js? Run the CLI instantly without installing. No PATH changes required.</p>
+        <div style="background:rgba(0,0,0,0.35);border:1px solid rgba(6,182,212,0.2);border-radius:10px;padding:14px 16px;font-family:monospace;font-size:0.8rem;color:#E2E8F0;margin-bottom:12px;position:relative;">
+          <span style="color:#06B6D4;user-select:none;">$ </span>npx fluently-cli score "your task description"
+          <button onclick="navigator.clipboard.writeText('npx fluently-cli score &quot;your task description&quot;')" title="Copy" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:5px;color:#64748B;cursor:pointer;font-size:0.7rem;padding:3px 8px;transition:all 0.15s;" onmouseover="this.style.color='#F1F5F9'" onmouseout="this.style.color='#64748B'">copy</button>
+        </div>
+        <div style="background:rgba(0,0,0,0.35);border:1px solid rgba(6,182,212,0.2);border-radius:10px;padding:14px 16px;font-family:monospace;font-size:0.8rem;color:#E2E8F0;">
+          <span style="color:#06B6D4;user-select:none;">$ </span>npx fluently-cli compare --description "AI code review" --delegation augmented
+        </div>
+      </div>
+
+      <!-- Option 3: Global install -->
+      <div class="glass glass-hover" style="border-radius:16px;padding:28px 24px;border-color:rgba(16,185,129,0.3);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+          <div style="width:36px;height:36px;background:rgba(16,185,129,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">💾</div>
+          <div>
+            <div style="font-size:0.7rem;font-weight:700;color:#10B981;letter-spacing:0.6px;">PERMANENT INSTALL</div>
+            <div style="font-weight:700;font-size:0.95rem;">Install Globally</div>
+          </div>
+        </div>
+        <p style="color:#64748B;font-size:0.82rem;line-height:1.6;margin-bottom:16px;">Add <code style="background:rgba(255,255,255,0.06);padding:1px 5px;border-radius:4px;font-size:0.78rem;">fluent</code> to your PATH once and use it everywhere in your terminal workflow.</p>
+        <div style="background:rgba(0,0,0,0.35);border:1px solid rgba(16,185,129,0.2);border-radius:10px;padding:14px 16px;font-family:monospace;font-size:0.8rem;color:#E2E8F0;margin-bottom:8px;position:relative;">
+          <span style="color:#10B981;user-select:none;">$ </span>npm install -g fluently-cli
+          <button onclick="navigator.clipboard.writeText('npm install -g fluently-cli')" title="Copy" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:5px;color:#64748B;cursor:pointer;font-size:0.7rem;padding:3px 8px;transition:all 0.15s;" onmouseover="this.style.color='#F1F5F9'" onmouseout="this.style.color='#64748B'">copy</button>
+        </div>
+        <div style="background:rgba(0,0,0,0.35);border:1px solid rgba(16,185,129,0.2);border-radius:10px;padding:14px 16px;font-family:monospace;font-size:0.8rem;color:#E2E8F0;">
+          <span style="color:#10B981;user-select:none;">$ </span>fluent score "review my AI prompt strategy"
+        </div>
+      </div>
+    </div>
+
+    <!-- Node.js note -->
+    <p style="color:#334155;font-size:0.78rem;">Requires <a href="https://nodejs.org" target="_blank" rel="noopener" style="color:#475569;text-decoration:underline;">Node.js 20+</a>. The CLI is self-contained — no configuration files or environment variables needed.</p>
+
   </div>
 </section>
 

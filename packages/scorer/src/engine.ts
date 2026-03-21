@@ -45,7 +45,7 @@ export function scoreTask(input: TaskInput, knowledgeDir: string) {
     const dimensionScores = Object.fromEntries(
       Object.entries(entry.dimensions).map(([dim, val]: [string, any]) => [
         dim,
-        Math.round(similarity * (entry.score_hints[dim as keyof typeof entry.score_hints] ?? 0) * 100)
+        Math.min(100, Math.round(similarity * (entry.score_hints[dim as keyof typeof entry.score_hints] ?? 0) * 400))
       ])
     );
     return {

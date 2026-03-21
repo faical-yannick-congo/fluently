@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import { Command } from 'commander';
 import chalk from 'chalk';
 import ora from 'ora';
@@ -21,16 +20,18 @@ program
   .argument('<task>', 'Task description')
   .action(async (task) => {
     const spinner = ora('Scoring task...').start();
-    const results = scoreTask({ description: task, delegation_intent: '' }, path.resolve(__dirname, '../../../knowledge'));
-    spinner.succeed('Score complete');
-    console.log(chalk.bold('Dimension | Score | Status'));
-    results.forEach(({ entry, dimensionScores }: any) => {
+    const results = scoreTask({ description: task, delegation_intent: '' }, path.resolve(__dirname, '../knowledge'));
+    spinner.succeed('Score complete\n');
+    results.forEach(({ entry, dimensionScores }: any, i: number) => {
+      const scores = Object.values(dimensionScores) as number[];
+      const overall = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+      console.log(chalk.bold.white(`#${i + 1}  ${entry.title}`) + chalk.gray(`  (${entry.domain})`) + chalk.yellow(`  overall: ${overall}/100`));
       Object.entries(dimensionScores).forEach(([dim, score]: [string, any]) => {
-        let status = (score as number) >= 80 ? '✅ Strong' : (score as number) >= 50 ? '⚠️ Improve' : '❌ Weak';
-        console.log(`${chalk.cyan(dim)} | ${chalk.yellow((score as number).toString())} | ${status}`);
+        const bar = '█'.repeat(Math.round((score as number) / 10)) + '░'.repeat(10 - Math.round((score as number) / 10));
+        const status = (score as number) >= 80 ? chalk.green('✅ Strong') : (score as number) >= 50 ? chalk.yellow('⚠️  Improve') : chalk.red('❌ Weak');
+        console.log(`  ${chalk.cyan(dim.padEnd(14))} ${bar}  ${chalk.yellow(String(score).padStart(3))}  ${status}`);
       });
-      console.log(chalk.green(`Top play: ${entry.title} (${entry.domain})`));
-      console.log(chalk.blue(`YAML: knowledge/${entry.domain}-${entry.id}.yaml`));
+      console.log(chalk.gray(`  → knowledge/${entry.domain}-${entry.id}.yaml\n`));
     });
   });
 
@@ -40,7 +41,7 @@ program
   .requiredOption('--delegation <intent>', 'Delegation intent')
   .action(async (opts) => {
     const spinner = ora('Comparing...').start();
-    const results = scoreTask({ description: opts.description, delegation_intent: opts.delegation }, path.resolve(__dirname, '../../../knowledge'));
+    const results = scoreTask({ description: opts.description, delegation_intent: opts.delegation }, path.resolve(__dirname, '../knowledge'));
     spinner.succeed('Comparison complete');
     const top = results[0];
     const overall = (Object.values(top.dimensionScores) as number[]).reduce((a, b) => a + b, 0) / 4;
@@ -88,7 +89,7 @@ program
     try {
       knowledgeEntrySchema.parse(answers);
       const yamlStr = yaml.dump(answers);
-      const filePath = path.resolve(__dirname, '../../../knowledge', `${answers.domain}-${answers.id}.yaml`);
+      const filePath = path.resolve(__dirname, '../knowledge', `${answers.domain}-${answers.id}.yaml`);
       fs.writeFileSync(filePath, yamlStr);
       console.log(chalk.green(`Entry written to ${filePath}`));
       console.log(chalk.yellow('Run `git add . && git commit` then open a PR to share with the community'));
@@ -106,7 +107,7 @@ program
     // Simple implementation: git pull
     require('child_process').execSync('git pull', { cwd: path.resolve(__dirname, '../../') });
     spinner.succeed('Sync complete');
-    const files = fs.readdirSync(path.resolve(__dirname, '../../../knowledge')).filter((f: string) => f.endsWith('.yaml'));
+    const files = fs.readdirSync(path.resolve(__dirname, '../knowledge')).filter((f: string) => f.endsWith('.yaml'));
     console.log(chalk.green(`New entries: ${files.length}`));
   });
 
@@ -114,7 +115,7 @@ program
   .command('list')
   .argument('[domain]', 'Domain to filter')
   .action(async (domain) => {
-    const entries = loadKnowledgeEntries(path.resolve(__dirname, '../../../knowledge'));
+    const entries = loadKnowledgeEntries(path.resolve(__dirname, '../knowledge'));
     entries.filter(e => !domain || e.domain === domain).forEach(e => {
       console.log(`${chalk.bold(e.title)} | ${chalk.cyan(e.domain)} | ${chalk.yellow(e.tags.join(','))} | ${chalk.magenta(e.contributor)}`);
     });

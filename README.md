@@ -45,18 +45,20 @@ Each suggestion links to the full Fluently 4D cycle—delegation guidelines, fra
 
 ## Install in 30 Seconds
 
+**Option 1 — Zero install (browser):** Use the [live scorer](https://faical-yannick-congo.github.io/fluently/) right now. No setup required.
+
+**Option 2 — Zero install (terminal):** Run instantly with npx — no PATH changes needed:
 ```bash
-npm install -g fluently
+npx fluently-cli score "Automated bug triage with human review"
+```
+
+**Option 3 — Permanent install:**
+```bash
+npm install -g fluently-cli
 fluent --help
 ```
 
-Then score your first task:
-
-```bash
-fluent score --description "Automated bug triage with human review" \
-             --delegation "augmented" \
-             --domain "coding"
-```
+Requires Node.js 20+. The CLI is self-contained — no configuration files needed.
 
 ---
 

@@ -28,7 +28,9 @@ interface ToolResponse {
 }
 
 const SERVER_VERSION = "0.1.0";
-const KNOWLEDGE_DIR = path.join(process.cwd(), "knowledge");
+const KNOWLEDGE_DIR = fs.existsSync(path.join(__dirname, "../knowledge"))
+  ? path.join(__dirname, "../knowledge")
+  : path.join(process.cwd(), "knowledge");
 
 // Initialize server with metadata
 const server = new Server({
@@ -277,8 +279,8 @@ server.setRequestHandler("tools/call" as any, async (request: any) => {
       return {
         entry,
         similarity,
-        delegationScore: Math.round(similarity * entry.score_hints.delegation * 100),
-        descriptionScore: Math.round(similarity * entry.score_hints.description * 100),
+        delegationScore: Math.min(100, Math.round(similarity * entry.score_hints.delegation * 400)),
+        descriptionScore: Math.min(100, Math.round(similarity * entry.score_hints.description * 400)),
       };
     });
 
@@ -325,7 +327,7 @@ server.setRequestHandler("tools/call" as any, async (request: any) => {
       const similarity = cosineSimilarity(taskSet, entrySet);
       return {
         entry,
-        discernmentScore: Math.round(similarity * entry.score_hints.discernment * 100),
+        discernmentScore: Math.min(100, Math.round(similarity * entry.score_hints.discernment * 400)),
       };
     });
 
@@ -458,14 +460,10 @@ server.setRequestHandler("tools/call" as any, async (request: any) => {
       return {
         entry,
         similarity,
-        delegationScore: Math.round(similarity * entry.score_hints.delegation * 100),
-        descriptionScore: Math.round(
-          similarity * entry.score_hints.description * 100
-        ),
-        discernmentScore: Math.round(
-          similarity * entry.score_hints.discernment * 100
-        ),
-        diligenceScore: Math.round(similarity * entry.score_hints.diligence * 100),
+        delegationScore: Math.min(100, Math.round(similarity * entry.score_hints.delegation * 400)),
+        descriptionScore: Math.min(100, Math.round(similarity * entry.score_hints.description * 400)),
+        discernmentScore: Math.min(100, Math.round(similarity * entry.score_hints.discernment * 400)),
+        diligenceScore: Math.min(100, Math.round(similarity * entry.score_hints.diligence * 400)),
       };
     });
 

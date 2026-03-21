@@ -5,3 +5,5 @@ dist/
 _site/
 .jekyll-cache/
 .jekyll-metadata
+packages/**/*.tgz
+packages/*/knowledge/
