@@ -3,7 +3,7 @@
 [![fluently-cli](https://img.shields.io/npm/v/fluently-cli?label=fluently-cli&style=flat-square&color=3B82F6)](https://www.npmjs.com/package/fluently-cli)
 [![fluently-mcp-server](https://img.shields.io/npm/v/fluently-mcp-server?label=fluently-mcp-server&style=flat-square&color=6B6CB5)](https://www.npmjs.com/package/fluently-mcp-server)
 [![CI](https://img.shields.io/github/actions/workflow/status/faical-yannick-congo/fluently/ci.yml?branch=main&label=CI&style=flat-square&color=10B981)](https://github.com/faical-yannick-congo/fluently/actions/workflows/ci.yml)
-[![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0%20%2B%20MIT-blueviolet?style=flat-square)](LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/faical-yannick-congo/fluently?style=flat-square&color=FFB800)](https://github.com/faical-yannick-congo/fluently/stargazers)
 [![MCP Compatible](https://img.shields.io/badge/MCP-compatible-6B6CB5?style=flat-square)](https://modelcontextprotocol.io)
 [![Works with any AI agent](https://img.shields.io/badge/works%20with-Claude%20%7C%20GPT%20%7C%20Gemini%20%7C%20Mistral%20%7C%20Copilot-D4602A?style=flat-square)](https://faical-yannick-congo.github.io/fluently/)
@@ -79,7 +79,7 @@ Requires Node.js 20+. The CLI is self-contained — no configuration files neede
 
 This isn't just a framework—it's a **commons for AI fluency**. Every Fluently 4D cycle you contribute teaches thousands of teams how to collaborate smarter with AI.
 
-Built on the **AI Fluency 4D Framework** by Dakan & Feller, distributed under **CC BY-NC-SA 4.0**. Code (CLI, MCP, scorer) is MIT. Mix and match.
+Built on the **AI Fluency 4D Framework** by Dakan & Feller. Everything — code, knowledge cycles, and tooling — is released under the **MIT License**.
 
 [Browse the Knowledge Base →](https://faical-yannick-congo.github.io/fluently/)
 
@@ -172,16 +172,14 @@ Tests        → Vitest
 
 **Fluently** brings that framework to life as an open-source tool + knowledge commons.
 
-- Framework & research: Dakan & Feller — AI Fluency 4D Framework
-- Community knowledge: CC BY-NC-SA 4.0
-- Code (CLI, MCP, scorer): MIT
+- Framework: Dakan & Feller — AI Fluency 4D Framework
+- License: MIT (code + knowledge)
 
 ---
 
 ## License
 
-- **Knowledge base** (YAML Fluently 4D cycles): [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-- **Code** (CLI, MCP, scorer): [MIT](LICENSE)
+**[MIT](LICENSE)** — code, knowledge cycles, and all tooling.
 
 Mix and match. Share freely. Build better AI collaboration.
 

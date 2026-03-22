@@ -119,6 +119,4 @@ The custom MCP server is the right choice when:
 
 ## License
 
-**Code** (this package): [MIT](../../LICENSE)
-
-**Bundled knowledge** (`knowledge/` directory): [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) — the YAML cycles shipped with this package are community knowledge under CC BY-NC-SA. The NC clause applies to the knowledge content, not the server code. Commercial use of the server is permitted; commercial redistribution of the knowledge content is not.
+[MIT](../../LICENSE) — code and bundled knowledge cycles.

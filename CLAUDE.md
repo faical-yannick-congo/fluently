@@ -1,5 +1,5 @@
 PROJECT: fluently
-PURPOSE: An open-source CLI + MCP server + knowledge base that operationalizes the AI Fluency 4D Framework (Delegation, Description, Discernment, Diligence) by Dakan & Feller. Licensed CC BY-NC-SA. Works with any AI agent — Claude, GPT, Gemini, Mistral, Copilot, and more.
+PURPOSE: An open-source CLI + MCP server + knowledge base that operationalizes the AI Fluency 4D Framework (Delegation, Description, Discernment, Diligence) by Dakan & Feller. Licensed MIT. Works with any AI agent — Claude, GPT, Gemini, Mistral, Copilot, and more.
 
 ARCHITECTURE:
 - /knowledge/ — YAML Fluently 4D cycles, community-contributed, organized by dimension and domain

@@ -143,4 +143,4 @@ Once you push to the `main` branch:
 
 ## License
 
-CC BY-NC-SA 4.0 — Same as main Fluently project
+MIT — same as main Fluently project
