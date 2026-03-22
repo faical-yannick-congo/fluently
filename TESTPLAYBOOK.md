@@ -1,6 +1,6 @@
 # Fluently Test Playbook
 
-Two paths to interact with the Fluently 4D knowledge base. **GitHub MCP is the default community path** — no server to install, no rebuild needed, works with any Claude agent.
+Two paths to interact with the Fluently 4D knowledge base. **GitHub MCP is the default community path** — no server to install, no rebuild needed, works with any AI agent.
 
 | Path | When to use |
 |---|---|
@@ -15,7 +15,7 @@ The agent reads the Fluently knowledge base directly from the public GitHub repo
 
 ### Wire GitHub MCP
 
-In `~/.claude/settings.json` (Claude Code) or `claude_desktop_config.json` (Claude Desktop):
+In your agent's MCP config — `~/.claude/settings.json` (Claude Code), `claude_desktop_config.json` (Claude Desktop), or your IDE's MCP settings (VS Code Copilot, Cursor, Continue…):
 
 ```json
 {
@@ -33,7 +33,7 @@ In `~/.claude/settings.json` (Claude Code) or `claude_desktop_config.json` (Clau
 
 > Token is optional for read-only access to the public repo. Required only to open contribution PRs.
 
-### Agent workflow (prompts to give Claude)
+### Agent workflow (prompts to give your agent)
 
 ```
 # Step 1 — Orient (read the guide)
@@ -128,7 +128,8 @@ echo '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}' \
   | python3 -c "import sys,json; print([t['name'] for t in json.load(sys.stdin)['result']['tools']])"
 
 # Expected: ['list_domains', 'find_relevant_cycles', 'get_cycle_detail',
-#            'get_dimension_guidance', 'refresh_knowledge', 'contribute_cycle']
+#            'get_collaboration_pattern', 'get_dimension_guidance',
+#            'refresh_knowledge', 'contribute_cycle']
 
 
 # 2. List domains and cycle counts
@@ -200,9 +201,12 @@ print(c['message'])
 # Expected: "Knowledge base refreshed from github-public. 16 cycles now available."
 ```
 
-### Wire to Claude Desktop
+### Wire to any MCP client
 
-`~/Library/Application Support/Claude/claude_desktop_config.json` (Mac) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows):
+Same config block for all clients — drop it into:
+- Claude Desktop: `~/Library/Application Support/Claude/claude_desktop_config.json` (Mac)
+- Claude Code: `~/.claude/settings.json`
+- VS Code Copilot / Cursor / Continue: check extension MCP settings
 
 ```json
 {
@@ -228,7 +232,7 @@ With private knowledge:
 }
 ```
 
-### Wire to Claude Code
+### Claude Code (alternative path)
 
 In `.claude/settings.json` (project) or `~/.claude/settings.json` (global):
 
